@@ -4,7 +4,7 @@
       <span class="top-left r-pull-left">
         为了您有更好的咨询体验，请选择在线客服 客服热线：400-123-9876
       </span>
-      <div class="top-right r-pull-right" v-if="!isLogin">
+      <div v-if="!isLogin" class="top-right r-pull-right">
         <span class="please-login">
           <nuxt-link to="/">请登录</nuxt-link>
         </span>
@@ -12,7 +12,7 @@
           <nuxt-link to="/">注册有礼</nuxt-link>
         </span>
       </div>
-      <div class="top-right" v-if="isLogin">
+      <div v-if="isLogin" class="top-right">
         <a>张三</a>
       </div>
     </div>
