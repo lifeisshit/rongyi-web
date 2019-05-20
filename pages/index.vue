@@ -10,26 +10,30 @@
           <div class="login-tab-content">
             <div v-if="isLoginTabActive" class="content-login">
               <div class="content-row">
-                <el-input v-model="input" placeholder="请输入内容"></el-input>
+                <el-input v-model="loginInfo.userName" placeholder="请输入内容">
+                </el-input>
               </div>
               <div class="content-row">
-                <el-input v-model="input" placeholder="请输入内容"></el-input>
+                <el-input v-model="loginInfo.password" placeholder="请输入内容">
+                </el-input>
               </div>
-              <div class="content-row">
-                <el-input
-                  v-model="input"
-                  placeholder="请输入内容"
-                  class="ver-code-input"
-                ></el-input>
-                <span class="ver-code-text">1235</span
-                ><span class="ver-code-refresh">刷新</span>
-              </div>
+              <!--<div class="content-row">-->
+              <!--<el-input-->
+              <!--v-model="loginInfo.verificationCode"-->
+              <!--placeholder="请输入内容"-->
+              <!--class="ver-code-input"-->
+              <!--&gt;</el-input>-->
+              <!--<span class="ver-code-text">1235</span-->
+              <!--&gt;<span class="ver-code-refresh">刷新</span>-->
+              <!--</div>-->
               <div class="submit-row">
                 <el-button class="login-btn">登陆</el-button>
               </div>
               <div class="other-row">
-                <el-checkbox v-model="checked">下次自动登陆</el-checkbox>
-                <span>忘记密码</span>
+                <el-checkbox v-model="isAutoLoginchecked">
+                  下次自动登陆
+                </el-checkbox>
+                <nuxt-link to="/" class="forget-pwd">忘记密码</nuxt-link>
               </div>
             </div>
             <div v-if="!isLoginTabActive" class="content-register"></div>
@@ -84,7 +88,8 @@ export default {
         password: '',
         verificationCode: ''
       },
-      regInfo: {}
+      regInfo: {},
+      isAutoLoginchecked: false
     }
   }
 }

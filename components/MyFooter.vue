@@ -18,11 +18,21 @@
       </div>
       <div class="footer-part2">
         <ul class="r-pull-left bottom-menu">
-          <li><nuxt-link to="/">网站地图</nuxt-link></li>
-          <li><nuxt-link to="/">法律声明</nuxt-link></li>
-          <li><nuxt-link to="/">版权信息</nuxt-link></li>
-          <li><nuxt-link to="/">联系我们</nuxt-link></li>
-          <li><nuxt-link to="/">帮助中心</nuxt-link></li>
+          <li>
+            <nuxt-link to="/">网站地图</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/">法律声明</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/">版权信息</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/">联系我们</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/">帮助中心</nuxt-link>
+          </li>
         </ul>
         <div class="r-pull-right">
           <p>版权所有：融易网 鄂ICPXXXXXX号</p>

@@ -10,9 +10,9 @@
       .login-tab {
         position: absolute;
         right: 0;
-        top: 20px;
+        top: 50px;
         width: 226px;
-        height: 308px;
+        height: 258px;
         padding: 24px 22px 18px;
         background-color: #ffffff;
         border-radius: 2px;
@@ -26,7 +26,24 @@
             width: 50%;
             text-align: center;
             cursor: pointer;
-            &.active {}
+            height: 100%;
+            position: relative;
+            &::before {
+              content: '';
+              width: 0;
+              height: 3px;
+              background-color: #ff873f;
+              position: absolute;
+              bottom: -2px;
+              left: 0;
+            }
+            &.active {
+              font-size: 16px;
+              color: #ff873f;
+              &::before {
+                width: 100%;
+              }
+            }
           }
         }
         .login-tab-content {
@@ -73,9 +90,20 @@
               background-image: linear-gradient(103deg,
               #fba95e 0%,
               #ff873f 100%);
+              color: #fff;
+            }
+            .submit-row {
+              margin-top: 30px;
             }
             .other-row {
               margin-top: 18px;
+              .forget-pwd {
+                font-size: 12px;
+                color: #060608;
+                float: right;
+                top: 3px;
+                position: relative;
+              }
             }
           }
           .content-register {}

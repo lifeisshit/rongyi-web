@@ -1,3 +1,9 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: "Microsoft YaHei UI", Arial, Gabriola, sans-serif;
+}
 a {
   text-decoration: none;
 }
@@ -9,6 +15,15 @@ address,caption,cite,code,dfn,em,strong,th,var {font-style:normal;font-weight:no
 ol,ul {list-style:none}
 caption,th {text-align:left}
 h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal}
+
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #ff873f;
+  border-color: #ff873f;
+}
+
+.el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: #ff873f;
+}
 
 .wrap {
   width: 1200px;
