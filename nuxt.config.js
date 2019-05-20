@@ -66,7 +66,8 @@ export default {
    */
   build: {
     transpile: [/^element-ui/],
-
+    // 提取css
+    extractCSS: { allChunks: true },
     /*
      ** You can extend webpack config here
      */
