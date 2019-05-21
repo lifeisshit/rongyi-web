@@ -39,13 +39,17 @@ export default {
   css: [
     'element-ui/lib/theme-chalk/index.css',
     'normalize.css/normalize.css',
-    '~/assets/css/common.less'
+    '~/assets/css/common.less',
+    'swiper/dist/css/swiper.css'
   ],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/element-ui'],
+  plugins: [
+    { src: '~/plugins/element-ui' },
+    { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' }
+  ],
 
   /*
    ** Nuxt.js modules
