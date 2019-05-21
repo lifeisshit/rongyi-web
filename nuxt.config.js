@@ -71,7 +71,23 @@ export default {
   build: {
     transpile: [/^element-ui/],
     // 提取css
-    extractCSS: { allChunks: true },
+    optimizeCSS: true,
+    // 拆分大体积的js包
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        automaticNameDelimiter: '.',
+        maxAsyncRequests: 7,
+        cacheGroups: {
+          elementui: {
+            test: /node_modules[\\/]element-ui/,
+            chunks: 'all',
+            priority: 20,
+            name: true
+          }
+        }
+      }
+    },
     /*
      ** You can extend webpack config here
      */
