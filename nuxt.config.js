@@ -71,7 +71,7 @@ export default {
   build: {
     transpile: [/^element-ui/],
     // 提取css
-    optimizeCSS: true,
+    extractCSS: true,
     // 拆分大体积的js包
     optimization: {
       splitChunks: {

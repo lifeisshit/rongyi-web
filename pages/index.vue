@@ -91,7 +91,7 @@
           </div>
         </nuxt-link>
         <nuxt-link to="/" class="money-item money-item-center">
-          <img src="~/static/img/money-img3.png" alt="找资金" />
+          <img src="~/static/img/money-img2.png" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">股权投资</span>
             <span class="money-title2">引入实力投资，助推企业发展</span>
@@ -99,7 +99,7 @@
           </div>
         </nuxt-link>
         <nuxt-link to="/" class="money-item">
-          <img src="~/static/img/money-img1.png" alt="找资金" />
+          <img src="~/static/img/money-img3.png" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">债权投资</span>
             <span class="money-title2">借款方式多样，融资就这么简单</span>
@@ -127,7 +127,7 @@
             <div
               v-for="slide in successCaseSwiperSlides"
               :key="slide.id"
-              class="swiper-slide"
+              class="swiper-slide sc-swiper-slide"
             >
               <nuxt-link to="/" class="link-img">
                 <img :src="slide.img" alt="成功案例" />
@@ -204,6 +204,129 @@
         </div>
       </div>
     </div>
+    <!--找项目-->
+    <div class="index-sec wrap">
+      <div class="index-sec-hd">
+        <h3 class="index-sec-hd-left">找项目</h3>
+        <div class="index-sec-hd-right">
+          <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+        </div>
+      </div>
+      <div class="index-sec-bd">
+        <div class="fm-item find-money1">
+          <img src="~/static/img/find-money1.png" alt="找项目" />
+          <div class="fm-info">
+            <div class="fm-left">
+              <p class="fm-title">IT互联网</p>
+              <p class="fm-line"></p>
+            </div>
+            <div class="fm-right">
+              <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+            </div>
+          </div>
+        </div>
+        <div class="find-money2">
+          <div class="fm-item find-money2-1">
+            <img src="~/static/img/find-money2.jpg" alt="找项目" />
+            <div class="fm-info">
+              <div class="fm-left">
+                <p class="fm-title">农林牧渔</p>
+                <p class="fm-line"></p>
+              </div>
+              <div class="fm-right">
+                <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+              </div>
+            </div>
+          </div>
+          <div class="fm-item find-money2-2">
+            <img src="~/static/img/find-money3.png" alt="找项目" />
+            <div class="fm-info">
+              <div class="fm-left">
+                <p class="fm-title">房地产</p>
+                <p class="fm-line"></p>
+              </div>
+              <div class="fm-right">
+                <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="find-money3">
+          <div class="fm-item find-money3-1">
+            <img src="~/static/img/find-money4.jpg" alt="找项目" />
+            <div class="fm-info">
+              <div class="fm-left">
+                <p class="fm-title">餐饮休闲娱乐</p>
+                <p class="fm-line"></p>
+              </div>
+              <div class="fm-right">
+                <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+              </div>
+            </div>
+          </div>
+          <div class="find-money3-2">
+            <div class="fm-item find-money3-2-1">
+              <img src="~/static/img/find-money5.png" alt="找项目" />
+              <div class="fm-info">
+                <div class="fm-left">
+                  <p class="fm-title">节能环保</p>
+                  <p class="fm-line"></p>
+                </div>
+                <div class="fm-right">
+                  <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+                </div>
+              </div>
+            </div>
+            <div class="fm-item find-money3-2-2">
+              <img src="~/static/img/find-money6.png" alt="找项目" />
+              <div class="fm-info">
+                <div class="fm-left">
+                  <p class="fm-title">其他行业</p>
+                  <p class="fm-line"></p>
+                </div>
+                <div class="fm-right">
+                  <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--优质项目-->
+    <div class="index-sec wrap">
+      <div class="index-sec-hd">
+        <h3 class="index-sec-hd-left">优质项目</h3>
+        <div class="index-sec-hd-right">
+          <span class="idx-btn-prev" @click="betterCasePrevClick"
+            ><i class="el-icon-arrow-left"></i
+          ></span>
+          <span class="idx-btn-next" @click="betterCaseNextClick"
+            ><i class="el-icon-arrow-right"></i
+          ></span>
+        </div>
+      </div>
+      <div class="index-sec-bd bc-sec-bd">
+        <div v-swiper:betterCaseSwiper="betterCaseSwiperOption">
+          <div class="swiper-wrapper">
+            <div
+              v-for="slide in betterCaseSwiperSlides"
+              :key="slide.id"
+              class="swiper-slide bc-swiper-slide"
+            >
+              <nuxt-link to="/" class="link-img">
+                <img :src="slide.img" alt="优质项目" />
+              </nuxt-link>
+              <div class="slide-info">
+                <p class="title">{{ slide.title }}</p>
+                <p class="introduce">{{ slide.introduce }}</p>
+                <nuxt-link to="/">查看详情</nuxt-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -233,38 +356,32 @@ export default {
         {
           id: '1',
           title: '四川某项目融资成功1',
-          img:
-            'https://img.ivsky.com/img/tupian/pre/201810/30/motianlun-005.jpg'
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
         },
         {
           id: '2',
           title: '四川某项目融资成功2',
-          img:
-            'https://img.ivsky.com/img/tupian/pre/201810/27/youyongchi-001.jpg'
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
         },
         {
           id: '3',
           title: '四川某项目融资成功3',
-          img:
-            'https://img.ivsky.com/img/tupian/pre/201810/27/youyongchi-002.jpg'
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
         },
         {
           id: '4',
           title: '四川某项目融资成功4',
-          img:
-            'https://img.ivsky.com/img/tupian/pre/201810/27/youyongchi-005.jpg'
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
         },
         {
           id: '5',
           title: '四川某项目融资成功5',
-          img:
-            'https://img.ivsky.com/img/tupian/pre/201810/27/youyongchi-009.jpg'
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
         },
         {
           id: '6',
           title: '四川某项目融资成功6',
-          img:
-            'https://img.ivsky.com/img/tupian/pre/201810/27/youyongchi-011.jpg'
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
         }
       ],
       investors: [
@@ -330,6 +447,56 @@ export default {
           introduce:
             '金沙江创业投资基金专注于投资立足中国，面向全球市场的高新技术初创企业。'
         }
+      ],
+      betterCaseSwiperOption: {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        slidesPerGroup: 4,
+        allowTouchMove: false
+      },
+      betterCaseSwiperSlides: [
+        {
+          id: '1',
+          title: '四川某项目融资成功1',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
+          introduce:
+            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
+        },
+        {
+          id: '2',
+          title: '四川某项目融资成功2',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
+          introduce:
+            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
+        },
+        {
+          id: '3',
+          title: '四川某项目融资成功3',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
+          introduce:
+            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
+        },
+        {
+          id: '4',
+          title: '四川某项目融资成功4',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
+          introduce:
+            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
+        },
+        {
+          id: '5',
+          title: '四川某项目融资成功5',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
+          introduce:
+            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
+        },
+        {
+          id: '6',
+          title: '四川某项目融资成功6',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
+          introduce:
+            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有作的民营有作的民营有'
+        }
       ]
     }
   },
@@ -339,6 +506,12 @@ export default {
     },
     successCaseNextClick() {
       this.successCaseSwiper.slideNext()
+    },
+    betterCasePrevClick() {
+      this.betterCaseSwiper.slidePrev()
+    },
+    betterCaseNextClick() {
+      this.betterCaseSwiper.slideNext()
     }
   }
 }
