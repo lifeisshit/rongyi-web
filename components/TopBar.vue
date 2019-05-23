@@ -12,8 +12,11 @@
           <nuxt-link to="/">注册有礼</nuxt-link>
         </span>
       </div>
-      <div v-if="isLogin" class="top-right">
-        <a>张三</a>
+      <div v-if="isLogin" class="top-right r-pull-right">
+        <span class="welcome">您好</span>
+        <nuxt-link to="/" class="user-name">{{ userName }}</nuxt-link>
+        <span class="ver-line"></span>
+        <span class="logout">退出登录</span>
       </div>
     </div>
   </div>
@@ -24,7 +27,8 @@ export default {
   name: 'TopBar',
   data() {
     return {
-      isLogin: false
+      isLogin: false,
+      userName: '15685235621'
     }
   }
 }

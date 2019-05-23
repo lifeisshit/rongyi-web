@@ -60,13 +60,14 @@
                   placeholder="请输入验证码"
                   class="reg-ver-code-input"
                 ></el-input>
-                <span class="reg-ver-code-get">获取验证码</span>
+                <span class="reg-ver-code-get" @click="sendSmsCode"
+                  >获取验证码</span
+                >
               </div>
               <div class="other-row">
                 <el-checkbox v-model="regInfo.isAgree">
-                  我已阅读并同意<nuxt-link to="/" class="reg-agree"
-                    >《服务协议》</nuxt-link
-                  >
+                  我已阅读并同意
+                  <nuxt-link to="/" class="reg-agree">《服务协议》 </nuxt-link>
                 </el-checkbox>
               </div>
               <div class="reg-submit-row">
@@ -546,6 +547,10 @@ export default {
     },
     showRegTab() {
       this.isLoginTabActive = false
+    },
+    // 发送验证码
+    sendSmsCode() {
+      this.$store.dispatch('sendSmsCode', {})
     },
     successCasePrevClick() {
       this.successCaseSwiper.slidePrev()

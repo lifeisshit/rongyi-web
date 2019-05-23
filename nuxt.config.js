@@ -48,7 +48,8 @@ export default {
    */
   plugins: [
     { src: '~/plugins/element-ui' },
-    { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' }
+    { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
+    { src: '~/plugins/axios' }
   ],
 
   /*
@@ -63,6 +64,16 @@ export default {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    // prefix: '/service/',
+    credentials: true,
+    proxy: true // Can be also an object with default options
+  },
+  proxy: {
+    '/service': {
+      target: 'http://47.103.55.170:18080/service',
+      changeOrigin: true,
+      pathRewrite: { '^/service': '' }
+    }
   },
 
   /*
