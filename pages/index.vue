@@ -4,17 +4,25 @@
       <div class="wrap banner-wrap">
         <div class="login-tab">
           <ul class="login-tab-menu">
-            <li :class="{ active: isLoginTabActive }">手机号登陆</li>
-            <li :class="{ active: !isLoginTabActive }">免费注册</li>
+            <li :class="{ active: isLoginTabActive }" @click="showLoginTab">
+              手机号登陆
+            </li>
+            <li :class="{ active: !isLoginTabActive }" @click="showRegTab">
+              免费注册
+            </li>
           </ul>
           <div class="login-tab-content">
+            <!--登录-->
             <div v-if="isLoginTabActive" class="content-login">
               <div class="content-row">
-                <el-input v-model="loginInfo.userName" placeholder="请输入内容">
+                <el-input
+                  v-model="loginInfo.userName"
+                  placeholder="请输入用户名"
+                >
                 </el-input>
               </div>
               <div class="content-row">
-                <el-input v-model="loginInfo.password" placeholder="请输入内容">
+                <el-input v-model="loginInfo.password" placeholder="请输入密码">
                 </el-input>
               </div>
               <!--<div class="content-row">-->
@@ -30,13 +38,41 @@
                 <el-button class="login-btn">登陆</el-button>
               </div>
               <div class="other-row">
-                <el-checkbox v-model="isAutoLoginchecked">
+                <el-checkbox v-model="loginInfo.isAutoLogin">
                   下次自动登陆
                 </el-checkbox>
                 <nuxt-link to="/" class="forget-pwd">忘记密码</nuxt-link>
               </div>
             </div>
-            <div v-if="!isLoginTabActive" class="content-register"></div>
+            <!--注册-->
+            <div v-if="!isLoginTabActive" class="content-register">
+              <div class="content-row">
+                <el-input v-model="regInfo.userName" placeholder="请输入用户名">
+                </el-input>
+              </div>
+              <div class="content-row">
+                <el-input v-model="regInfo.password" placeholder="请输入密码">
+                </el-input>
+              </div>
+              <div class="content-row">
+                <el-input
+                  v-model="loginInfo.verificationCode"
+                  placeholder="请输入验证码"
+                  class="reg-ver-code-input"
+                ></el-input>
+                <span class="reg-ver-code-get">获取验证码</span>
+              </div>
+              <div class="other-row">
+                <el-checkbox v-model="regInfo.isAgree">
+                  我已阅读并同意<nuxt-link to="/" class="reg-agree"
+                    >《服务协议》</nuxt-link
+                  >
+                </el-checkbox>
+              </div>
+              <div class="reg-submit-row">
+                <el-button class="login-btn">注册</el-button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -91,7 +127,7 @@
           </div>
         </nuxt-link>
         <nuxt-link to="/" class="money-item money-item-center">
-          <img src="~/static/img/money-img2.png" alt="找资金" />
+          <img src="~/static/img/money-img2.jpg" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">股权投资</span>
             <span class="money-title2">引入实力投资，助推企业发展</span>
@@ -340,10 +376,14 @@ export default {
       loginInfo: {
         userName: '',
         password: '',
-        verificationCode: ''
+        isAutoLogin: false
       },
-      regInfo: {},
-      isAutoLoginchecked: false,
+      regInfo: {
+        userName: '',
+        password: '',
+        verificationCode: '',
+        isAgree: false
+      },
       successCaseSwiperOption: {
         slidesPerView: 4,
         spaceBetween: 0,
@@ -501,6 +541,12 @@ export default {
     }
   },
   methods: {
+    showLoginTab() {
+      this.isLoginTabActive = true
+    },
+    showRegTab() {
+      this.isLoginTabActive = false
+    },
     successCasePrevClick() {
       this.successCaseSwiper.slidePrev()
     },
