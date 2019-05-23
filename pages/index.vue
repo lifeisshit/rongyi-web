@@ -15,10 +15,7 @@
             <!--登录-->
             <div v-if="isLoginTabActive" class="content-login">
               <div class="content-row">
-                <el-input
-                  v-model="loginInfo.userName"
-                  placeholder="请输入用户名"
-                >
+                <el-input v-model="loginInfo.phone" placeholder="请输入手机号">
                 </el-input>
               </div>
               <div class="content-row">
@@ -47,7 +44,7 @@
             <!--注册-->
             <div v-if="!isLoginTabActive" class="content-register">
               <div class="content-row">
-                <el-input v-model="regInfo.userName" placeholder="请输入用户名">
+                <el-input v-model="regInfo.phone" placeholder="请输入手机号">
                 </el-input>
               </div>
               <div class="content-row">
@@ -369,18 +366,20 @@
 
 <script>
 import '~/assets/css/index.less'
+import { SmsCodeType } from '../common/constant'
+// import { mapActions } from 'vuex'
 
 export default {
   data() {
     return {
       isLoginTabActive: true,
       loginInfo: {
-        userName: '',
+        phone: '',
         password: '',
         isAutoLogin: false
       },
       regInfo: {
-        userName: '',
+        phone: '',
         password: '',
         verificationCode: '',
         isAgree: false
@@ -542,6 +541,7 @@ export default {
     }
   },
   methods: {
+    // ...mapActions('user', ['sendSmsCode']),
     showLoginTab() {
       this.isLoginTabActive = true
     },
@@ -550,7 +550,12 @@ export default {
     },
     // 发送验证码
     sendSmsCode() {
-      this.$store.dispatch('sendSmsCode', {})
+      // this.sendSmsCode(this.regInfo.login)
+      this.$store.dispatch('user/sendSmsCode', {
+        phone: this.regInfo.phone,
+        type: SmsCodeType.Register
+      })
+      console.log(123)
     },
     successCasePrevClick() {
       this.successCaseSwiper.slidePrev()

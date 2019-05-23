@@ -16,13 +16,19 @@ export const actions = {
     const { data } = await this.$axios.$post(API.register)
     console.log(data)
   },
-  async verifySmsCode({ commit }) {
+  async verifySmsCode({ commit }, payload) {
     const { data } = await this.$axios.$post(API.verifySmsCode)
-    console.log(data)
+    console.log('payload is: ', payload, 'data is: ', data)
+    // commit('setDate', payload)
   },
-  async sendSmsCode({ commit }) {
-    const { data } = await this.$axios.$get(API.sendSmsCode)
-    console.log(data)
+  async sendSmsCode({ commit }, payload) {
+    console.log('payload is: ', payload)
+    try {
+      const data = await this.$axios.get(API.sendSmsCode, {
+        params: payload
+      })
+      console.log('payload is: ', payload, 'data is: ', data)
+    } catch (e) {}
   },
   async logout({ commit }) {
     const { data } = await this.$axios.$get(API.logout)
