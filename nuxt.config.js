@@ -48,8 +48,8 @@ export default {
    */
   plugins: [
     { src: '~/plugins/element-ui' },
-    { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
-    { src: '~/plugins/axios' }
+    { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' }
+    // { src: '~/plugins/axios' }
   ],
 
   /*

@@ -1,7 +1,7 @@
 /*
  * 全局http请求拦截器
  * */
-export default function({ $axios, redirect }) {
+export default ({ $axios, redirect }) => {
   // 请求回调
   $axios.onRequest(config => {
     console.log('Making request to ' + config.url)
