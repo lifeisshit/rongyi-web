@@ -602,18 +602,15 @@ export default {
       this.isLoginTabActive = false
     },
     // 发送验证码
-    async onSendSmsCodeClick() {
-      await this.$refs.regForm.validateField('phone', error => {
-        if (error) {
-          console.log('error')
-        } else {
-          console.log('valid')
+    onSendSmsCodeClick() {
+      this.$refs.regForm.validateField('phone', async error => {
+        if (!error) {
+          await this.sendSmsCode({
+            phone: this.regForm.phone,
+            type: SmsCodeType.Register
+          })
         }
       })
-      // await this.sendSmsCode({
-      //   phone: this.regForm.phone,
-      //   type: SmsCodeType.Register
-      // })
     },
     // 点击注册按钮
     onFormSubmit(formName) {

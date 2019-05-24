@@ -26,6 +26,11 @@ export const actions = {
     await this.$axios.get(API.sendSmsCode, {
       params: payload
     })
+    this.$message.success({
+      showClose: true,
+      message: '验证码已发送成功，请注意查收',
+      type: 'error'
+    })
   },
   async logout({ commit }) {
     const { data } = await this.$axios.$get(API.logout)
