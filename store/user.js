@@ -23,12 +23,9 @@ export const actions = {
   },
   async sendSmsCode({ commit }, payload) {
     console.log('payload is: ', payload)
-    try {
-      const data = await this.$axios.get(API.sendSmsCode, {
-        params: payload
-      })
-      console.log('payload is: ', payload, 'data is: ', data)
-    } catch (e) {}
+    await this.$axios.get(API.sendSmsCode, {
+      params: payload
+    })
   },
   async logout({ commit }) {
     const { data } = await this.$axios.$get(API.logout)

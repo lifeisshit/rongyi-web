@@ -13,64 +13,96 @@
           </ul>
           <div class="login-tab-content">
             <!--登录-->
-            <div v-if="isLoginTabActive" class="content-login">
-              <div class="content-row">
-                <el-input v-model="loginInfo.phone" placeholder="请输入手机号">
+            <el-form
+              v-show="isLoginTabActive"
+              ref="loginForm"
+              class="content-login"
+              :model="loginForm"
+              :rules="rules"
+            >
+              <el-form-item class="content-row" prop="phone">
+                <el-input
+                  v-model="loginForm.phone"
+                  placeholder="请输入手机号"
+                  type="text"
+                >
                 </el-input>
-              </div>
-              <div class="content-row">
-                <el-input v-model="loginInfo.password" placeholder="请输入密码">
+              </el-form-item>
+              <el-form-item class="content-row" prop="password">
+                <el-input
+                  v-model="loginForm.password"
+                  placeholder="请输入密码"
+                  type="password"
+                >
                 </el-input>
-              </div>
+              </el-form-item>
               <!--<div class="content-row">-->
               <!--<el-input-->
-              <!--v-model="loginInfo.verificationCode"-->
+              <!--v-model="loginForm.verificationCode"-->
               <!--placeholder="请输入内容"-->
               <!--class="ver-code-input"-->
               <!--&gt;</el-input>-->
               <!--<span class="ver-code-text">1235</span-->
               <!--&gt;<span class="ver-code-refresh">刷新</span>-->
               <!--</div>-->
-              <div class="submit-row">
-                <el-button class="login-btn">登陆</el-button>
-              </div>
-              <div class="other-row">
-                <el-checkbox v-model="loginInfo.isAutoLogin">
+              <el-form-item class="submit-row">
+                <el-button class="login-btn" @click="onFormSubmit('loginForm')"
+                  >登陆</el-button
+                >
+              </el-form-item>
+              <el-form-item class="other-row">
+                <el-checkbox v-model="loginForm.isAutoLogin">
                   下次自动登陆
                 </el-checkbox>
                 <nuxt-link to="/" class="forget-pwd">忘记密码</nuxt-link>
-              </div>
-            </div>
+              </el-form-item>
+            </el-form>
             <!--注册-->
-            <div v-if="!isLoginTabActive" class="content-register">
-              <div class="content-row">
-                <el-input v-model="regInfo.phone" placeholder="请输入手机号">
-                </el-input>
-              </div>
-              <div class="content-row">
-                <el-input v-model="regInfo.password" placeholder="请输入密码">
-                </el-input>
-              </div>
-              <div class="content-row">
+            <el-form
+              v-show="!isLoginTabActive"
+              ref="regForm"
+              class="content-register"
+              :model="regForm"
+              :rules="rules"
+            >
+              <el-form-item class="content-row" prop="phone">
                 <el-input
-                  v-model="loginInfo.verificationCode"
+                  v-model="regForm.phone"
+                  placeholder="请输入手机号"
+                  type="tel"
+                >
+                </el-input>
+              </el-form-item>
+              <el-form-item class="content-row" prop="password">
+                <el-input
+                  v-model="regForm.password"
+                  placeholder="请输入密码"
+                  type="password"
+                >
+                </el-input>
+              </el-form-item>
+              <el-form-item class="content-row" prop="verificationCode">
+                <el-input
+                  v-model="regForm.verificationCode"
                   placeholder="请输入验证码"
                   class="reg-ver-code-input"
                 ></el-input>
-                <span class="reg-ver-code-get" @click="sendSmsCode"
+                <span class="reg-ver-code-get" @click="onSendSmsCodeClick"
                   >获取验证码</span
                 >
-              </div>
-              <div class="other-row">
-                <el-checkbox v-model="regInfo.isAgree">
+              </el-form-item>
+              <el-form-item class="other-row" prop="isAgree">
+                <el-checkbox v-model="regForm.isAgree">
                   我已阅读并同意
                   <nuxt-link to="/" class="reg-agree">《服务协议》 </nuxt-link>
                 </el-checkbox>
-              </div>
-              <div class="reg-submit-row">
-                <el-button class="login-btn">注册</el-button>
-              </div>
-            </div>
+              </el-form-item>
+              <el-form-item class="reg-submit-row">
+                <el-button class="login-btn" @click="onFormSubmit('regForm')"
+                  >注册</el-button
+                >
+              </el-form-item>
+            </el-form>
           </div>
         </div>
       </div>
@@ -366,23 +398,40 @@
 
 <script>
 import '~/assets/css/index.less'
+import { mapActions } from 'vuex'
 import { SmsCodeType } from '../common/constant'
-// import { mapActions } from 'vuex'
+import {
+  verifyPassword,
+  verifyEmail,
+  verifyUsername,
+  verifyChecked
+} from '~/common/validate'
 
 export default {
   data() {
     return {
       isLoginTabActive: true,
-      loginInfo: {
+      loginForm: {
         phone: '',
         password: '',
         isAutoLogin: false
       },
-      regInfo: {
+      regForm: {
         phone: '',
         password: '',
         verificationCode: '',
         isAgree: false
+      },
+      rules: {
+        password: verifyPassword(),
+        phone: verifyUsername(),
+        verificationCode: {
+          required: true,
+          min: 4,
+          trigger: 'blur',
+          message: '请输入验证码'
+        },
+        isAgree: verifyChecked('请同意服务协议')
       },
       successCaseSwiperOption: {
         slidesPerView: 4,
@@ -541,21 +590,38 @@ export default {
     }
   },
   methods: {
-    // ...mapActions('user', ['sendSmsCode']),
+    ...mapActions('user', ['sendSmsCode']),
     showLoginTab() {
+      this.$refs.loginForm.clearValidate()
+      this.$refs.regForm.clearValidate()
       this.isLoginTabActive = true
     },
     showRegTab() {
+      this.$refs.regForm.clearValidate()
+      this.$refs.loginForm.clearValidate()
       this.isLoginTabActive = false
     },
     // 发送验证码
-    sendSmsCode() {
-      // this.sendSmsCode(this.regInfo.login)
-      this.$store.dispatch('user/sendSmsCode', {
-        phone: this.regInfo.phone,
-        type: SmsCodeType.Register
+    async onSendSmsCodeClick() {
+      await this.$refs.regForm.validateField('phone', error => {
+        if (error) {
+          console.log('error')
+        } else {
+          console.log('valid')
+        }
       })
-      console.log(123)
+      // await this.sendSmsCode({
+      //   phone: this.regForm.phone,
+      //   type: SmsCodeType.Register
+      // })
+    },
+    // 点击注册按钮
+    onFormSubmit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          console.log('valid')
+        }
+      })
     },
     successCasePrevClick() {
       this.successCaseSwiper.slidePrev()
