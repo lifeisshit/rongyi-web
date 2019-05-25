@@ -2,5 +2,5 @@
  * 常量
  * */
 export const SmsCodeType = {
-  Register: 1
+  Register: '1'
 }

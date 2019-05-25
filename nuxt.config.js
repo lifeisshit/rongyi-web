@@ -57,7 +57,8 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-vuex-localstorage'
   ],
   /*
    ** Axios module configuration
@@ -80,7 +81,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/],
+    transpile: [/^element-ui/, 'nuxt-vuex-localstorage'],
     // 提取css
     extractCSS: true,
     // 拆分大体积的js包

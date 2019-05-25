@@ -8,33 +8,39 @@ export const state = () => ({
 })
 
 export const actions = {
-  async login({ commit }) {
-    const { data } = await this.$axios.$post(API.login)
-    console.log(data)
+  async login({ commit }, payload) {
+    const data = await this.$axios.$post(API.login, null, {
+      params: payload
+    })
+    commit('setData', {
+      key: 'user',
+      value: data
+    })
   },
-  async register({ commit }) {
-    const { data } = await this.$axios.$post(API.register)
-    console.log(data)
+  async register({ commit }, payload) {
+    const data = await this.$axios.$post(API.register, null, {
+      params: payload
+    })
   },
   async verifySmsCode({ commit }, payload) {
-    const { data } = await this.$axios.$post(API.verifySmsCode)
-    console.log('payload is: ', payload, 'data is: ', data)
-    // commit('setDate', payload)
+    console.log('payload is: ', payload)
+    const data = await this.$axios.$post(API.verifySmsCode, null, {
+      params: payload
+    })
+    console.log('data is: ', data)
   },
   async sendSmsCode({ commit }, payload) {
     console.log('payload is: ', payload)
     await this.$axios.get(API.sendSmsCode, {
       params: payload
     })
-    this.$message.success({
-      showClose: true,
-      message: '验证码已发送成功，请注意查收',
-      type: 'error'
-    })
   },
   async logout({ commit }) {
-    const { data } = await this.$axios.$get(API.logout)
-    console.log(data)
+    const data = await this.$axios.$get(API.logout)
+    commit('setData', {
+      key: 'user',
+      value: {}
+    })
   }
 }
 

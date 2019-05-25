@@ -94,8 +94,6 @@
           .reg-ver-code-get {
             display: inline-block;
             width: 90px;
-            height: 38px;
-            line-height: 38px;
             text-align: center;
             font-size: 12px;
             vertical-align: top;
@@ -106,6 +104,11 @@
             color: #fff;
             position: relative;
             top: 1px;
+            border: 0;
+            padding: 0;
+            &:disabled {
+              background: #ccc;
+            }
           }
           .login-btn {
             width: 100%;

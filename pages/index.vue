@@ -2,7 +2,7 @@
   <section class="index">
     <div class="banner">
       <div class="wrap banner-wrap">
-        <div class="login-tab">
+        <div v-if="!user.login" class="login-tab">
           <ul class="login-tab-menu">
             <li :class="{ active: isLoginTabActive }" @click="showLoginTab">
               手机号登陆
@@ -87,9 +87,17 @@
                   placeholder="请输入验证码"
                   class="reg-ver-code-input"
                 ></el-input>
-                <span class="reg-ver-code-get" @click="onSendSmsCodeClick"
-                  >获取验证码</span
+                <el-button
+                  class="reg-ver-code-get"
+                  :disabled="regCodeInfo.isSendDiabled"
+                  @click="onSendSmsCodeClick"
                 >
+                  {{
+                    regCodeInfo.isSendDiabled
+                      ? smsCodeBtnText + '(' + regCodeInfo.countdown + ')'
+                      : smsCodeBtnText
+                  }}
+                </el-button>
               </el-form-item>
               <el-form-item class="other-row" prop="isAgree">
                 <el-checkbox v-model="regForm.isAgree">
@@ -398,7 +406,7 @@
 
 <script>
 import '~/assets/css/index.less'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import { SmsCodeType } from '../common/constant'
 import {
   verifyPassword,
@@ -411,6 +419,7 @@ export default {
   data() {
     return {
       isLoginTabActive: true,
+      smsCodeBtnText: '获取验证码',
       loginForm: {
         phone: '',
         password: '',
@@ -589,8 +598,28 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState('sessionStorage', ['regCodeInfo']),
+    ...mapState('user', ['user'])
+  },
+  created() {
+    const isSendDiabled = this.regCodeInfo.isSendDiabled
+    // 如果验证码不可用，则继续倒计时
+    if (isSendDiabled) {
+      this.startCountDown({
+        isInit: true
+      })
+    }
+  },
   methods: {
-    ...mapActions('user', ['sendSmsCode']),
+    ...mapActions('user', [
+      'sendSmsCode',
+      'verifySmsCode',
+      'register',
+      'login',
+      'logout'
+    ]),
+    ...mapActions('sessionStorage', ['startCountDown']),
     showLoginTab() {
       this.$refs.loginForm.clearValidate()
       this.$refs.regForm.clearValidate()
@@ -605,19 +634,54 @@ export default {
     onSendSmsCodeClick() {
       this.$refs.regForm.validateField('phone', async error => {
         if (!error) {
+          this.startCountDown({
+            isInit: false
+          })
           await this.sendSmsCode({
             phone: this.regForm.phone,
             type: SmsCodeType.Register
+          })
+          this.$message.success({
+            showClose: true,
+            message: '验证码已发送成功，请注意查收',
+            type: 'success'
           })
         }
       })
     },
     // 点击注册按钮
     onFormSubmit(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          console.log('valid')
+      this.$refs[formName].validate(async valid => {
+        if (!valid) {
+          return
         }
+        let msg = ''
+        if (formName === 'regForm') {
+          // 注册
+          await this.verifySmsCode({
+            phone: this.regForm.phone,
+            type: SmsCodeType.Register,
+            smsCode: this.regForm.verificationCode
+          })
+          await this.register({
+            login: this.regForm.phone,
+            password: this.regForm.password
+          })
+          msg = '注册成功'
+        } else {
+          // 登录
+          await this.login({
+            login: this.loginForm.phone,
+            password: this.loginForm.password
+          })
+          msg = '登录成功'
+        }
+
+        this.$message.success({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        })
       })
     },
     successCasePrevClick() {

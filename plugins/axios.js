@@ -4,10 +4,11 @@
  * */
 import { Message } from 'element-ui'
 
-export default ({ $axios, redirect }) => {
+export default ({ $axios, redirect, store }) => {
   // 请求回调
   $axios.onRequest(config => {
     // console.log('Making request to ' + config.url)
+    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
   })
   // 返回结果回调
   $axios.onResponse(res => {
