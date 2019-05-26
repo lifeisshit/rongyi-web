@@ -5,7 +5,7 @@
         <div v-if="!user.login" class="login-tab">
           <ul class="login-tab-menu">
             <li :class="{ active: isLoginTabActive }" @click="showLoginTab">
-              手机号登陆
+              手机号登录
             </li>
             <li :class="{ active: !isLoginTabActive }" @click="showRegTab">
               免费注册
@@ -47,12 +47,12 @@
               <!--</div>-->
               <el-form-item class="submit-row">
                 <el-button class="login-btn" @click="onFormSubmit('loginForm')"
-                  >登陆</el-button
+                  >登录</el-button
                 >
               </el-form-item>
               <el-form-item class="other-row">
                 <el-checkbox v-model="loginForm.isAutoLogin">
-                  下次自动登陆
+                  下次自动登录
                 </el-checkbox>
                 <nuxt-link to="/" class="forget-pwd">忘记密码</nuxt-link>
               </el-form-item>
@@ -407,10 +407,9 @@
 <script>
 import '~/assets/css/index.less'
 import { mapActions, mapState } from 'vuex'
-import { SmsCodeType } from '../common/constant'
+import { SmsCodeType } from '~/common/constant'
 import {
   verifyPassword,
-  verifyEmail,
   verifyUsername,
   verifyChecked
 } from '~/common/validate'
@@ -607,7 +606,8 @@ export default {
     // 如果验证码不可用，则继续倒计时
     if (isSendDiabled) {
       this.startCountDown({
-        isInit: true
+        isInit: true,
+        smsCodeType: SmsCodeType.Register
       })
     }
   },
@@ -635,7 +635,8 @@ export default {
       this.$refs.regForm.validateField('phone', async error => {
         if (!error) {
           this.startCountDown({
-            isInit: false
+            isInit: false,
+            smsCodeType: SmsCodeType.Register
           })
           await this.sendSmsCode({
             phone: this.regForm.phone,

@@ -6,15 +6,17 @@
       </span>
       <div v-if="!user.login" class="top-right r-pull-right">
         <span class="please-login">
-          <nuxt-link to="/">请登录</nuxt-link>
+          <nuxt-link to="/login">请登录</nuxt-link>
         </span>
         <span class="please-register">
-          <nuxt-link to="/">注册有礼</nuxt-link>
+          <nuxt-link to="/register">注册有礼</nuxt-link>
         </span>
       </div>
       <div v-if="user.login" class="top-right r-pull-right">
         <span class="welcome">您好</span>
-        <nuxt-link to="/" class="user-name">{{ user.login }}</nuxt-link>
+        <nuxt-link to="/usercenter" class="user-name">{{
+          user.login
+        }}</nuxt-link>
         <span class="ver-line"></span>
         <span class="logout" @click="onLogOutClick">退出登录</span>
       </div>

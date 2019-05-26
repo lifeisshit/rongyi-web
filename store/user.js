@@ -2,9 +2,11 @@
  * 用户相关的状态管理
  * */
 import API from '~/common/api'
+import Cookie from 'js-cookie'
 
 export const state = () => ({
-  user: {}
+  user: {},
+  token: null
 })
 
 export const actions = {
@@ -12,10 +14,27 @@ export const actions = {
     const data = await this.$axios.$post(API.login, null, {
       params: payload
     })
+    // 设置cookie
+    Cookie.set('nuxtToken', data.nuxtToken, { expires: 1 })
+    // 设置对象树中的值
     commit('setData', {
       key: 'user',
-      value: data
+      value: data.user
     })
+    commit('setToken', data.nuxtToken)
+  },
+  async loginBySmsCode({ commit }, payload) {
+    const data = await this.$axios.$post(API.loginBySmsCode, null, {
+      params: payload
+    })
+    // 设置cookie
+    Cookie.set('nuxtToken', data.nuxtToken, { expires: 1 })
+    // 设置对象树中的值
+    commit('setData', {
+      key: 'user',
+      value: data.user
+    })
+    commit('setToken', data.nuxtToken)
   },
   async register({ commit }, payload) {
     const data = await this.$axios.$post(API.register, null, {
@@ -36,16 +55,23 @@ export const actions = {
     })
   },
   async logout({ commit }) {
-    const data = await this.$axios.$get(API.logout)
-    commit('setData', {
-      key: 'user',
-      value: {}
-    })
+    await this.$axios.$get(API.logout)
+    // 清除cookie
+    Cookie.remove('nuxtToken')
+    // 清除对象树中的值
+    commit('clearToken')
   }
 }
 
 export const mutations = {
   setData(state, payload) {
     state[payload.key] = payload.value
+  },
+  setToken(state, payload) {
+    state.nuxtToken = payload
+  },
+  clearToken(state) {
+    state.nuxtToken = null
+    state.user = {}
   }
 }
