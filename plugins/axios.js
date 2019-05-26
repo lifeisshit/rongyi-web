@@ -36,9 +36,9 @@ export default ({ $axios, redirect }) => {
       error.response && error.response.data && error.response.data.message
     console.log(`error code: ${code} message: ${msg}`)
     // redirect('/400')
-    if (code === 400) {
-      redirect('/400')
-    }
+    // if (code === 400) {
+    //   redirect('/400')
+    // }
     if (code === 401) {
       redirect('/login')
     }

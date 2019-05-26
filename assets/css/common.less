@@ -326,3 +326,51 @@ h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal}
     }
   }
 }
+
+.error-page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 382px;
+  width: 817px;
+  .error-img {
+    width: 367px;
+    height: 100%;
+    background: url("~static/img/error.png") no-repeat center;
+    background-size: cover;
+    float: left;
+  }
+  .error-info {
+    float: right;
+    width: 300px;
+    height: 100%;
+    text-align: center;
+    .error-title {
+      font-size: 24px;
+      color: #060608;
+      margin: 130px 0 26px;
+    }
+    .error-sub-title {
+      font-size: 14px;
+      color: #060608;
+      margin-bottom: 67px;
+    }
+    .index-link {
+      display: block;
+      width: 234px;
+      height: 46px;
+      line-height: 46px;
+      text-align: center;
+      background-image: linear-gradient(103deg,
+      #fba95e 0%,
+      #ff873f 100%);
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      margin: 0 auto;
+    }
+  }
+}

@@ -36,6 +36,20 @@ export const actions = {
     })
     commit('setToken', data.nuxtToken)
   },
+  async getUserInfoByInit({ commit }, payload) {
+    // 不调用公共拦截器中的方法
+    const res = await this.$axios.get(API.getUserInfo)
+    // console.log(res)
+    if (!res || !res.data || res.status !== 0) {
+      return
+    }
+    // 设置对象树中的值
+    commit('setData', {
+      key: 'user',
+      value: res.data
+    })
+    commit('setToken', payload.nuxtToken)
+  },
   async register({ commit }, payload) {
     const data = await this.$axios.$post(API.register, null, {
       params: payload
