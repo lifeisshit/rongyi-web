@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "name": "rongyi-web",
+      "script": "npm",
+      "args": "start",
+      "watch": [
+        ".nuxt"
+      ]
+    }
+  ]
+}

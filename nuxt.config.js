@@ -76,12 +76,14 @@ export default {
       pathRewrite: { '^/service': '' }
     }
   },
-
   /*
    ** Build configuration
    */
   build: {
+    publicPath: 'http://nickfu.com/_nuxt/',
     transpile: [/^element-ui/, 'nuxt-vuex-localstorage'],
+    // 分析编译结果, 看看哪里可以优化
+    analyze: false,
     // 提取css
     extractCSS: true,
     // 拆分大体积的js包
