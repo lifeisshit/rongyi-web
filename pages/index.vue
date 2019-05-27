@@ -669,6 +669,10 @@ export default {
             password: this.regForm.password
           })
           msg = '注册成功'
+          // 注册成功跳转到登录
+          this.$router.push({
+            path: '/login'
+          })
         } else {
           // 登录
           await this.login({

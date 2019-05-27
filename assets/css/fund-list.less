@@ -1,0 +1,263 @@
+.fund-list-page{
+  width: 100%;
+  background: #f5f5f5;
+  padding: 30px 0;
+  .filter-box{
+    border:1px solid #e6e6e6;
+    background: #fff;
+    padding:3px;
+    .filter-box-item{
+      position: relative;
+      border-bottom: 1px dashed #f3f3f3;
+      padding-left: 100px;
+      padding-right: 180px;
+      &:last-child{
+        border-bottom: none;
+      }
+      label{
+        position: absolute;
+        display: inline-block;
+        width: 100px;
+        padding-left: 20px;
+        top: 0;
+        left: 0;
+        line-height: 40px;
+        height: 40px;
+        color:#666;
+        font-size: 12px;
+      }
+      .items{
+        line-height: 40px;
+        li{
+          display: inline-block;
+          width: 120px;
+          height: 40px;
+          line-height: 40px;
+          font-size: 12px;
+          color:#000;
+          a{
+            display: inline-block;
+            line-height: 20px;
+            padding:0 8px;
+            vertical-align: middle;
+            cursor:pointer;
+            &.active{
+              border:1px solid #ff873f;
+              color:#ff873f;
+            }
+          }
+        }
+      }
+      .options{
+        position: absolute;
+        width: 150px;
+        height: 40px;
+        text-align: right;
+        top:0;
+        right:20px;
+        span{
+          font-size: 12px;
+          display: inline-block;
+          border:1px solid #eee;
+          padding:5px 10px;
+          margin:0 5px;
+          cursor: pointer;
+          margin-top: 6px;
+          i{
+            margin:0 2px;
+          }
+        }
+      }
+    }
+  }
+  .business-list{
+    margin-top: 20px;
+    .items-list{
+      float: left;
+      width: 840px;
+      .filter-condition{
+        padding:0 25px;
+        background: #f9f9f9;
+        .order-cur,.order-type{
+          float: left;
+          width: 130px;
+          line-height: 50px;
+          font-size: 14px;
+          span{
+            color:#fe8b43;
+          }
+        }
+        .order-type{
+          cursor: pointer;
+          i{
+            margin-left: 5px;
+            color:#666;
+          }
+        }
+        .soform{
+          position: relative;
+          float: left;
+          width: 180px;
+          .soKey{
+            margin-top: 10px;
+            .el-input__inner{
+              border:1px solid #999;
+              border-radius:0 ;
+              height: 30px;
+              line-height: 30px;
+            }
+          }
+          .soBtn{
+            position: absolute;
+            top:17px;
+            right:10px;
+            color:#666;
+            cursor: pointer;
+          }
+        }
+        .so-count{
+          float: right;
+          width: 220px;
+          line-height: 50px;
+          font-size: 14px;
+          text-align: right;
+          span{
+            margin:0 5px;
+            font-weight: bold;
+          }
+        }
+      }
+      .items-out-box{
+        background: #fff;
+        padding:0 30px;
+        .items-infos{
+          padding: 25px 0;
+          border-bottom: 1px solid #e6e6e6;
+          .items-infos-row{
+            float: left;
+            width: 480px;
+            .i-title{
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              a{
+                line-height: 35px;
+                font-size: 16px;
+                font-weight: bold;
+                color:#000;
+                cursor: pointer;
+                &:hover{
+                  color:#fe8b43;
+                  text-decoration: underline;
+                }
+              }
+            }
+            .i-time{
+              line-height: 20px;
+              font-size: 14px;
+              color:#666;
+            }
+            .attribute{
+              margin-top: 10px;
+              li{
+                float: left;
+                width: 50%;
+                line-height: 20px;
+                color:#666;
+                font-size: 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+
+          }
+          .item-price{
+            float: right;
+            width: 160px;
+            background: #f9f9f9;
+            height: 105px;
+            padding:0 35px;
+            p{
+              line-height: 30px;
+              font-size: 21px;
+              font-weight: bold;
+              color:#ff873f;
+              margin-top: 10px;
+            }
+            a{
+              margin-top: 5px;
+              display: inline-block;
+              width: 100%;
+              line-height:40px;
+              text-align: center;
+              color:#fff;
+              font-size: 16px;
+              background: #ff8840;
+            }
+          }
+        }
+        .item-pager{
+          padding:30px 0;
+          li{
+            margin: 0 7px;
+            &.number{
+              padding:0 5px;
+              &.active{
+                background: #ff8840;
+              }
+            }
+          }
+        button{
+          padding:0 10px;
+        }
+        }
+
+      }
+    }
+    .hot-items{
+      float: right;
+      width: 330px;
+      .tips{
+        line-height: 50px;
+        color:#000;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .hot-items-row{
+        background: #f8f8fa;
+        border:1px solid #e6e6e6;
+        -webkit-box-shadow:0 0 2px #ddd;
+        -moz-box-shadow: 0 0 2px #ddd;
+        box-shadow:0 0 2px #ddd;
+        padding:0 30px;
+        a.rows{
+          display: block;
+          vertical-align: middle;
+          padding:25px 0;
+          border-bottom: 1px solid #e6e6e6;
+          cursor: pointer;
+          .item-img{
+            img{
+              vertical-align: middle;
+              width: 100%;
+            }
+          }
+          .item-title{
+            padding:0 10px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+//<a class="rows">
+//<div class="item-img"><img src="../assets/images/item_img.png"></div>
+//<div class="item-title">江苏省南京某探索类儿童乐园项目股权融资20万-100万元</div>
+//</a>

@@ -133,6 +133,13 @@ h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal}
           -o-transition: all .3s ease-in-out;
           transition: all .3s ease-in-out
         }
+        &.nuxt-link-active {
+          color: #ff873f;
+          &::before {
+            left: 0;
+            width: 100%
+          }
+        }
       }
       &:hover,
       &.active {
@@ -372,5 +379,106 @@ h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal}
       font-size: 16px;
       margin: 0 auto;
     }
+  }
+}
+
+.clearfix{
+  *zoom:1;
+  *clear:both;
+}
+.clearfix:after{
+  display:block;
+  clear:both;
+  content:".";
+  visibility:hidden;
+  height:0;
+  overflow: hidden;
+}
+.clearboth{
+  clear:both;
+}
+.mtop20{
+  margin-top: 20px;
+}
+#app,.full-page{
+  width: 100%;
+  height: 100%;
+}
+
+//个人中心通用样式
+.ucenter-warp{
+  width: 1200px;
+  margin:30px auto;
+  .uc-left-menu{
+    float: left;
+    width: 185px;
+  }
+  .uc-right-main{
+    float: right;
+    width: 990px;
+  }
+}
+.main-page-out{
+  padding:25px 30px;
+  background: #fff;
+  border:1px solid #efeeee;
+  .page-cate-name{
+    margin-bottom: 5px;
+    line-height: 50px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .public-msg-tips{
+    border:1px solid #ffe1d0;
+    background: url("~static/img/public-msg-tips.png") 20px 15px #fff2eb no-repeat;
+    color:#ff8b42;
+    font-size: 12px;
+    line-height: 20px;
+    padding:10px 30px 10px 70px;
+  }
+}
+
+//通用按钮类
+.el-button{
+  &.item-btn{
+    border:none;
+    border-radius: 0;
+    height: 45px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin:0 15px;
+    color:#fff;
+  }
+  &.submit-btn{
+    background: linear-gradient(to right,#fba95e,#ff873f);
+    margin-left: 0;
+  }
+  &.cancel-btn{
+    background: #828282;
+  }
+  &.el-button--upload{
+    width: 100px;
+    background: #828282;
+    color:#fff;
+    border-radius: 0;
+    &:hover{
+      border-color:#828282;
+    }
+  }
+}
+.upload-demo{
+  .el-upload--text{
+    width: 100px;
+    float: left;
+  }
+  .el-upload__tip{
+    width: 300px;
+    float: left;
+    margin-top: 0;
+    padding-left: 20px;
+  }
+  .el-upload-list{
+    float: left;
+    width: 100%;
   }
 }

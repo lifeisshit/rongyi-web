@@ -7,23 +7,23 @@
     </h1>
     <div class="r-pull-left">
       <ul class="main-menu">
-        <li class="active">
-          <nuxt-link to="/">首页</nuxt-link>
+        <li>
+          <nuxt-link to="/" exact>首页</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/">资金方</nuxt-link>
+          <nuxt-link to="/fund">资金方</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/">项目方</nuxt-link>
+          <nuxt-link to="/project">项目方</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/">成功案例</nuxt-link>
+          <nuxt-link to="/successcase">成功案例</nuxt-link>
         </li>
         <li>
           <nuxt-link to="/member">会员服务</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/">联系我们</nuxt-link>
+          <nuxt-link to="/contact">联系我们</nuxt-link>
         </li>
       </ul>
     </div>

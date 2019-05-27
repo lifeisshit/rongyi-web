@@ -3,7 +3,7 @@
  * */
 import { SmsCodeType } from '~/common/constant'
 
-const MAX_COUNT_DOWN = 10
+const MAX_COUNT_DOWN = 60
 
 export const state = () => ({
   regCodeInfo: {
