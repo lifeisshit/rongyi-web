@@ -157,7 +157,7 @@
       </div>
       <div class="index-sec-bd">
         <nuxt-link to="/" class="money-item">
-          <img src="~/static/img/money-img1.png" alt="找资金" />
+          <img src="~/assets/img/money-img1.png" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">天使投资</span>
             <span class="money-title2">早期项目的福利从这里开始</span>
@@ -165,7 +165,7 @@
           </div>
         </nuxt-link>
         <nuxt-link to="/" class="money-item money-item-center">
-          <img src="~/static/img/money-img2.jpg" alt="找资金" />
+          <img src="~/assets/img/money-img2.jpg" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">股权投资</span>
             <span class="money-title2">引入实力投资，助推企业发展</span>
@@ -173,7 +173,7 @@
           </div>
         </nuxt-link>
         <nuxt-link to="/" class="money-item">
-          <img src="~/static/img/money-img3.png" alt="找资金" />
+          <img src="~/assets/img/money-img3.png" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">债权投资</span>
             <span class="money-title2">借款方式多样，融资就这么简单</span>
@@ -288,7 +288,7 @@
       </div>
       <div class="index-sec-bd">
         <div class="fm-item find-money1">
-          <img src="~/static/img/find-money1.png" alt="找项目" />
+          <img src="~/assets/img/find-money1.png" alt="找项目" />
           <div class="fm-info">
             <div class="fm-left">
               <p class="fm-title">IT互联网</p>
@@ -301,7 +301,7 @@
         </div>
         <div class="find-money2">
           <div class="fm-item find-money2-1">
-            <img src="~/static/img/find-money2.jpg" alt="找项目" />
+            <img src="~/assets/img/find-money2.jpg" alt="找项目" />
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">农林牧渔</p>
@@ -313,7 +313,7 @@
             </div>
           </div>
           <div class="fm-item find-money2-2">
-            <img src="~/static/img/find-money3.png" alt="找项目" />
+            <img src="~/assets/img/find-money3.png" alt="找项目" />
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">房地产</p>
@@ -327,7 +327,7 @@
         </div>
         <div class="find-money3">
           <div class="fm-item find-money3-1">
-            <img src="~/static/img/find-money4.jpg" alt="找项目" />
+            <img src="~/assets/img/find-money4.jpg" alt="找项目" />
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">餐饮休闲娱乐</p>
@@ -340,7 +340,7 @@
           </div>
           <div class="find-money3-2">
             <div class="fm-item find-money3-2-1">
-              <img src="~/static/img/find-money5.png" alt="找项目" />
+              <img src="~/assets/img/find-money5.png" alt="找项目" />
               <div class="fm-info">
                 <div class="fm-left">
                   <p class="fm-title">节能环保</p>
@@ -352,7 +352,7 @@
               </div>
             </div>
             <div class="fm-item find-money3-2-2">
-              <img src="~/static/img/find-money6.png" alt="找项目" />
+              <img src="~/assets/img/find-money6.png" alt="找项目" />
               <div class="fm-info">
                 <div class="fm-left">
                   <p class="fm-title">其他行业</p>

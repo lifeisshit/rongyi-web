@@ -9,6 +9,7 @@ export default ({ $axios, redirect }) => {
   $axios.onRequest(config => {
     // 获取cookie放在头部传到后端
     // config.headers.Authorization = app.$cookies.get('token')
+    config.headers['Content-Type'] = 'application/json;charset=UTF-8'
   })
   // 返回结果回调
   $axios.onResponse(res => {
@@ -35,10 +36,9 @@ export default ({ $axios, redirect }) => {
     const msg =
       error.response && error.response.data && error.response.data.message
     console.log(`error code: ${code} message: ${msg}`)
-    // redirect('/400')
-    // if (code === 400) {
-    //   redirect('/400')
-    // }
+    if (code === 400) {
+      // redirect('/400')
+    }
     if (code === 401) {
       redirect('/login')
     }

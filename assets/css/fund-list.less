@@ -75,6 +75,9 @@
     .items-list{
       float: left;
       width: 840px;
+      -webkit-box-shadow:0 0 8px 0px #ddd;
+      -moz-box-shadow: 0 0 8px 0px #ddd;
+      box-shadow:0 0 8px 0px #ddd;
       .filter-condition{
         padding:0 25px;
         background: #f9f9f9;
@@ -160,14 +163,19 @@
             .attribute{
               margin-top: 10px;
               li{
-                float: left;
-                width: 50%;
+                width: 49%;
                 line-height: 20px;
                 color:#666;
                 font-size: 12px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                &:nth-child(odd) {
+                  float: left;
+                }
+                &:nth-child(even) {
+                  float: right;
+                }
               }
             }
 
@@ -227,9 +235,9 @@
       .hot-items-row{
         background: #f8f8fa;
         border:1px solid #e6e6e6;
-        -webkit-box-shadow:0 0 2px #ddd;
-        -moz-box-shadow: 0 0 2px #ddd;
-        box-shadow:0 0 2px #ddd;
+        -webkit-box-shadow:0 0 8px 0px #ddd;
+        -moz-box-shadow: 0 0 8px 0px #ddd;
+        box-shadow:0 0 8px 0px #ddd;
         padding:0 30px;
         a.rows{
           display: block;
@@ -237,6 +245,9 @@
           padding:25px 0;
           border-bottom: 1px solid #e6e6e6;
           cursor: pointer;
+          &:last-child {
+            border-bottom: none;
+          }
           .item-img{
             img{
               vertical-align: middle;

@@ -223,7 +223,7 @@
         </div>
       </div>
       <div class="business-list clearfix">
-        <div class="items-list">
+        <div v-if="totalRow > 0" class="items-list">
           <div class="filter-condition clearfix">
             <div class="order-cur">
               排序：<span class="order-state-text">{{ orderby_text }}</span>
@@ -252,190 +252,38 @@
                 <span class="el-icon-search soBtn" @click="onSubmit"></span>
               </el-form>
             </div>
-            <div class="so-count">查询结果共<span>19502</span>个项目</div>
+            <div class="so-count">
+              查询结果共<span>{{ totalRow }}</span
+              >个项目
+            </div>
           </div>
           <div class="items-out-box">
             <div class="item-data-list">
-              <div class="items-infos clearfix">
+              <div
+                v-for="fund in fundList"
+                :key="fund.id"
+                class="items-infos clearfix"
+              >
                 <div class="items-infos-row">
                   <div class="i-title">
-                    <a href=""
-                      >上海某投资公司寻找优质项目300万-2000万元投资公司寻找优质项资公司寻找优目</a
-                    >
+                    <nuxt-link :to="`/fund/${fund.id}`">{{
+                      fund.title || ''
+                    }}</nuxt-link>
                   </div>
-                  <div class="i-time">2019-05-08发布</div>
+                  <div class="i-time">{{ fund.gmtCreate || '' }}发布</div>
                   <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
+                    <li>投资地区：{{ fund.inventRegion || '' }}</li>
+                    <li>投资行业：{{ fund.investIndustry || '' }}</li>
+                    <li>投资资金：{{ fund.investAmount || '' }}</li>
+                    <li>风控要求：{{ fund.riskRequire || '' }}</li>
+                    <li>最低回报要求：{{ fund.minReturnRequire || '' }}</li>
+                    <li>投资方式：{{ fund.investWay || '' }}</li>
+                    <li>资金类型：{{ fund.type || '' }}</li>
                   </ul>
                 </div>
                 <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
+                  <p>{{ fund.investAmount || 0 }}</p>
+                  <nuxt-link to="/">约谈项目</nuxt-link>
                 </div>
               </div>
             </div>
@@ -445,59 +293,34 @@
                 layout="prev, pager, next"
                 prev-text="上一页"
                 next-text="下一页"
-                :total="1000"
+                :total="totalRow"
+                :page-size="pageSize"
+                @current-change="handleCurrentChange"
               >
               </el-pagination>
             </div>
           </div>
         </div>
+        <div v-if="totalRow <= 0" class="items-list">暂无数据</div>
         <div class="hot-items">
           <div class="tips">优质信息推荐</div>
           <div class="hot-items-row">
-            <a class="rows">
+            <nuxt-link
+              v-for="fund in topfundList"
+              :key="fund.id"
+              to="/"
+              class="rows"
+            >
               <div class="item-img">
                 <img
                   alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
+                  :src="fund.img || require('~/assets/img/no-img.png')"
                 />
               </div>
               <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
+                {{ fund.title }}
               </div>
-            </a>
-            <a class="rows">
-              <div class="item-img">
-                <img
-                  alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
-                />
-              </div>
-              <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
-              </div>
-            </a>
-            <a class="rows">
-              <div class="item-img">
-                <img
-                  alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
-                />
-              </div>
-              <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
-              </div>
-            </a>
-            <a class="rows">
-              <div class="item-img">
-                <img
-                  alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
-                />
-              </div>
-              <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
-              </div>
-            </a>
+            </nuxt-link>
           </div>
         </div>
       </div>
@@ -506,9 +329,10 @@
 </template>
 <script>
 import '~/assets/css/fund-list.less'
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'Fund',
-  components: {},
   data() {
     return {
       orderby: '',
@@ -524,7 +348,22 @@ export default {
       tzMoney: 0
     }
   },
+  computed: {
+    ...mapState('fund', ['pageSize', 'totalRow', 'topfundList', 'fundList'])
+  },
+  async fetch({ store }) {
+    await Promise.all([
+      store.dispatch('fund/getPageList', { recommend: 0 }),
+      store.dispatch('fund/getPageList', { recommend: 1 })
+    ])
+  },
   methods: {
+    ...mapActions('fund', ['getPageList']),
+    handleCurrentChange(page) {
+      this.getPageList({
+        pageNum: page
+      })
+    },
     onSubmit() {
       const keyword = this.soform.keyword
       if (!keyword) {

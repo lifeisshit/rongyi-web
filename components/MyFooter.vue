@@ -6,7 +6,7 @@
           <nuxt-link to="/" title="融易网">
             <img
               class="bottom-logo"
-              src="~/static/img/bottom-logo.png"
+              src="~/assets/img/bottom-logo.png"
               alt="跳转到融易网首页"
             />
           </nuxt-link>
