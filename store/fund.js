@@ -15,20 +15,13 @@ export const state = () => ({
 export const actions = {
   // 获取列表信息
   async getPageList({ commit, state }, payload) {
-    const params = {
-      pageSize: state.pageSize,
-      pageNum: state.pageNum
-    }
-    if (payload.recommend === 1) {
-      params.recommend = 1
-    }
-    if (payload.pageNum) {
-      params.pageNum = payload.pageNum
+    if (!payload.pageNum) {
+      payload.pageNum = state.pageNum
     }
 
     const { dataList, totalRow } = await this.$axios.$post(
       API.fundPageList,
-      params
+      payload
     )
     // 设置对象树中的值
     if (payload.recommend === 1) {

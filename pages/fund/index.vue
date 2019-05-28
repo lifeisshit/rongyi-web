@@ -225,22 +225,14 @@
       <div class="business-list clearfix">
         <div v-if="totalRow > 0" class="items-list">
           <div class="filter-condition clearfix">
-            <div class="order-cur">
-              排序：<span class="order-state-text">{{ orderby_text }}</span>
-            </div>
-            <div class="order-type" @click="changeorderby('time')">
-              更新时间<i
-                :class="[
-                  orderby == 'time' ? 'el-icon-arrow-up' : 'el-icon-arrow-down'
-                ]"
-              ></i>
-            </div>
-            <div class="order-type" @click="changeorderby('money')">
-              金额排序<i
-                :class="[
-                  orderby == 'money' ? 'el-icon-arrow-up' : 'el-icon-arrow-down'
-                ]"
-              ></i>
+            <div
+              v-for="item in sortList"
+              :key="item.key"
+              class="order-type"
+              :class="{ active: item.key === sort }"
+              @click="onSortChange(item.key)"
+            >
+              {{ item.value }}
             </div>
             <div class="soform">
               <el-form ref="form" :model="soform" label-width="80px">
@@ -301,10 +293,12 @@
             </div>
           </div>
         </div>
-        <div v-if="totalRow <= 0" class="items-list">暂无数据</div>
+        <div v-if="totalRow <= 0" class="items-list">
+          <p class="no-data">暂无数据</p>
+        </div>
         <div class="hot-items">
           <div class="tips">优质信息推荐</div>
-          <div class="hot-items-row">
+          <div v-if="topfundList.length > 0" class="hot-items-row">
             <nuxt-link
               v-for="fund in topfundList"
               :key="fund.id"
@@ -322,6 +316,9 @@
               </div>
             </nuxt-link>
           </div>
+          <div v-if="topfundList.length <= 0" class="hot-items-row">
+            <p class="no-data">暂无数据</p>
+          </div>
         </div>
       </div>
     </div>
@@ -335,8 +332,17 @@ export default {
   name: 'Fund',
   data() {
     return {
-      orderby: '',
-      orderby_text: '默认',
+      sort: 'default',
+      sortList: [
+        {
+          key: 'default',
+          value: '综合排序'
+        },
+        {
+          key: 'time',
+          value: '更新时间'
+        }
+      ],
       soform: {
         keyword: ''
       },
@@ -376,19 +382,8 @@ export default {
       }
       console.log('submit!')
     },
-    changeorderby: function(orderby) {
-      this.orderby = orderby
-      switch (orderby) {
-        case 'time':
-          this.orderby_text = '更新时间'
-          break
-        case 'money':
-          this.orderby_text = '投资金额'
-          break
-        default:
-          this.orderby_text = '默认'
-          break
-      }
+    onSortChange: function(sort) {
+      this.sort = sort
     },
     change_tzType: function(value) {
       this.tzType = value
