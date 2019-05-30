@@ -8,7 +8,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: '融易网',
+    title: '专业的融资信息服务平台－融易网',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -49,7 +49,8 @@ export default {
   plugins: [
     { src: '~/plugins/element-ui' },
     { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
-    { src: '~/plugins/axios' }
+    { src: '~/plugins/axios' },
+    { src: '~/plugins/filter' }
   ],
 
   /*

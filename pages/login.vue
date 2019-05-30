@@ -112,7 +112,7 @@
       </div>
     </section>
     <section class="login-bottom">
-      <div class="wrap">版权所有：融易网 www.rongyi.com 鄂ICP123554554号</div>
+      <div class="wrap">版权所有：融易网 www.rongyi8.com 鄂ICP123554554号</div>
     </section>
   </div>
 </template>

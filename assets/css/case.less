@@ -1,0 +1,137 @@
+.case-page{
+  background: #f5f5f5;
+  padding: 30px 0;
+  .maps{
+    padding:20px 0;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+  }
+  .el-breadcrumb__inner a , .maps span.el-breadcrumb__inner{
+    color: #666;
+    font-weight: normal;
+    font-size: 12px;
+  }
+  .maps .icon{
+    width: 17px;
+    height: 15px;
+    display: inline-block;
+    float: left;
+    //background: url("../images/home_icon.png") center center no-repeat;
+    margin-right: 10px;
+  }
+  .case-item-list{
+    .case-item{
+      height: 175px;
+      margin-bottom: 25px;
+      .case-img{
+        float: left;
+        width: 295px;
+        position: relative;
+        img{
+          width: 295px;
+          height: 175px;
+          vertical-align: middle;
+        }
+        span{
+          position: absolute;
+          display: inline-block;
+          top:0;
+          left: 0;
+          width: 60px;
+          height: 25px;
+          background: #303842;
+          color:#fff;
+          font-size: 12px;
+          padding: 0 5px;
+          text-align: center;
+          line-height: 25px;
+        }
+      }
+      .case-infos{
+        float: right;
+        position: relative;
+        width: 620px;
+        padding-right: 190px;
+        border-top: 1px solid #f5f5f5;
+        .case-title{
+          line-height: 40px;
+          a{
+            font-size: 16px;
+            color:#000;
+            &:hover{
+              color:#fe8b43;
+              text-decoration: underline;
+            }
+          }
+        }
+        .case-desc{
+          font-size: 14px;
+          color:#666;
+          line-height: 20px;
+          height: 40px;
+          overflow: hidden;
+        }
+        .case-pram{
+          ul {
+            margin-top: 10px;
+            li {
+              float: left;
+              width: 50%;
+              line-height: 24px;
+              font-size: 12px;
+              i{
+                display: inline-block;
+                width: 4px;
+                height: 4px;
+                border-radius: 100%;
+                background: #666;
+                vertical-align: middle;
+                margin-right: 5px;
+              }
+              label {
+                color: #666;
+              }
+              span {
+                color: #000;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+        a.item-apply{
+          position: absolute;
+          top:67.5px;
+          right:0;
+          display: block;
+          width: 160px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          color:#fff;
+          font-size: 16px;
+          background: linear-gradient(to right,#fba95e,#ff873f);
+        }
+      }
+    }
+  }
+  .case-item-pager{
+    margin-top: 25px;
+    text-align: center;
+    li{
+      margin: 0 7px!important;
+      &.number{
+        padding:0 5px!important;
+        &.active{
+          background-color: #ff8840!important;
+        }
+      }
+    }
+    button{
+      padding:0 10px!important;
+    }
+  }
+}
+.case-detail-page{
+
+}

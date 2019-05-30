@@ -5,9 +5,9 @@
         <h1>{{ fundInfo.title }}</h1>
         <div class="infos">
           <span class="el-icon-time"
-            ><span>2019/04/12&nbsp;&nbsp;09:30</span></span
+            ><span>{{ fundInfo.gmtCreate }}</span></span
           >
-          <span class="el-icon-view"><span>5643</span></span>
+          <span class="el-icon-view"><span>421</span></span>
           <span class="el-icon-edit-outline"><span>评论区</span></span>
           <span class="el-icon-share"><span>分享</span></span>
         </div>
@@ -54,7 +54,7 @@
               </el-tab-pane>
               <el-tab-pane label="其他备注" name="second">
                 <div class="dec">
-                  其他备注
+                  无
                 </div>
               </el-tab-pane>
             </el-tabs>

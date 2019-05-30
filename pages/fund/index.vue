@@ -281,9 +281,9 @@
         </div>
         <div class="hot-items">
           <div class="tips">优质信息推荐</div>
-          <div v-if="topfundList.length > 0" class="hot-items-row">
+          <div v-if="topFundList.length > 0" class="hot-items-row">
             <nuxt-link
-              v-for="fund in topfundList"
+              v-for="fund in topFundList"
               :key="fund.id"
               to="/"
               class="rows"
@@ -299,7 +299,7 @@
               </div>
             </nuxt-link>
           </div>
-          <div v-if="topfundList.length <= 0" class="hot-items-row">
+          <div v-if="topFundList.length <= 0" class="hot-items-row">
             <p class="no-data">暂无数据</p>
           </div>
         </div>
@@ -359,7 +359,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('fund', ['pageSize', 'totalRow', 'topfundList', 'fundList'])
+    ...mapState('fund', ['pageSize', 'totalRow', 'topFundList', 'fundList'])
   },
   async fetch({ store }) {
     await Promise.all([

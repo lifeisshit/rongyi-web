@@ -4,7 +4,7 @@
       <div class="filter-state">
         <label v-if="solabel.has" class="all">筛选条件：</label>
         <label v-if="solabel.tzType" class="cur" @click="clearFilter('tzType')"
-          >投资方式：<span class="ellipsis">{{ solabel.tzType }}</span
+          >融资方式：<span class="ellipsis">{{ solabel.tzType }}</span
           ><i class="el-icon-close"></i
         ></label>
         <label v-if="solabel.zjType" class="cur" @click="clearFilter('zjType')"
@@ -19,18 +19,18 @@
           v-if="solabel.tzHangye"
           class="cur"
           @click="clearFilter('tzHangye')"
-          >投资行业：<span class="ellipsis">{{ solabel.tzHangye }}</span
+          >融资行业：<span class="ellipsis">{{ solabel.tzHangye }}</span
           ><i class="el-icon-close"></i
         ></label>
         <label v-if="solabel.tzCity" class="cur" @click="clearFilter('tzCity')"
-          >投资地区：<span class="ellipsis">{{ solabel.tzCity }}</span
+          >融资地区：<span class="ellipsis">{{ solabel.tzCity }}</span
           ><i class="el-icon-close"></i
         ></label>
         <label
           v-if="solabel.tzMoney"
           class="cur"
           @click="clearFilter('tzMoney')"
-          >投资金额：<span class="ellipsis">{{ solabel.tzMoney }}</span
+          >融资金额：<span class="ellipsis">{{ solabel.tzMoney }}</span
           ><i class="el-icon-close"></i
         ></label>
         <label v-if="solabel.key" class="cur" @click="clearFilter('keyword')"
@@ -40,7 +40,7 @@
       </div>
       <div class="filter-box">
         <div class="filter-box-item">
-          <span class="label">投资方式：</span>
+          <span class="label">融资方式：</span>
           <div class="items">
             <el-radio-group v-model="tzType" class="form-check-data">
               <el-radio
@@ -118,7 +118,7 @@
           </div>
         </div>
         <div class="filter-box-item">
-          <span class="label">投资行业：</span>
+          <span class="label">融资行业：</span>
           <div
             v-if="tzHangyeMore"
             :class="['items', isMoretzHangye ? 'showall' : '']"
@@ -159,7 +159,7 @@
           </div>
         </div>
         <!--<div class="filter-box-item">-->
-        <!--<span class="label">投资地区：</span>-->
+        <!--<span class="label">融资地区：</span>-->
         <!--<div :class="['items', isMoretzCity ? 'showall' : '']">-->
         <!--<el-radio-group v-model="tzCity" class="form-check-data">-->
         <!--<el-radio-->
@@ -182,7 +182,7 @@
         <!--</div>-->
         <!--</div>-->
         <div class="filter-box-item">
-          <span class="label">投资金额：</span>
+          <span class="label">融资金额：</span>
           <div :class="['items', isMoreAmount ? 'showall' : '']">
             <el-radio-group v-model="tzMoney" class="form-check-data">
               <el-radio
@@ -234,29 +234,29 @@
           <div class="items-out-box">
             <div class="item-data-list">
               <div
-                v-for="fund in fundList"
-                :key="fund.id"
+                v-for="project in projectList"
+                :key="project.id"
                 class="items-infos clearfix"
               >
                 <div class="items-infos-row">
                   <div class="i-title">
-                    <nuxt-link :to="`/fund/${fund.id}`">{{
-                      fund.title || ''
+                    <nuxt-link :to="`/project/${project.id}`">{{
+                      project.title || ''
                     }}</nuxt-link>
                   </div>
-                  <div class="i-time">{{ fund.gmtCreate || '' }}发布</div>
+                  <div class="i-time">{{ project.gmtCreate || '' }}发布</div>
                   <ul class="attribute">
-                    <li>投资地区：{{ fund.inventRegion || '' }}</li>
-                    <li>投资行业：{{ fund.investIndustry || '' }}</li>
-                    <li>投资资金：{{ fund.investAmount || '' }}</li>
-                    <li>风控要求：{{ fund.riskRequire || '' }}</li>
-                    <li>最低回报要求：{{ fund.minReturnRequire || '' }}</li>
-                    <li>投资方式：{{ fund.investWay || '' }}</li>
-                    <li>资金类型：{{ fund.type || '' }}</li>
+                    <li>融资地区：{{ project.inventRegion || '' }}</li>
+                    <li>融资行业：{{ project.investIndustry || '' }}</li>
+                    <li>融资资金：{{ project.investAmount || '' }}</li>
+                    <li>风控要求：{{ project.riskRequire || '' }}</li>
+                    <li>最低回报要求：{{ project.minReturnRequire || '' }}</li>
+                    <li>融资方式：{{ project.investWay || '' }}</li>
+                    <li>资金类型：{{ project.type || '' }}</li>
                   </ul>
                 </div>
                 <div class="item-price">
-                  <p>{{ fund.investAmount || 0 }}</p>
+                  <p>{{ project.investAmount || 0 }}</p>
                   <nuxt-link to="/">约谈项目</nuxt-link>
                 </div>
               </div>
@@ -281,25 +281,25 @@
         </div>
         <div class="hot-items">
           <div class="tips">优质信息推荐</div>
-          <div v-if="topfundList.length > 0" class="hot-items-row">
+          <div v-if="topProjectList.length > 0" class="hot-items-row">
             <nuxt-link
-              v-for="fund in topfundList"
-              :key="fund.id"
+              v-for="project in topProjectList"
+              :key="project.id"
               to="/"
               class="rows"
             >
               <div class="item-img">
                 <img
-                  alt="资金方"
-                  :src="fund.img || require('~/assets/img/no-img.png')"
+                  alt="项目方"
+                  :src="project.img || require('~/assets/img/no-img.png')"
                 />
               </div>
               <div class="item-title">
-                {{ fund.title }}
+                {{ project.title }}
               </div>
             </nuxt-link>
           </div>
-          <div v-if="topfundList.length <= 0" class="hot-items-row">
+          <div v-if="topProjectList.length <= 0" class="hot-items-row">
             <p class="no-data">暂无数据</p>
           </div>
         </div>
@@ -310,14 +310,19 @@
 <script>
 import '~/assets/css/fund-list.less'
 import { mapState, mapActions } from 'vuex'
-import { InvestMethods, Amounts, Industries, Regions } from '~/common/constant'
+import {
+  FinancingMethods,
+  Amounts,
+  Industries,
+  Regions
+} from '~/common/constant'
 
 export default {
-  name: 'Fund',
+  name: 'Project',
   data() {
     return {
       currentPage: 1,
-      tzTypeList: InvestMethods,
+      tzTypeList: FinancingMethods,
       cityList: Regions,
       tzMoneyList: Amounts,
       tzHangyeList: Industries,
@@ -359,16 +364,21 @@ export default {
     }
   },
   computed: {
-    ...mapState('fund', ['pageSize', 'totalRow', 'topfundList', 'fundList'])
+    ...mapState('project', [
+      'pageSize',
+      'totalRow',
+      'topProjectList',
+      'projectList'
+    ])
   },
   async fetch({ store }) {
     await Promise.all([
-      store.dispatch('fund/getPageList', { recommend: 0 }),
-      store.dispatch('fund/getPageList', { recommend: 1, pageSize: 6 })
+      store.dispatch('project/getPageList', { pageNum: 1 }),
+      store.dispatch('project/getPageList', { recommend: 1, pageSize: 6 })
     ])
   },
   methods: {
-    ...mapActions('fund', ['getPageList']),
+    ...mapActions('project', ['getPageList']),
     handleCurrentChange(page) {
       this.sumbitSearch(page)
     },

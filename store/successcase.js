@@ -7,9 +7,9 @@ export const state = () => ({
   pageNum: 1,
   pageSize: 10,
   totalRow: 0,
-  topFundList: [],
-  fundList: [],
-  fundInfo: {}
+  topSuccessCaseList: [],
+  successCaseList: [],
+  successCaseInfo: {}
 })
 
 export const actions = {
@@ -21,22 +21,24 @@ export const actions = {
     if (!payload.pageSize) {
       payload.pageSize = state.pageSize
     }
-    const { dataList, totalRow } = await this.$axios.$post(
-      API.fundPageList,
-      payload
+    const { dataList, totalRow } = await this.$axios.$get(
+      API.successCasePageList,
+      {
+        params: payload
+      }
     )
-    // console.log(dataList)
+    console.log(dataList)
     // 设置对象树中的值
     if (payload.recommend === 1) {
-      // 推荐资金方
+      // 推荐成功案例
       commit('setData', {
-        key: 'topFundList',
+        key: 'topSuccessCaseList',
         value: dataList
       })
     } else {
-      // 普通资金方
+      // 普通成功案例
       commit('setData', {
-        key: 'fundList',
+        key: 'successCaseList',
         value: dataList
       })
       commit('setData', {
@@ -53,13 +55,13 @@ export const actions = {
   },
   // 根据id获取详情
   async getById({ state, commit }, payload) {
-    const fundInfo = await this.$axios.$get(API.fundGetById, {
+    const successCaseInfo = await this.$axios.$get(API.successCaseGetById, {
       params: payload
     })
-    console.log(fundInfo)
+    console.log(successCaseInfo)
     commit('setData', {
-      key: 'fundInfo',
-      value: fundInfo
+      key: 'successCaseInfo',
+      value: successCaseInfo
     })
   }
 }
