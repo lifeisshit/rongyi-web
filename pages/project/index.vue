@@ -1,441 +1,263 @@
 <template>
   <div class="fund-list-page">
     <div class="wrap">
+      <div class="filter-state">
+        <label v-if="solabel.has" class="all">筛选条件：</label>
+        <label v-if="solabel.tzType" class="cur" @click="clearFilter('tzType')"
+          >投资方式：<span class="ellipsis">{{ solabel.tzType }}</span
+          ><i class="el-icon-close"></i
+        ></label>
+        <label v-if="solabel.zjType" class="cur" @click="clearFilter('zjType')"
+          >资金类型：<span class="ellipsis">{{ solabel.zjType }}</span
+          ><i class="el-icon-close"></i
+        ></label>
+        <label v-if="solabel.szCity" class="cur" @click="clearFilter('szCity')"
+          >所在地区：<span class="ellipsis">{{ solabel.szCity }}</span
+          ><i class="el-icon-close"></i
+        ></label>
+        <label
+          v-if="solabel.tzHangye"
+          class="cur"
+          @click="clearFilter('tzHangye')"
+          >投资行业：<span class="ellipsis">{{ solabel.tzHangye }}</span
+          ><i class="el-icon-close"></i
+        ></label>
+        <label v-if="solabel.tzCity" class="cur" @click="clearFilter('tzCity')"
+          >投资地区：<span class="ellipsis">{{ solabel.tzCity }}</span
+          ><i class="el-icon-close"></i
+        ></label>
+        <label
+          v-if="solabel.tzMoney"
+          class="cur"
+          @click="clearFilter('tzMoney')"
+          >投资金额：<span class="ellipsis">{{ solabel.tzMoney }}</span
+          ><i class="el-icon-close"></i
+        ></label>
+        <label v-if="solabel.key" class="cur" @click="clearFilter('keyword')"
+          >关键词：<span class="ellipsis">{{ solabel.key }}</span
+          ><i class="el-icon-close"></i
+        ></label>
+      </div>
       <div class="filter-box">
         <div class="filter-box-item">
-          <label>投资方式：</label>
-          <ul class="items">
-            <li>
-              <a :class="{ active: tzType == 1 }" @click="change_tzType(1)"
-                >股权投资</a
+          <span class="label">投资方式：</span>
+          <div class="items">
+            <el-radio-group v-model="tzType" class="form-check-data">
+              <el-radio
+                v-for="(value, index) in tzTypeList"
+                :key="index"
+                :label="value"
+                @change="sumbitSearch()"
+                >{{ value }}</el-radio
               >
-            </li>
-            <li>
-              <a :class="{ active: tzType == 2 }" @click="change_tzType(2)"
-                >债权投资</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzType == 3 }" @click="change_tzType(3)"
-                >其他投资</a
-              >
-            </li>
-          </ul>
+            </el-radio-group>
+          </div>
         </div>
+        <!--<div class="filter-box-item">-->
+        <!--<span class="label">资金类型：</span>-->
+        <!--<div-->
+        <!--v-if="zjTypeMore"-->
+        <!--:class="['items', isMorezjType ? 'showall' : '']"-->
+        <!--&gt;-->
+        <!--<el-checkbox-group v-model="zjType" class="form-check-data">-->
+        <!--<el-checkbox-->
+        <!--v-for="(value, index) in arrZjList"-->
+        <!--:key="index"-->
+        <!--:label="value"-->
+        <!--@change="sumbitSearch()"-->
+        <!--&gt;{{ value }}</el-checkbox-->
+        <!--&gt;-->
+        <!--</el-checkbox-group>-->
+        <!--</div>-->
+        <!--<div v-else :class="['items', isMorezjType ? 'showall' : '']">-->
+        <!--<el-radio-group v-model="zjType" class="form-check-data">-->
+        <!--<el-radio-->
+        <!--v-for="(value, index) in arrZjList"-->
+        <!--:key="index"-->
+        <!--:label="value"-->
+        <!--@change="sumbitSearch()"-->
+        <!--&gt;{{ value }}</el-radio-->
+        <!--&gt;-->
+        <!--</el-radio-group>-->
+        <!--</div>-->
+        <!--<div class="options">-->
+        <!--<span @click="setZjTypeMore"-->
+        <!--&gt;<i :class="[zjTypeMore ? 'el-icon-minus' : 'el-icon-plus']"></i-->
+        <!--&gt;多选</span-->
+        <!--&gt;-->
+        <!--<span @click="showAllzjType"-->
+        <!--&gt;更多<i-->
+        <!--:class="[-->
+        <!--isMorezjType ? 'el-icon-arrow-down' : 'el-icon-arrow-up'-->
+        <!--]"-->
+        <!--&gt;</i-->
+        <!--&gt;</span>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="filter-box-item">
-          <label>资金类型：</label>
-          <ul class="items">
-            <li>
-              <a :class="{ active: zjType == 1 }" @click="change_zjType(1)"
-                >个人资金</a
+          <span class="label">所在地区：</span>
+          <div :class="['items', isMoreszCity ? 'showall' : '']">
+            <el-radio-group v-model="szCity" class="form-check-data">
+              <el-radio
+                v-for="(value, index) in cityList"
+                :key="index"
+                :label="value"
+                @change="sumbitSearch()"
+                >{{ value }}</el-radio
               >
-            </li>
-            <li>
-              <a :class="{ active: zjType == 2 }" @click="change_zjType(2)"
-                >企业资金</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: zjType == 3 }" @click="change_zjType(3)"
-                >天使资金</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: zjType == 4 }" @click="change_zjType(4)"
-                >VC投资</a
-              >
-            </li>
-          </ul>
+            </el-radio-group>
+          </div>
           <div class="options">
-            <span><i class="el-icon-plus"></i>多选</span>
-            <span>更多<i class="el-icon-arrow-down"></i></span>
+            <span @click="showAllszCity"
+              >更多<i
+                :class="[
+                  isMoreszCity ? 'el-icon-arrow-down' : 'el-icon-arrow-up'
+                ]"
+              ></i
+            ></span>
           </div>
         </div>
         <div class="filter-box-item">
-          <label>所在地区：</label>
-          <ul class="items">
-            <li>
-              <a :class="{ active: szCity == 1 }" @click="change_szCity(1)"
-                >浙江省</a
+          <span class="label">投资行业：</span>
+          <div
+            v-if="tzHangyeMore"
+            :class="['items', isMoretzHangye ? 'showall' : '']"
+          >
+            <el-checkbox-group v-model="tzHangye" class="form-check-data">
+              <el-checkbox
+                v-for="(value, index) in tzHangyeList"
+                :key="index"
+                :label="value"
+                @change="sumbitSearch()"
+                >{{ value }}</el-checkbox
               >
-            </li>
-            <li>
-              <a :class="{ active: szCity == 2 }" @click="change_szCity(2)"
-                >北京</a
+            </el-checkbox-group>
+          </div>
+          <div v-else :class="['items', isMoretzHangye ? 'showall' : '']">
+            <el-radio-group v-model="tzHangye" class="form-check-data">
+              <el-radio
+                v-for="(value, index) in tzHangyeList"
+                :key="index"
+                :label="value"
+                @change="sumbitSearch()"
+                >{{ value }}</el-radio
               >
-            </li>
-            <li>
-              <a :class="{ active: szCity == 3 }" @click="change_szCity(3)"
-                >重庆</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: szCity == 4 }" @click="change_szCity(4)"
-                >福建省</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: szCity == 5 }" @click="change_szCity(5)"
-                >甘肃省</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: szCity == 6 }" @click="change_szCity(6)"
-                >广东省</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: szCity == 7 }" @click="change_szCity(7)"
-                >广西省</a
-              >
-            </li>
-          </ul>
+            </el-radio-group>
+          </div>
           <div class="options">
-            <span>更多<i class="el-icon-arrow-down"></i></span>
+            <span @click="setTzHangyeMore"
+              ><i :class="[tzHangyeMore ? 'el-icon-minus' : 'el-icon-plus']"></i
+              >多选</span
+            >
+            <span @click="showAlltzHangye"
+              >更多<i
+                :class="[
+                  isMoretzHangye ? 'el-icon-arrow-down' : 'el-icon-arrow-up'
+                ]"
+              ></i
+            ></span>
           </div>
         </div>
+        <!--<div class="filter-box-item">-->
+        <!--<span class="label">投资地区：</span>-->
+        <!--<div :class="['items', isMoretzCity ? 'showall' : '']">-->
+        <!--<el-radio-group v-model="tzCity" class="form-check-data">-->
+        <!--<el-radio-->
+        <!--v-for="(value, index) in cityList"-->
+        <!--:key="index"-->
+        <!--:label="value"-->
+        <!--@change="sumbitSearch()"-->
+        <!--&gt;{{ value }}</el-radio-->
+        <!--&gt;-->
+        <!--</el-radio-group>-->
+        <!--</div>-->
+        <!--<div class="options">-->
+        <!--<span @click="showAlltzCity"-->
+        <!--&gt;更多<i-->
+        <!--:class="[-->
+        <!--isMoretzCity ? 'el-icon-arrow-down' : 'el-icon-arrow-up'-->
+        <!--]"-->
+        <!--&gt;</i-->
+        <!--&gt;</span>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="filter-box-item">
-          <label>投资行业：</label>
-          <ul class="items">
-            <li>
-              <a :class="{ active: tzHangye == 1 }" @click="change_tzHangye(1)"
-                >房地产</a
+          <span class="label">投资金额：</span>
+          <div :class="['items', isMoreAmount ? 'showall' : '']">
+            <el-radio-group v-model="tzMoney" class="form-check-data">
+              <el-radio
+                v-for="(value, index) in tzMoneyList"
+                :key="index"
+                :label="value"
+                @change="sumbitSearch()"
+                >{{ value }}</el-radio
               >
-            </li>
-            <li>
-              <a :class="{ active: tzHangye == 2 }" @click="change_tzHangye(2)"
-                >矿产冶金</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzHangye == 3 }" @click="change_tzHangye(3)"
-                >金融投资</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzHangye == 4 }" @click="change_tzHangye(4)"
-                >农林牧渔</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzHangye == 5 }" @click="change_tzHangye(5)"
-                >能源</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzHangye == 6 }" @click="change_tzHangye(6)"
-                >建筑建材</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzHangye == 7 }" @click="change_tzHangye(7)"
-                >旅游酒店</a
-              >
-            </li>
-          </ul>
-          <div class="options">
-            <span><i class="el-icon-plus"></i>多选</span>
-            <span>更多<i class="el-icon-arrow-down"></i></span>
+            </el-radio-group>
           </div>
-        </div>
-        <div class="filter-box-item">
-          <label>投资地区：</label>
-          <ul class="items">
-            <li>
-              <a :class="{ active: tzCity == 1 }" @click="change_tzCity(1)"
-                >浙江省</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzCity == 2 }" @click="change_tzCity(2)"
-                >北京</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzCity == 3 }" @click="change_tzCity(3)"
-                >重庆</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzCity == 4 }" @click="change_tzCity(4)"
-                >福建省</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzCity == 5 }" @click="change_tzCity(5)"
-                >甘肃省</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzCity == 6 }" @click="change_tzCity(6)"
-                >广东省</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzCity == 7 }" @click="change_tzCity(7)"
-                >广西省</a
-              >
-            </li>
-          </ul>
           <div class="options">
-            <span>更多<i class="el-icon-arrow-down"></i></span>
+            <span @click="showAllAmounts"
+              >更多<i
+                :class="[
+                  isMoreAmount ? 'el-icon-arrow-down' : 'el-icon-arrow-up'
+                ]"
+              ></i
+            ></span>
           </div>
-        </div>
-        <div class="filter-box-item">
-          <label>投资金额：</label>
-          <ul class="items">
-            <li>
-              <a :class="{ active: tzMoney == 0 }" @click="change_tzMoney(0)"
-                >不限</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzMoney == 1 }" @click="change_tzMoney(1)"
-                >1万-50万</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzMoney == 2 }" @click="change_tzMoney(2)"
-                >50万-100万</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzMoney == 3 }" @click="change_tzMoney(3)"
-                >100万-500万</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzMoney == 4 }" @click="change_tzMoney(4)"
-                >500万-1000万</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzMoney == 5 }" @click="change_tzMoney(5)"
-                >1000万-5000万</a
-              >
-            </li>
-            <li>
-              <a :class="{ active: tzMoney == 6 }" @click="change_tzMoney(6)"
-                >5000万-1亿</a
-              >
-            </li>
-          </ul>
         </div>
       </div>
       <div class="business-list clearfix">
-        <div class="items-list">
+        <div v-if="totalRow > 0" class="items-list">
           <div class="filter-condition clearfix">
-            <div class="order-cur">
-              排序：<span class="order-state-text">{{ orderby_text }}</span>
-            </div>
-            <div class="order-type" @click="changeorderby('time')">
-              更新时间<i
-                :class="[
-                  orderby == 'time' ? 'el-icon-arrow-up' : 'el-icon-arrow-down'
-                ]"
-              ></i>
-            </div>
-            <div class="order-type" @click="changeorderby('money')">
-              金额排序<i
-                :class="[
-                  orderby == 'money' ? 'el-icon-arrow-up' : 'el-icon-arrow-down'
-                ]"
-              ></i>
+            <div
+              v-for="item in sortList"
+              :key="item.key"
+              class="order-type"
+              :class="{ active: item.key === sort }"
+              @click="onSortChange(item.key)"
+            >
+              {{ item.value }}
             </div>
             <div class="soform">
-              <el-form ref="form" :model="soform" label-width="80px">
-                <el-input
-                  v-model="soform.keyword"
-                  placeholder="输入搜索关键词"
-                  class="soKey"
-                ></el-input>
-                <span class="el-icon-search soBtn" @click="onSubmit"></span>
-              </el-form>
+              <el-input
+                v-model="keyword"
+                placeholder="输入搜索关键词"
+                class="soKey"
+                @keyup.enter.native="onSearch"
+              ></el-input>
+              <span class="el-icon-search soBtn" @click="onSearch"></span>
             </div>
-            <div class="so-count">查询结果共<span>19502</span>个项目</div>
+            <div class="so-count">
+              查询结果共<span>{{ totalRow }}</span
+              >个项目
+            </div>
           </div>
           <div class="items-out-box">
             <div class="item-data-list">
-              <div class="items-infos clearfix">
+              <div
+                v-for="fund in fundList"
+                :key="fund.id"
+                class="items-infos clearfix"
+              >
                 <div class="items-infos-row">
                   <div class="i-title">
-                    <a href=""
-                      >上海某投资公司寻找优质项目300万-2000万元投资公司寻找优质项资公司寻找优目</a
-                    >
+                    <nuxt-link :to="`/fund/${fund.id}`">{{
+                      fund.title || ''
+                    }}</nuxt-link>
                   </div>
-                  <div class="i-time">2019-05-08发布</div>
+                  <div class="i-time">{{ fund.gmtCreate || '' }}发布</div>
                   <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
+                    <li>投资地区：{{ fund.inventRegion || '' }}</li>
+                    <li>投资行业：{{ fund.investIndustry || '' }}</li>
+                    <li>投资资金：{{ fund.investAmount || '' }}</li>
+                    <li>风控要求：{{ fund.riskRequire || '' }}</li>
+                    <li>最低回报要求：{{ fund.minReturnRequire || '' }}</li>
+                    <li>投资方式：{{ fund.investWay || '' }}</li>
+                    <li>资金类型：{{ fund.type || '' }}</li>
                   </ul>
                 </div>
                 <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
-                </div>
-              </div>
-              <div class="items-infos clearfix">
-                <div class="items-infos-row">
-                  <div class="i-title">
-                    <a href="">上海某投资公司寻找优质项目300万-2000万元</a>
-                  </div>
-                  <div class="i-time">2019-05-08发布</div>
-                  <ul class="attribute">
-                    <li>所在地区：上海</li>
-                    <li>所属行业：节能环保</li>
-                    <li>融资方式：股权融资</li>
-                    <li>融资用途：找厂房、生产及业务等等</li>
-                  </ul>
-                </div>
-                <div class="item-price">
-                  <p>100万-1亿</p>
-                  <a href="">约谈项目</a>
+                  <p>{{ fund.investAmount || 0 }}</p>
+                  <nuxt-link to="/">约谈项目</nuxt-link>
                 </div>
               </div>
             </div>
@@ -445,59 +267,40 @@
                 layout="prev, pager, next"
                 prev-text="上一页"
                 next-text="下一页"
-                :total="1000"
+                :total="totalRow"
+                :page-size="pageSize"
+                :current-page="currentPage"
+                @current-change="handleCurrentChange"
               >
               </el-pagination>
             </div>
           </div>
         </div>
+        <div v-if="totalRow <= 0" class="items-list">
+          <p class="no-data">暂无数据</p>
+        </div>
         <div class="hot-items">
           <div class="tips">优质信息推荐</div>
-          <div class="hot-items-row">
-            <a class="rows">
+          <div v-if="topfundList.length > 0" class="hot-items-row">
+            <nuxt-link
+              v-for="fund in topfundList"
+              :key="fund.id"
+              to="/"
+              class="rows"
+            >
               <div class="item-img">
                 <img
                   alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
+                  :src="fund.img || require('~/assets/img/no-img.png')"
                 />
               </div>
               <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
+                {{ fund.title }}
               </div>
-            </a>
-            <a class="rows">
-              <div class="item-img">
-                <img
-                  alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
-                />
-              </div>
-              <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
-              </div>
-            </a>
-            <a class="rows">
-              <div class="item-img">
-                <img
-                  alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
-                />
-              </div>
-              <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
-              </div>
-            </a>
-            <a class="rows">
-              <div class="item-img">
-                <img
-                  alt="资金方"
-                  src="https://inews.gtimg.com/newsapp_bt/0/9105900977/1000"
-                />
-              </div>
-              <div class="item-title">
-                江苏省南京某探索类儿童乐园项目股权融资20万-100万元
-              </div>
-            </a>
+            </nuxt-link>
+          </div>
+          <div v-if="topfundList.length <= 0" class="hot-items-row">
+            <p class="no-data">暂无数据</p>
           </div>
         </div>
       </div>
@@ -506,68 +309,227 @@
 </template>
 <script>
 import '~/assets/css/fund-list.less'
+import { mapState, mapActions } from 'vuex'
+import { InvestMethods, Amounts, Industries, Regions } from '~/common/constant'
+
 export default {
-  name: 'Project',
-  components: {},
+  name: 'Fund',
   data() {
     return {
-      orderby: '',
-      orderby_text: '默认',
-      soform: {
-        keyword: ''
+      currentPage: 1,
+      tzTypeList: InvestMethods,
+      cityList: Regions,
+      tzMoneyList: Amounts,
+      tzHangyeList: Industries,
+      keyword: '',
+      tzType: '',
+      zjType: [],
+      szCity: '',
+      tzHangye: [],
+      tzCity: '',
+      tzMoney: '',
+      zjTypeMore: false,
+      isMorezjType: false,
+      isMoreszCity: false,
+      tzHangyeMore: false,
+      isMoretzHangye: false,
+      isMoretzCity: false,
+      isMoreAmount: false,
+      solabel: {
+        has: false,
+        key: '',
+        tzType: '',
+        zjType: '',
+        szCity: '',
+        tzHangye: '',
+        tzCity: '',
+        tzMoney: ''
       },
-      tzType: 2,
-      zjType: 3,
-      szCity: 5,
-      tzHangye: 1,
-      tzCity: 1,
-      tzMoney: 0
+      sort: 0,
+      sortList: [
+        {
+          key: 0,
+          value: '综合排序'
+        },
+        {
+          key: 1,
+          value: '更新时间'
+        }
+      ]
     }
   },
+  computed: {
+    ...mapState('fund', ['pageSize', 'totalRow', 'topfundList', 'fundList'])
+  },
+  async fetch({ store }) {
+    await Promise.all([
+      store.dispatch('fund/getPageList', { recommend: 0 }),
+      store.dispatch('fund/getPageList', { recommend: 1, pageSize: 6 })
+    ])
+  },
   methods: {
-    onSubmit() {
-      const keyword = this.soform.keyword
-      if (!keyword) {
-        this.$message({
-          message: '请输入搜索关键词',
-          type: 'warning',
-          center: true
-        })
-        return false
-      }
-      console.log('submit!')
+    ...mapActions('fund', ['getPageList']),
+    handleCurrentChange(page) {
+      this.sumbitSearch(page)
     },
-    changeorderby: function(orderby) {
-      this.orderby = orderby
-      switch (orderby) {
-        case 'time':
-          this.orderby_text = '更新时间'
+    onSearch() {
+      this.solabel.key = this.keyword
+      this.sumbitSearch()
+    },
+    onSortChange: function(sort) {
+      this.sort = sort
+      this.sumbitSearch()
+    },
+    showAllzjType: function() {
+      this.isMorezjType = !this.isMorezjType
+    },
+    showAllszCity: function() {
+      this.isMoreszCity = !this.isMoreszCity
+    },
+    showAlltzHangye: function() {
+      this.isMoretzHangye = !this.isMoretzHangye
+    },
+    showAlltzCity: function() {
+      this.isMoretzCity = !this.isMoretzCity
+    },
+    showAllAmounts() {
+      this.isMoreAmount = !this.isMoreAmount
+    },
+    setZjTypeMore: function() {
+      this.zjTypeMore = !this.zjTypeMore
+      this.zjType = []
+      this.sumbitSearch()
+    },
+    setTzHangyeMore: function() {
+      this.tzHangyeMore = !this.tzHangyeMore
+      this.tzHangye = []
+      this.sumbitSearch()
+    },
+    // 开始搜索
+    sumbitSearch: function(page) {
+      const condition = {
+        keyword: this.keyword,
+        investWay: this.tzType,
+        szCity: this.szCity,
+        tzHangye: this.tzHangye,
+        tzMoney: this.tzMoney,
+        sort: this.sort,
+        pageNum: page || 1
+      }
+      // 检测是否有筛选条件
+      this.checkHasSolabel()
+      // 构造当前筛选label
+      this.buildSolabelText()
+      // 加载内容
+      // console.log(JSON.stringify(condition))
+      // 开始查询
+      this.getPageList(condition)
+      this.currentPage = page || 1
+    },
+    checkHasSolabel: function() {
+      const solabel = this.solabel
+      const has =
+        solabel.key ||
+        solabel.tzType ||
+        solabel.zjType ||
+        solabel.szCity ||
+        solabel.tzHangye ||
+        solabel.tzCity ||
+        solabel.tzMoney
+      this.solabel.has = has
+    },
+    buildSolabelText: function() {
+      let hasLabel = false
+      if (this.solabel.key) {
+        hasLabel = true
+      }
+      if (this.tzType) {
+        this.solabel.tzType = this.tzType
+        hasLabel = true
+      }
+      if (this.szCity) {
+        this.solabel.szCity = this.szCity
+        hasLabel = true
+      }
+      if (this.tzCity) {
+        this.solabel.tzCity = this.tzCity
+        hasLabel = true
+      }
+      if (this.tzMoney) {
+        this.solabel.tzMoney = this.tzMoney
+        hasLabel = true
+      }
+      if (this.tzHangye) {
+        let tzHangyeText = ''
+
+        // 如果是字符串，则直接是选中的值，如果是数组，则需要遍历
+        if (typeof this.tzHangye === 'string') {
+          tzHangyeText = this.tzHangye
+        } else {
+          for (let i = 0, len = this.tzHangye.length; i < len; i++) {
+            tzHangyeText += ',' + this.tzHangye[i]
+          }
+        }
+        if (tzHangyeText) {
+          typeof this.tzHangye === 'string' ||
+            (tzHangyeText = tzHangyeText.substr(1))
+          hasLabel = true
+        }
+
+        this.solabel.tzHangye = tzHangyeText
+      }
+      if (this.zjType) {
+        let zjTypeText = ''
+        // 如果是字符串，则直接是选中的值，如果是数组，则需要遍历
+        if (typeof this.zjType === 'string') {
+          zjTypeText = this.zjType
+        } else {
+          for (let i = 0, len = this.zjType.length; i < len; i++) {
+            zjTypeText += ',' + this.zjType[i]
+          }
+        }
+        if (zjTypeText) {
+          typeof this.zjType === 'string' || (zjTypeText = zjTypeText.substr(1))
+          hasLabel = true
+        }
+        this.solabel.zjType = zjTypeText
+      }
+      this.solabel.has = hasLabel
+    },
+    clearFilter: function(clearfilter) {
+      switch (clearfilter) {
+        case 'tzType':
+          this.tzType = ''
+          this.solabel.tzType = ''
           break
-        case 'money':
-          this.orderby_text = '投资金额'
+        case 'zjType':
+          this.zjType = []
+          this.solabel.zjType = ''
+          break
+        case 'szCity':
+          this.szCity = ''
+          this.solabel.szCity = ''
+          break
+        case 'tzHangye':
+          this.tzHangye = []
+          this.solabel.tzHangye = ''
+          break
+        case 'tzCity':
+          this.tzCity = ''
+          this.solabel.tzCity = ''
+          break
+        case 'tzMoney':
+          this.tzMoney = ''
+          this.solabel.tzMoney = ''
+          break
+        case 'keyword':
+          this.keyword = ''
+          this.solabel.key = ''
           break
         default:
-          this.orderby_text = '默认'
           break
       }
-    },
-    change_tzType: function(value) {
-      this.tzType = value
-    },
-    change_zjType: function(value) {
-      this.zjType = value
-    },
-    change_szCity: function(value) {
-      this.szCity = value
-    },
-    change_tzHangye: function(value) {
-      this.tzHangye = value
-    },
-    change_tzCity: function(value) {
-      this.tzCity = value
-    },
-    change_tzMoney: function(value) {
-      this.tzMoney = value
+      this.sumbitSearch()
     }
   }
 }

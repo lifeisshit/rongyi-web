@@ -18,11 +18,14 @@ export const actions = {
     if (!payload.pageNum) {
       payload.pageNum = state.pageNum
     }
-
+    if (!payload.pageSize) {
+      payload.pageSize = state.pageSize
+    }
     const { dataList, totalRow } = await this.$axios.$post(
       API.fundPageList,
       payload
     )
+    // console.log(dataList)
     // 设置对象树中的值
     if (payload.recommend === 1) {
       // 推荐资金方

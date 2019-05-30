@@ -25,7 +25,7 @@ export default {
           '融资,项目融资,天使投资,风投,风险投资,投资公司,项目,股权融资,债权融资,找投资人,快速融资,融易网'
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v3' }]
   },
 
   /*
@@ -80,7 +80,7 @@ export default {
    ** Build configuration
    */
   build: {
-    publicPath: 'http://nickfu.com/_nuxt/',
+    publicPath: 'https://www.rongyi8.com/_nuxt/',
     transpile: [/^element-ui/, 'nuxt-vuex-localstorage'],
     // 分析编译结果, 看看哪里可以优化
     analyze: false,
