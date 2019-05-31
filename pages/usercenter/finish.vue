@@ -38,9 +38,9 @@
               <div class="form-item">
                 <el-form-item
                   :label="type === 3 ? '单位名称：' : '企业名称：'"
-                  prop="enterprise_name"
+                  prop="compName"
                 >
-                  <el-input v-model="accountForm.enterprise_name"></el-input>
+                  <el-input v-model="accountForm.compName"></el-input>
                   <div v-if="type !== 3" class="el-form-item__tips">
                     请填写您营业执照上的企业名称
                   </div>
@@ -63,8 +63,8 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="所在地区：" prop="address">
-                  <FormCitySelect></FormCitySelect>
+                <el-form-item label="所在地区：">
+                  <FormCitySelect @change="changeAddress"></FormCitySelect>
                 </el-form-item>
                 <el-form-item label="">
                   <el-input v-model="accountForm.address"></el-input>
@@ -74,10 +74,10 @@
                 </el-form-item>
                 <el-form-item
                   :label="type === 3 ? '单位简介：' : '企业简介：'"
-                  prop="company_profile"
+                  prop="compDes"
                 >
                   <el-input
-                    v-model="accountForm.company_profile"
+                    v-model="accountForm.compDes"
                     type="textarea"
                     :rows="4"
                   ></el-input>
@@ -87,20 +87,20 @@
             <div class="form-table">
               <div class="tips">个人信息</div>
               <div class="form-item">
-                <el-form-item label="姓名：" prop="truename">
-                  <el-input v-model="accountForm.truename"></el-input>
+                <el-form-item label="姓名：" prop="name">
+                  <el-input v-model="accountForm.name"></el-input>
                   <div class="el-form-item__tips">请输入您的真实姓名</div>
                 </el-form-item>
-                <el-form-item label="性别：" prop="sex">
-                  <el-radio-group v-model="accountForm.sex">
-                    <el-radio label="1">男</el-radio>
-                    <el-radio label="2">女</el-radio>
+                <el-form-item label="性别：" prop="gender">
+                  <el-radio-group v-model="accountForm.gender">
+                    <el-radio label="男">男</el-radio>
+                    <el-radio label="女">女</el-radio>
                   </el-radio-group>
                 </el-form-item>
-                <el-form-item label="职位：" prop="position">
+                <el-form-item label="职位：" prop="duty">
                   <el-select
                     v-if="type !== 3"
-                    v-model="accountForm.position"
+                    v-model="accountForm.duty"
                     placeholder="请选择"
                     style="width: 180px;"
                   >
@@ -113,7 +113,7 @@
                   </el-select>
                   <el-select
                     v-if="type === 3"
-                    v-model="accountForm.position"
+                    v-model="accountForm.duty"
                     placeholder="请选择"
                     style="width: 180px;"
                   >
@@ -128,20 +128,17 @@
                 <el-form-item label="所在部门：" prop="department">
                   <el-input v-model="accountForm.department"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号码：" class="sns-check">
-                  {{ accountForm.mobile }}
-                  <a class="edit">修改</a>
-                  <span v-if="accountForm.mobile_state">已验证</span>
-                  <span v-else>未验证</span>
-                </el-form-item>
-                <el-form-item label="邮箱：" class="sns-check">
-                  {{ accountForm.email }}
-                  <a class="edit">修改</a>
-                  <span v-if="accountForm.email_state">已验证</span>
-                  <span v-else>未验证</span>
+                <!--<el-form-item label="手机号码：" class="sns-check">-->
+                <!--{{ accountForm.mobile }}-->
+                <!--<a class="edit">修改</a>-->
+                <!--<span v-if="accountForm.mobile_state">已验证</span>-->
+                <!--<span v-else>未验证</span>-->
+                <!--</el-form-item>-->
+                <el-form-item label="邮箱：" class="sns-check" prop="email">
+                  <el-input v-model="accountForm.email"></el-input>
                 </el-form-item>
                 <el-form-item label="电话号码：">
-                  <el-input v-model="accountForm.tel"></el-input>
+                  <el-input v-model="accountForm.fixLinePhone"></el-input>
                 </el-form-item>
                 <el-form-item label="QQ号码：">
                   <el-input v-model="accountForm.qq"></el-input>
@@ -171,6 +168,8 @@ import {
   CompanyPositions
 } from '~/common/constant'
 import FormCitySelect from '~/components/FormCitySelect'
+import { mapState, mapActions } from 'vuex'
+import { verifyEmail } from '~/common/validate'
 
 export default {
   name: 'UserCenterFinish',
@@ -184,47 +183,51 @@ export default {
       governmentPositions: GovernmentPositions,
       companyPositions: CompanyPositions,
       type: 1,
+      memberType: '',
+      selectAddr: {},
       accountForm: {
-        truename: 'xiaoying5201',
-        sex: '1',
+        name: '',
+        gender: '男',
         department: '',
-        tel: '',
+        fixLinePhone: '',
         qq: '',
-        position: '',
-        mobile: '18086002222',
-        mobile_state: true,
-        email: '860002100@qq.com',
+        duty: '',
+        // mobile: '',
+        // mobile_state: true,
+        email: '',
         email_state: false,
-        enterprise_name: '',
+        compName: '',
         address: '',
         industry: '',
-        company_profile: ''
+        compDes: ''
       },
       rules: {
-        truename: [
+        name: [
           { required: true, message: '请输入姓名', trigger: 'blur' },
           {
-            min: 3,
-            max: 5,
-            message: '姓名长度在 3 到 20 个字符',
+            min: 2,
+            max: 20,
+            message: '姓名长度在 2 到 20 个字符',
             trigger: 'blur'
           }
         ],
-        sex: [{ required: true, message: '请选择性别' }],
+        gender: [{ required: true, message: '请选择性别' }],
         department: [
           { required: true, message: '请输入所在部门', trigger: 'blur' }
         ],
-        enterprise_name: [
-          { required: true, message: '请输入名称', trigger: 'blur' }
-        ],
+        compName: [{ required: true, message: '请输入名称', trigger: 'blur' }],
         industry: [
           { required: true, message: '请选择所属行业', trigger: 'blur' }
         ],
-        address: [{ required: true, message: '请输入地址', trigger: 'blur' }]
+        email: verifyEmail()
       }
     }
   },
+  computed: {
+    ...mapState('user', ['user'])
+  },
   methods: {
+    ...mapActions('user', ['completeMemberInfo', 'finishStep1']),
     chooseType: function(type) {
       // 如果是同一个选项，无需重复设置
       if (this.type === type) {
@@ -238,17 +241,39 @@ export default {
       }
       this.$refs.accountForm.clearValidate()
     },
+    changeAddress(selectAddr) {
+      this.selectAddr = selectAddr
+    },
     onSubmit(formName) {
-      // this.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     alert('submit!')
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
-      this.$router.push({
-        path: '/usercenter/custom'
+      this.$refs[formName].validate(async valid => {
+        console.log(this.accountForm.address)
+
+        if (!valid) {
+          return false
+        }
+        const param = this.accountForm
+
+        if (this.type === 1) {
+          this.memberType = '企业'
+        } else if (this.type === 2) {
+          this.memberType = '个人'
+        } else {
+          this.memberType = '政府'
+        }
+
+        param.memberType = this.memberType
+        param.userId = this.user.id
+        param.province = this.selectAddr.province
+        param.city = this.selectAddr.city
+        param.region = this.selectAddr.region
+
+        await this.completeMemberInfo(param)
+        // 设置完成状态
+        this.finishStep1()
+        // 进入下一步
+        this.$router.push({
+          path: '/usercenter/custom'
+        })
       })
     }
   }

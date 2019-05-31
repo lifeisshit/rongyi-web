@@ -9,7 +9,7 @@ export const verifyPassword = message => ({
   message: message || '请正确输入密码'
 })
 
-export const verifyUsername = message => ({
+export const verifyMobilePhone = message => ({
   required: true,
   min: 2,
   max: 10,
@@ -19,7 +19,7 @@ export const verifyUsername = message => ({
 })
 
 export const verifyEmail = message => ({
-  required: true,
+  required: false,
   type: 'email',
   trigger: 'blur',
   message: message || '请正确输入邮箱'

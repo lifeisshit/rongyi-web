@@ -73,6 +73,18 @@ export const actions = {
     Cookie.remove('nuxtToken')
     // 清除对象树中的值
     commit('clearToken')
+  },
+  async completeMemberInfo({ commit }, payload) {
+    await this.$axios.$post(API.completeMemberInfo, payload)
+  },
+  async completeBusinessInfo({ commit }, payload) {
+    await this.$axios.$post(API.completeBusinessInfo, payload)
+  },
+  finishStep1({ commit }) {
+    commit('setStep1')
+  },
+  finishStep2({ commit }) {
+    commit('setStep2')
   }
 }
 
@@ -86,5 +98,11 @@ export const mutations = {
   clearToken(state) {
     state.nuxtToken = null
     state.user = {}
+  },
+  setStep1(state) {
+    state.user && (state.user.hasCompleteMemberInfo = true)
+  },
+  setStep2(state) {
+    state.user && (state.user.hasCompleteBusinessInfo = true)
   }
 }

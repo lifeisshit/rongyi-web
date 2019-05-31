@@ -39,8 +39,24 @@
                   "
                   prop="moneyType"
                 >
-                  <el-select
+                  <!--融资-->
+                  <el-checkbox-group
+                    v-if="type === 1"
                     v-model="accountForm.investTypes"
+                    class="form-check-box"
+                  >
+                    <el-checkbox
+                      v-for="(value, index) in investTypes"
+                      :key="index"
+                      :label="value"
+                      @change="onCheckChanged()"
+                      >{{ value }}</el-checkbox
+                    >
+                  </el-checkbox-group>
+                  <!--投资-->
+                  <el-select
+                    v-if="type !== 1"
+                    v-model="accountForm.fundTypes"
                     placeholder="请选择..."
                     style="width: 180px;"
                   >
@@ -108,6 +124,7 @@
 <script>
 import '~/assets/css/finish.less'
 import { InvestTypes, Industries, Regions } from '~/common/constant'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'UserCenterCustom',
@@ -119,18 +136,19 @@ export default {
       regions: Regions,
       type: 1,
       accountForm: {
-        investTypes: '',
+        investTypes: [],
+        fundTypes: '',
         industries: [],
         regions: []
       },
-      rules: {
-        moneyType: [
-          { required: true, message: '请选择资金类型', trigger: 'blur' }
-        ]
-      }
+      rules: {}
     }
   },
+  computed: {
+    ...mapState('user', ['user'])
+  },
   methods: {
+    ...mapActions('user', ['completeBusinessInfo', 'finishStep2']),
     chooseType(type) {
       if (this.type === type) {
         return
@@ -144,14 +162,31 @@ export default {
       // console.log(this.accountForm)
     },
     onSubmit(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           const param = {}
           if (this.type === 1) {
             param.memberObject = '项目方'
+            param.moneySrc = this.accountForm.investTypes.join(',')
           } else {
             param.memberObject = '资金方'
+            param.moneySrc = this.accountForm.fundTypes
           }
+          param.interestIndustry = this.accountForm.industries.join(',')
+          param.interestRegion = this.accountForm.regions.join(',')
+          param.userId = this.user.id
+          // console.log(param)
+          await this.completeBusinessInfo(param)
+          // 设置完成状态
+          this.finishStep2()
+          this.$message.success({
+            showClose: true,
+            message: '设置成功',
+            type: 'success'
+          })
+          this.$router.push({
+            path: '/'
+          })
         } else {
           return false
         }

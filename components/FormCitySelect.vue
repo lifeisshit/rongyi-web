@@ -78,13 +78,24 @@ export default {
       this.chooseProv = prov
       this.publicForm.city = ''
       this.publicForm.region = ''
+
+      this.onChangeValue()
     },
     getCity: function(city) {
       const tempRegion = this.getChildren(city, this.provinces, 1)
       this.regions = tempRegion
       this.publicForm.region = ''
+
+      this.onChangeValue()
     },
-    getRegion: function(region) {},
+    getRegion: function(region) {
+      this.publicForm.region = region
+
+      this.onChangeValue()
+    },
+    onChangeValue: function() {
+      this.$emit('change', this.publicForm)
+    },
     getChildren: function(regionName, regionData, level) {
       let tempData = []
       if (level === 0) {

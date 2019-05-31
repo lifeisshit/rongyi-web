@@ -123,7 +123,7 @@ import { mapActions, mapState } from 'vuex'
 import { SmsCodeType } from '~/common/constant'
 import {
   verifyPassword,
-  verifyUsername,
+  verifyMobilePhone,
   verifyChecked
 } from '~/common/validate'
 
@@ -146,7 +146,7 @@ export default {
       },
       rules: {
         password: verifyPassword(),
-        phone: verifyUsername(),
+        phone: verifyMobilePhone(),
         verificationCode: {
           required: true,
           min: 4,
