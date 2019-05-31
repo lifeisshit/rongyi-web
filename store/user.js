@@ -6,7 +6,7 @@ import Cookie from 'js-cookie'
 
 export const state = () => ({
   user: {},
-  token: null
+  nuxtToken: null
 })
 
 export const actions = {
@@ -49,21 +49,20 @@ export const actions = {
       value: res.data
     })
     commit('setToken', payload.nuxtToken)
+    console.log('getUserInfoByInit res: ', res)
   },
   async register({ commit }, payload) {
-    const data = await this.$axios.$post(API.register, null, {
+    await this.$axios.$post(API.register, null, {
       params: payload
     })
   },
   async verifySmsCode({ commit }, payload) {
-    console.log('payload is: ', payload)
-    const data = await this.$axios.$post(API.verifySmsCode, null, {
+    // console.log('payload is: ', payload)
+    await this.$axios.$post(API.verifySmsCode, null, {
       params: payload
     })
-    console.log('data is: ', data)
   },
   async sendSmsCode({ commit }, payload) {
-    console.log('payload is: ', payload)
     await this.$axios.get(API.sendSmsCode, {
       params: payload
     })

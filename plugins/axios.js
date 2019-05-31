@@ -4,11 +4,12 @@
  * */
 import { Message } from 'element-ui'
 
-export default ({ $axios, redirect }) => {
+export default ({ $axios, redirect, app }) => {
   // 请求回调
   $axios.onRequest(config => {
     // 获取cookie放在头部传到后端
     // config.headers.Authorization = app.$cookies.get('token')
+    // console.log(app.$cookies.get('token'))
     config.headers['Content-Type'] = 'application/json;charset=UTF-8'
   })
   // 返回结果回调

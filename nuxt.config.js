@@ -81,7 +81,7 @@ export default {
    ** Build configuration
    */
   build: {
-    publicPath: 'https://www.rongyi8.com/_nuxt/',
+    // publicPath: 'https://www.rongyi8.com/_nuxt/',
     transpile: [/^element-ui/, 'nuxt-vuex-localstorage'],
     // 分析编译结果, 看看哪里可以优化
     analyze: false,

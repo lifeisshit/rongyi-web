@@ -2,7 +2,7 @@
   <section class="index">
     <div class="banner">
       <div class="wrap banner-wrap">
-        <div v-if="!user.login" class="login-tab">
+        <div v-if="!nuxtToken" class="login-tab">
           <ul class="login-tab-menu">
             <li :class="{ active: isLoginTabActive }" @click="showLoginTab">
               手机号登录
@@ -599,7 +599,7 @@ export default {
   },
   computed: {
     ...mapState('sessionStorage', ['regCodeInfo']),
-    ...mapState('user', ['user'])
+    ...mapState('user', ['nuxtToken'])
   },
   created() {
     const isSendDiabled = this.regCodeInfo.isSendDiabled

@@ -7,6 +7,20 @@ export const SmsCodeType = {
 }
 // 融资方式
 export const FinancingMethods = ['债权融资', '股权融资', '其他融资', '整体转让']
+// 资金类型
+export const InvestTypes = [
+  '个人资金',
+  '企业资金',
+  '天使投资',
+  'VC投资',
+  'PE投资',
+  '担保公司',
+  '金融租赁',
+  '投资公司',
+  '基金公司',
+  '资产管理',
+  '其它资金'
+]
 // 投资方式
 export const InvestMethods = [
   '股权投资',
@@ -103,4 +117,26 @@ export const Regions = [
   '澳门',
   '台湾',
   '海外'
+]
+
+export const CompanyPositions = [
+  '董事长',
+  '董事',
+  '总经理',
+  '副总经理',
+  '总监',
+  '经理',
+  '其他职位'
+]
+
+export const GovernmentPositions = [
+  '处长',
+  '局长',
+  '市长',
+  '主任',
+  '科员',
+  '办事员',
+  '调研员',
+  '巡视员',
+  '其他职位'
 ]
