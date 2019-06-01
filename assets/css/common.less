@@ -489,6 +489,9 @@ h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal}
   }
 }
 .upload-demo{
+  .el-upload {
+    float: left;
+  }
   .el-upload--text{
     width: 100px;
     float: left;
@@ -498,6 +501,9 @@ h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal}
     float: left;
     margin-top: 0;
     padding-left: 20px;
+    &.no-padding {
+      padding-left: 0;
+    }
   }
   .el-upload-list{
     float: left;

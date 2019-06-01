@@ -34,24 +34,34 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="所在地区：">
-              <FormCitySelect @change="changeAddress"></FormCitySelect>
+            <el-form-item label="所在地区：" prop="region">
+              <el-select
+                v-model="publicForm.region"
+                placeholder="请选择"
+                style="width: 180px;"
+              >
+                <el-option
+                  v-for="(region, index) in regions"
+                  :key="index"
+                  :label="region"
+                  :value="region"
+                ></el-option>
+              </el-select>
             </el-form-item>
-            <el-form-item label="去年营业额：" prop="yingye">
+            <el-form-item label="去年营业额：" prop="lastYearTurnover">
               <el-input
-                v-model="publicForm.yingye"
+                v-model="publicForm.lastYearTurnover"
                 style="width: 160px;"
+                placeholder="0"
               ></el-input
               ><el-select
-                v-model="publicForm.yingyeUnit"
+                v-model="publicForm.lastYearTurnoverUnit"
                 placeholder="请选择"
                 style="width: 80px;"
                 class="danwei"
               >
                 <el-option label="万元" value="万元"></el-option>
-                <el-option label="十万元" value="十万元"></el-option>
-                <el-option label="百万元" value="百万元"></el-option>
-                <el-option label="千万元" value="千万元"></el-option>
+                <el-option label="亿元" value="亿元"></el-option>
               </el-select>
               <div class="el-form-item__tips">
                 请如实填写，有助于您更快获得融资
@@ -62,6 +72,7 @@
               <el-input
                 v-model="publicForm.assetValue"
                 style="width: 160px;"
+                placeholder="0"
               ></el-input
               ><el-select
                 v-model="publicForm.assetValueUnit"
@@ -70,9 +81,7 @@
                 class="danwei"
               >
                 <el-option label="万元" value="万元"></el-option>
-                <el-option label="十万元" value="十万元"></el-option>
-                <el-option label="百万元" value="百万元"></el-option>
-                <el-option label="千万元" value="千万元"></el-option>
+                <el-option label="亿元" value="亿元"></el-option>
               </el-select>
               <div class="el-form-item__tips">
                 请如实填写，有助于您更快获得融资
@@ -87,6 +96,7 @@
               <el-input
                 v-model="publicForm.financeAmountMin"
                 style="width: 160px;"
+                placeholder="0"
               ></el-input
               ><el-select
                 v-model="publicForm.financeAmountMinUnit"
@@ -95,14 +105,13 @@
                 class="danwei"
               >
                 <el-option label="万元" value="万元"></el-option>
-                <el-option label="十万元" value="十万元"></el-option>
-                <el-option label="百万元" value="百万元"></el-option>
-                <el-option label="千万元" value="千万元"></el-option>
+                <el-option label="亿元" value="亿元"></el-option>
               </el-select>
               <span style="margin:0 15px;color:#666;">-</span>
               <el-input
                 v-model="publicForm.financeAmountMax"
                 style="width: 160px;"
+                placeholder="0"
               ></el-input
               ><el-select
                 v-model="publicForm.financeAmountMaxUnit"
@@ -111,9 +120,7 @@
                 class="danwei"
               >
                 <el-option label="万元" value="万元"></el-option>
-                <el-option label="十万元" value="十万元"></el-option>
-                <el-option label="百万元" value="百万元"></el-option>
-                <el-option label="千万元" value="千万元"></el-option>
+                <el-option label="亿元" value="亿元"></el-option>
               </el-select>
             </el-form-item>
 
@@ -121,6 +128,7 @@
               <el-input
                 v-model="publicForm.investAmount"
                 style="width: 160px;"
+                placeholder="0"
               ></el-input
               ><el-select
                 v-model="publicForm.investAmountUnit"
@@ -129,9 +137,7 @@
                 class="danwei"
               >
                 <el-option label="万元" value="万元"></el-option>
-                <el-option label="十万元" value="十万元"></el-option>
-                <el-option label="百万元" value="百万元"></el-option>
-                <el-option label="千万元" value="千万元"></el-option>
+                <el-option label="亿元" value="亿元"></el-option>
               </el-select>
             </el-form-item>
 
@@ -203,17 +209,22 @@
 
             <el-form-item label="缩略图：">
               <el-upload
+                ref="coverImg"
+                accept=".jpg, .png"
                 class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :before-remove="beforeRemove"
                 :on-exceed="handleExceed"
-                :file-list="fileList"
+                list-type="picture"
+                :action="ossHost"
+                :data="ossFormData"
+                :limit="1"
+                :show-file-list="true"
+                :before-upload="beforeCoverImgUpload"
               >
                 <el-button size="small" type="upload">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">
-                  只能上传jpg/png文件，且不超过500kb
+                  只能上传jpg/png文件，且不超过1M
                 </div>
               </el-upload>
             </el-form-item>
@@ -221,16 +232,18 @@
             <el-form-item label="附件：">
               <el-upload
                 class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview2"
                 :on-remove="handleRemove2"
-                :before-remove="beforeRemove2"
-                :on-exceed="handleExceed2"
-                :file-list="fileList2"
+                :before-remove="beforeRemove"
+                :on-exceed="handleExceed"
+                :action="ossHost"
+                :data="ossFormData"
+                :limit="1"
+                :show-file-list="true"
+                :before-upload="beforeAttachmentUpload"
               >
                 <el-button size="small" type="upload">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">
-                  只能上传jpg/png文件，且不超过500kb
+                  请尽量压缩文件上传，且不超过5M
                 </div>
               </el-upload>
             </el-form-item>
@@ -252,8 +265,8 @@
 </template>
 <script>
 import '~/assets/css/ucenter-public-msg.less'
+import API from '~/common/api'
 import UcenterLeftMenu from '~/components/UcenterLeftMenu'
-import FormCitySelect from '~/components/FormCitySelect'
 import {
   InvestTypes,
   Industries,
@@ -267,8 +280,7 @@ export default {
   name: 'Publish',
   middleware: 'authenticated',
   components: {
-    UcenterLeftMenu,
-    FormCitySelect
+    UcenterLeftMenu
   },
   data() {
     return {
@@ -279,15 +291,17 @@ export default {
       materials: Materials,
       publicForm: {
         title: '',
+        region: '',
         type: '项目融资',
-        yingyeUnit: '万元',
-        assetValue: 0,
+        lastYearTurnover: '',
+        lastYearTurnoverUnit: '万元',
+        assetValue: '',
         assetValueUnit: '万元',
-        financeAmountMin: 0,
+        financeAmountMin: '',
         financeAmountMinUnit: '万元',
-        financeAmountMax: 0,
+        financeAmountMax: '',
         financeAmountMaxUnit: '万元',
-        investAmount: 0,
+        investAmount: '',
         investAmountUnit: '万元',
         investTypes: [],
         financingMethods: [],
@@ -303,29 +317,63 @@ export default {
           { required: true, message: '请输入标题', trigger: 'blur' },
           {
             min: 3,
-            max: 5,
-            message: '标题长度在 3 到 20 个字符',
+            max: 50,
+            message: '标题长度在 3 到 50 个字符',
             trigger: 'blur'
           }
         ],
-        type: [{ required: true, message: '请选择分类', trigger: 'blur' }],
         industry: [
           { required: true, message: '请选择所属行业', trigger: 'change' }
+        ],
+        region: [
+          { required: true, message: '请选择所在地区', trigger: 'change' }
         ],
         financeUse: [
           { required: true, message: '请输入资金用途', trigger: 'blur' }
         ],
-        yingye: [
-          { required: true, message: '请输入当前营业额', trigger: 'blur' }
+        lastYearTurnover: [
+          {
+            required: true,
+            message: '请输入去年营业额',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[\d]+/,
+            message: '请输入正确的数值',
+            trigger: 'blur'
+          }
         ],
         assetValue: [
-          { required: true, message: '请输入资产估价', trigger: 'blur' }
+          { required: true, message: '请输入资产估价', trigger: 'blur' },
+          {
+            pattern: /^[\d]+/,
+            message: '请输入正确的数值',
+            trigger: 'blur'
+          }
         ],
         investAmount: [
-          { required: true, message: '请输入总投资', trigger: 'blur' }
+          { required: true, message: '请输入总投资', trigger: 'blur' },
+          {
+            pattern: /^[\d]+/,
+            message: '请输入正确的数值',
+            trigger: 'blur'
+          }
         ],
         financeAmountMin: [
-          { required: true, message: '请输入融资金额', trigger: 'blur' }
+          { required: true, message: '请输入最小融资金额', trigger: 'blur' },
+          {
+            pattern: /^[\d]+/,
+            message: '请输入正确的数值',
+            trigger: 'blur'
+          }
+        ],
+        financeAmountMax: [
+          { required: true, message: '请输入最大融资金额', trigger: 'blur' },
+          {
+            pattern: /^[\d]+/,
+            message: '请输入正确的数值',
+            trigger: 'blur'
+          }
         ],
         investTypes: [{ required: true, message: '请勾选意向资金' }],
         financingMethods: [{ required: true, message: '请勾选融资方式' }],
@@ -334,66 +382,129 @@ export default {
           { required: true, message: '请输入项目概述', trigger: 'blur' }
         ]
       },
-      fileList: [
-        {
-          name: 'food.jpeg',
-          url:
-            'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        }
-      ],
-      fileList2: []
+      // oss data
+      accessId: '',
+      policy: '',
+      signature: '',
+      ossDir: '',
+      ossHost: '',
+      ossFormData: {}
     }
   },
   computed: {
     ...mapState('user', ['user'])
   },
+  mounted() {
+    this.getAliyunOssSign()
+  },
   methods: {
     ...mapActions('user', ['updateMemberInfo']),
-    changeAddress(selectAddr) {
-      this.selectAddr = selectAddr
-    },
     onSubmit(formName) {
-      this.$refs[formName].validate(valid => {
+      console.log(this.publicForm)
+      this.$refs[formName].validate(async valid => {
         if (!valid) {
           return false
         }
+        const params = this.publicForm
+        // 提交
+        await this.$axios.$post(API.projectPublish, params)
+        this.$message.success({
+          showClose: true,
+          message: '发布成功',
+          type: 'success'
+        })
+        // this.$router.push({
+        //   path: '/usercenter/publish/list'
+        // })
       })
-      console.log('submit!')
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
+    getAliyunOssSign() {
+      // 获取oss认证
+      this.$axios.get(API.getSign).then(result => {
+        if (!result || !result.data) {
+          this.$message.error('图片服务器连接异常！')
+          return
+        }
+        this.accessId = result.data.accessid
+        this.policy = result.data.policy
+        this.signature = result.data.signature
+        this.ossDir = result.data.dir
+        this.ossHost = result.data.host
+      })
+    },
+    // 上传缩略图
+    beforeCoverImgUpload(file) {
+      const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
+      const isLt5M = file.size / 1024 / 1024 < 1
+      if (!isJPG) {
+        this.$message.error('上传图片只能是 JPG 或者 PNG 格式!')
+        return false
+      }
+      if (!isLt5M) {
+        this.$message.error('上传图片大小不能超过 1MB!')
+        return false
+      }
+
+      const newImgName =
+        'ci_' + Date.now() + Math.floor(Math.random() * 10000) + '_' + file.name
+
+      this.publicForm.img = this.getPictureFullPath(newImgName, true)
+
+      this.ossFormData.OSSAccessKeyId = this.accessId
+      this.ossFormData.policy = this.policy
+      this.ossFormData.Signature = this.signature
+      this.ossFormData.key = this.getPictureFullPath(newImgName, false)
+      // console.log(this.publicForm.img)
+    },
+    // 上传附加文件
+    beforeAttachmentUpload(file) {
+      const isLt5M = file.size / 1024 / 1024 < 5
+      if (!isLt5M) {
+        this.$message.error('上传图片大小不能超过 5MB!')
+        return false
+      }
+
+      const newFileName =
+        'atm_' +
+        Date.now() +
+        Math.floor(Math.random() * 10000) +
+        '_' +
+        file.name
+
+      this.publicForm.attachment = this.getPictureFullPath(newFileName, true)
+
+      this.ossFormData.OSSAccessKeyId = this.accessId
+      this.ossFormData.policy = this.policy
+      this.ossFormData.Signature = this.signature
+      this.ossFormData.key = this.getPictureFullPath(newFileName, false)
+      console.log(this.publicForm.attachment)
+    },
+    // 获取图片完整路径
+    getPictureFullPath(fileName, isHasHost) {
+      if (!fileName) {
+        return fileName
+      }
+      if (
+        fileName.toLowerCase().startsWith('http://') ||
+        fileName.toLowerCase().startsWith('https://')
+      ) {
+        return fileName
+      }
+      const host = isHasHost ? this.ossHost + '/' : ''
+
+      return host + this.ossDir + 'project/' + fileName
+    },
+    beforeRemove(file) {
+      return this.$confirm(`确定移除 ${file.name}？`)
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview(file) {
-      console.log(file)
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      )
-    },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
+      this.publicForm.img = ''
     },
     handleRemove2(file, fileList) {
-      console.log(file, fileList)
+      this.publicForm.attachment = ''
     },
-    handlePreview2(file) {
-      console.log(file)
-    },
-    handleExceed2(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      )
-    },
-    beforeRemove2(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
+    handleExceed(files, fileList) {
+      this.$message.warning('最多只能上传一个文件')
     },
     // 多选框选中事件
     onCheckChanged() {
