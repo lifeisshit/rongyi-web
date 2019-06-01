@@ -2,10 +2,10 @@
   <div class="fund-detail-page">
     <div class="wrap">
       <div class="detail-title">
-        <h1>{{ fundInfo.title }}</h1>
+        <h1>{{ projectInfo.title }}</h1>
         <div class="infos">
           <span class="el-icon-time"
-            ><span>{{ fundInfo.gmtCreate }}</span></span
+            ><span>{{ projectInfo.gmtCreate }}</span></span
           >
           <span class="el-icon-view"
             ><span>{{ viewTime }}</span></span
@@ -18,23 +18,21 @@
         <div class="detail-left-box">
           <div class="detail-labes">
             <ul class="clearfix">
-              <li><label>资金类型：</label>{{ fundInfo.type }}</li>
-              <li><label>投资地区：</label>{{ fundInfo.inventRegion }}</li>
-              <li><label>投资行业：</label>{{ fundInfo.investIndustry }}</li>
-              <li><label>投资金额：</label>{{ fundInfo.investAmount }}</li>
-              <li><label>投资类型：</label>{{ fundInfo.investType }}</li>
-              <li><label>投资阶段：</label>{{ fundInfo.investPeriod }}</li>
-              <li><label>投资方式：</label>{{ fundInfo.investWay }}</li>
-              <li><label>风控要求：</label>{{ fundInfo.riskRequire }}</li>
+              <li><label>项目类型：</label>{{ projectInfo.type }}</li>
+              <li><label>所在地区：</label>{{ projectInfo.region }}</li>
+              <li><label>所属行业：</label>{{ projectInfo.industry }}</li>
+              <li><label>投资金额：</label>{{ projectInfo.investAmount }}</li>
+              <li><label>融资用途：</label>{{ projectInfo.financeUse }}</li>
+              <li><label>融资金额：</label>{{ projectInfo.financeAmount }}</li>
+              <li><label>总投金额：</label>{{ projectInfo.investAmount }}</li>
+              <li><label>投资估算：</label>{{ projectInfo.investEstimate }}</li>
+              <li><label>融资方式：</label>{{ projectInfo.financeWay }}</li>
               <li>
-                <label>最低回报要求：</label>{{ fundInfo.minReturnRequire }}
+                <label>项目所处阶段：</label>{{ projectInfo.projectPeriod }}
               </li>
-              <li><label>资金主体：</label>{{ fundInfo.moneySubject }}</li>
-              <li>
-                <label>所在地区：</label>{{ fundInfo.moneySubjectRegion }}
-              </li>
-              <li><label>投资期限：</label>{{ fundInfo.investDeadline }}</li>
-              <li><label>需提供资料：</label>{{ fundInfo.provideData }}</li>
+              <li><label>资产估价：</label>{{ projectInfo.assetValue }}</li>
+              <li><label>招商方式：</label>{{ projectInfo.attractWay }}</li>
+              <li><label>投资期限：</label>{{ projectInfo.investTime }}</li>
             </ul>
             <div class="item-action">
               <div class="item-text">
@@ -48,14 +46,14 @@
           </div>
           <div class="detail-item-desc">
             <el-tabs v-model="activeName" type="card" class="detail-tab-divide">
-              <el-tab-pane label="投资要求概述" name="first">
+              <el-tab-pane label="项目简介" name="first">
                 <div class="dec">
-                  {{ fundInfo.investRequireDesc || '无' }}
+                  {{ projectInfo.projectDesc || '无' }}
                 </div>
               </el-tab-pane>
               <el-tab-pane label="其他备注" name="second">
                 <div class="dec">
-                  {{ fundInfo.otherComment || '无' }}
+                  {{ projectInfo.otherComment || '无' }}
                 </div>
               </el-tab-pane>
             </el-tabs>
@@ -92,7 +90,7 @@ import { mapState } from 'vuex'
 import { random3Num } from '~/common/util'
 
 export default {
-  name: 'FundsId',
+  name: 'ProjectId',
   data() {
     return {
       viewTime: random3Num(),
@@ -100,10 +98,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('fund', ['fundInfo'])
+    ...mapState('project', ['projectInfo'])
   },
   async fetch({ store, params }) {
-    await store.dispatch('fund/getById', { id: params.id })
+    await store.dispatch('project/getById', { id: params.id })
   }
 }
 </script>

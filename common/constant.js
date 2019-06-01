@@ -7,6 +7,13 @@ export const SmsCodeType = {
 }
 // 融资方式
 export const FinancingMethods = ['债权融资', '股权融资', '其他融资', '整体转让']
+// 提供资料
+export const Materials = [
+  '商业/项目计划书',
+  '公司证件',
+  '相关财务资料',
+  '其它资料'
+]
 // 资金类型
 export const InvestTypes = [
   '个人资金',

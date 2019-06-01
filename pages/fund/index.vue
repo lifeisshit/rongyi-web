@@ -285,7 +285,7 @@
             <nuxt-link
               v-for="fund in topFundList"
               :key="fund.id"
-              to="/"
+              :to="`/fund/${fund.id}`"
               class="rows"
             >
               <div class="item-img">
@@ -363,7 +363,7 @@ export default {
   },
   async fetch({ store }) {
     await Promise.all([
-      store.dispatch('fund/getPageList', { recommend: 0 }),
+      store.dispatch('fund/getPageList', { pageSize: 1 }),
       store.dispatch('fund/getPageList', { recommend: 1, pageSize: 6 })
     ])
   },
@@ -410,9 +410,9 @@ export default {
       const condition = {
         keyword: this.keyword,
         investWay: this.tzType,
-        szCity: this.szCity,
-        tzHangye: this.tzHangye,
-        tzMoney: this.tzMoney,
+        moneySubjectRegion: this.szCity,
+        investIndustry: this.tzHangye,
+        investAmount: this.tzMoney,
         sort: this.sort,
         pageNum: page || 1
       }

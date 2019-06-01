@@ -19,10 +19,10 @@
                 <el-row :gutter="20" class="form-item">
                   <el-col :span="18">
                     <el-form-item label="会员对象：">
-                      项目方
+                      {{ accountForm.memberObject }}
                     </el-form-item>
                     <el-form-item label="会员身份：">
-                      个人
+                      {{ accountForm.memberType }}
                     </el-form-item>
                     <el-form-item label="姓名：" prop="name">
                       <el-input v-model="accountForm.name"></el-input>
@@ -133,12 +133,17 @@
                       </el-select>
                     </el-form-item>
                     <el-form-item label="所在地区：">
-                      <FormCitySelect @change="changeAddress"></FormCitySelect>
+                      <FormCitySelect
+                        :province="accountForm.province"
+                        :city="accountForm.city"
+                        :region="accountForm.region"
+                        @change="changeAddress"
+                      ></FormCitySelect>
                     </el-form-item>
                     <el-form-item label="">
                       <el-input v-model="accountForm.address"></el-input>
                       <div class="el-form-item__tips">
-                        请选择{{ type === 3 ? '单位' : '公司' }}所在地的联系地址
+                        请填写{{ type === 3 ? '单位' : '公司' }}所在地的联系地址
                       </div>
                     </el-form-item>
                     <el-form-item
@@ -194,18 +199,19 @@ export default {
       industries: Industries,
       governmentPositions: GovernmentPositions,
       companyPositions: CompanyPositions,
-      type: 1,
       memberType: '',
-      selectAddr: {},
+      selectAddr: {
+        province: '',
+        city: '',
+        region: ''
+      },
       accountForm: {
         name: '',
-        gender: '男',
+        gender: '',
         department: '',
         fixLinePhone: '',
         qq: '',
         duty: '',
-        // mobile: '',
-        // mobile_state: true,
         email: '',
         email_state: false,
         compName: '',
@@ -236,21 +242,47 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['user'])
+    ...mapState('user', ['user']),
+    type: function() {
+      const userData = this.user.userData
+
+      if (userData.memberType === '企业') {
+        return 1
+      } else if (userData.memberType === '个人') {
+        return 2
+      }
+      return 3
+    }
+  },
+  created() {
+    this.accountForm = Object.assign({}, this.user.userData)
+
+    this.selectAddr.province = this.accountForm.province
+    this.selectAddr.city = this.accountForm.city
+    this.selectAddr.region = this.accountForm.region
   },
   methods: {
-    ...mapActions('user', ['completeMemberInfo']),
+    ...mapActions('user', ['updateMemberInfo']),
     changeAddress(selectAddr) {
       this.selectAddr = selectAddr
     },
     onSubmit(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
+      this.$refs[formName].validate(async valid => {
+        if (!valid) {
           return false
         }
+        const param = this.accountForm
+        param.province = this.selectAddr.province
+        param.city = this.selectAddr.city
+        param.region = this.selectAddr.region
+
+        await this.updateMemberInfo(param)
+
+        this.$message.success({
+          showClose: true,
+          message: '设置成功',
+          type: 'success'
+        })
       })
     }
   }

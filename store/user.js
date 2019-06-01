@@ -74,11 +74,17 @@ export const actions = {
     // 清除对象树中的值
     commit('clearToken')
   },
+  // 完善会员信息
   async completeMemberInfo({ commit }, payload) {
     await this.$axios.$post(API.completeMemberInfo, payload)
   },
+  // 完善定制信息
   async completeBusinessInfo({ commit }, payload) {
     await this.$axios.$post(API.completeBusinessInfo, payload)
+  },
+  // 修改会员信息
+  async updateMemberInfo({ commit }, payload) {
+    await this.$axios.$post(API.updateMemberInfo, payload)
   },
   finishStep1({ commit }) {
     commit('setStep1')

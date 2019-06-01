@@ -285,7 +285,7 @@
             <nuxt-link
               v-for="project in topProjectList"
               :key="project.id"
-              to="/"
+              :to="`/project/${project.id}`"
               class="rows"
             >
               <div class="item-img">
@@ -419,10 +419,10 @@ export default {
     sumbitSearch: function(page) {
       const condition = {
         keyword: this.keyword,
-        investWay: this.tzType,
-        szCity: this.szCity,
-        tzHangye: this.tzHangye,
-        tzMoney: this.tzMoney,
+        financeWay: this.tzType,
+        region: this.szCity,
+        industry: this.tzHangye,
+        financeAmount: this.tzMoney,
         sort: this.sort,
         pageNum: page || 1
       }

@@ -69,7 +69,7 @@
                 <el-form-item label="">
                   <el-input v-model="accountForm.address"></el-input>
                   <div class="el-form-item__tips">
-                    请选择{{ type === 3 ? '单位' : '公司' }}所在地的联系地址
+                    请填写{{ type === 3 ? '单位' : '公司' }}所在地的联系地址
                   </div>
                 </el-form-item>
                 <el-form-item
@@ -246,8 +246,6 @@ export default {
     },
     onSubmit(formName) {
       this.$refs[formName].validate(async valid => {
-        console.log(this.accountForm.address)
-
         if (!valid) {
           return false
         }

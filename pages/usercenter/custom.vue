@@ -163,33 +163,32 @@ export default {
     },
     onSubmit(formName) {
       this.$refs[formName].validate(async valid => {
-        if (valid) {
-          const param = {}
-          if (this.type === 1) {
-            param.memberObject = '项目方'
-            param.moneySrc = this.accountForm.investTypes.join(',')
-          } else {
-            param.memberObject = '资金方'
-            param.moneySrc = this.accountForm.fundTypes
-          }
-          param.interestIndustry = this.accountForm.industries.join(',')
-          param.interestRegion = this.accountForm.regions.join(',')
-          param.userId = this.user.id
-          // console.log(param)
-          await this.completeBusinessInfo(param)
-          // 设置完成状态
-          this.finishStep2()
-          this.$message.success({
-            showClose: true,
-            message: '设置成功',
-            type: 'success'
-          })
-          this.$router.push({
-            path: '/'
-          })
-        } else {
+        if (!valid) {
           return false
         }
+        const param = {}
+        if (this.type === 1) {
+          param.memberObject = '项目方'
+          param.moneySrc = this.accountForm.investTypes.join(',')
+        } else {
+          param.memberObject = '资金方'
+          param.moneySrc = this.accountForm.fundTypes
+        }
+        param.interestIndustry = this.accountForm.industries.join(',')
+        param.interestRegion = this.accountForm.regions.join(',')
+        param.userId = this.user.id
+        // console.log(param)
+        await this.completeBusinessInfo(param)
+        // 设置完成状态
+        this.finishStep2()
+        this.$message.success({
+          showClose: true,
+          message: '设置成功',
+          type: 'success'
+        })
+        this.$router.push({
+          path: '/'
+        })
       })
     }
   }

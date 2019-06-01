@@ -56,12 +56,26 @@ import allRegionList from '~/static/js/city'
 
 export default {
   name: 'FormCitySelect',
+  props: {
+    province: {
+      type: String,
+      default: ''
+    },
+    city: {
+      type: String,
+      default: ''
+    },
+    region: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       publicForm: {
-        province: '',
-        city: '',
-        region: ''
+        province: this.province,
+        city: this.city,
+        region: this.region
       },
       provinces: allRegionList,
       citys: [],

@@ -16,6 +16,7 @@ const API = {
   completeBusinessInfo: '/service/user/completeBusinessInfo', // 定制业务信息
   completeMemberInfo: '/service/user/completeMemberInfo', // 完善会员资料
   updatePwd: '/service/user/updatePwd', // 更新用户密码
+  updateMemberInfo: '/service/user/updateMemberInfo', // 修改会员资料
   // ================约谈项目================
   appoint: '/service/appointment-project/appoint', // 约谈
   appointPageList: '/service/appointment-project/pageList', // 列表

@@ -25,7 +25,7 @@ export const actions = {
       API.fundPageList,
       payload
     )
-    // console.log(dataList)
+    console.log(payload)
     // 设置对象树中的值
     if (payload.recommend === 1) {
       // 推荐资金方

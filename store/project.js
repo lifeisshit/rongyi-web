@@ -56,7 +56,7 @@ export const actions = {
     const projectInfo = await this.$axios.$get(API.projectGetById, {
       params: payload
     })
-    console.log(projectInfo)
+    // console.log(projectInfo)
     commit('setData', {
       key: 'projectInfo',
       value: projectInfo

@@ -11,12 +11,14 @@
     <dl>
       <dt>信息管理</dt>
       <dd>
-        <nuxt-link to="/usercenter" :class="{ active: active == 201 }"
+        <nuxt-link to="/usercenter/publish" :class="{ active: active == 201 }"
           >发布信息</nuxt-link
         >
       </dd>
       <dd>
-        <nuxt-link to="/usercenter" :class="{ active: active == 202 }"
+        <nuxt-link
+          to="/usercenter/publish/list"
+          :class="{ active: active == 202 }"
           >已发布的信息</nuxt-link
         >
       </dd>
