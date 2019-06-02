@@ -152,11 +152,11 @@
       <div class="index-sec-hd">
         <h3 class="index-sec-hd-left">找资金</h3>
         <div class="index-sec-hd-right">
-          <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+          <nuxt-link to="/fund" class="link-more">查看更多</nuxt-link>
         </div>
       </div>
       <div class="index-sec-bd">
-        <nuxt-link to="/" class="money-item">
+        <nuxt-link to="/fund" class="money-item">
           <img src="~/assets/img/money-img1.png" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">天使投资</span>
@@ -164,7 +164,7 @@
             <span class="money-arrow"></span>
           </div>
         </nuxt-link>
-        <nuxt-link to="/" class="money-item money-item-center">
+        <nuxt-link to="/fund" class="money-item money-item-center">
           <img src="~/assets/img/money-img2.jpg" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">股权投资</span>
@@ -172,7 +172,7 @@
             <span class="money-arrow"></span>
           </div>
         </nuxt-link>
-        <nuxt-link to="/" class="money-item">
+        <nuxt-link to="/fund" class="money-item">
           <img src="~/assets/img/money-img3.png" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">债权投资</span>
@@ -199,16 +199,19 @@
         <div v-swiper:successCaseSwiper="successCaseSwiperOption">
           <div class="swiper-wrapper">
             <div
-              v-for="slide in successCaseSwiperSlides"
+              v-for="slide in successCaseList"
               :key="slide.id"
               class="swiper-slide sc-swiper-slide"
             >
-              <nuxt-link to="/" class="link-img">
-                <img :src="slide.img" alt="成功案例" />
+              <nuxt-link :to="`/successcase/${slide.id}`" class="link-img">
+                <img
+                  :src="slide.img || require('~/assets/img/no-img.png')"
+                  alt="成功案例"
+                />
               </nuxt-link>
               <div class="slide-info">
                 <p>{{ slide.title }}</p>
-                <nuxt-link to="/">查看详情</nuxt-link>
+                <nuxt-link :to="`/successcase/${slide.id}`">查看详情</nuxt-link>
               </div>
             </div>
           </div>
@@ -216,7 +219,7 @@
       </div>
     </div>
     <!--投资人-->
-    <div class="index-sec wrap">
+    <div v-if="showInvestor" class="index-sec wrap">
       <div class="index-sec-hd">
         <h3 class="index-sec-hd-left">投资人</h3>
         <div class="index-sec-hd-right">
@@ -245,7 +248,7 @@
       </div>
     </div>
     <!--投资机构-->
-    <div class="index-sec wrap">
+    <div v-if="showInvestigate" class="index-sec wrap">
       <div class="index-sec-hd">
         <h3 class="index-sec-hd-left">投资机构</h3>
         <div class="index-sec-hd-right">
@@ -283,7 +286,7 @@
       <div class="index-sec-hd">
         <h3 class="index-sec-hd-left">找项目</h3>
         <div class="index-sec-hd-right">
-          <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+          <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
         </div>
       </div>
       <div class="index-sec-bd">
@@ -295,7 +298,7 @@
               <p class="fm-line"></p>
             </div>
             <div class="fm-right">
-              <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+              <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
             </div>
           </div>
         </div>
@@ -308,7 +311,7 @@
                 <p class="fm-line"></p>
               </div>
               <div class="fm-right">
-                <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+                <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
               </div>
             </div>
           </div>
@@ -320,7 +323,7 @@
                 <p class="fm-line"></p>
               </div>
               <div class="fm-right">
-                <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+                <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
               </div>
             </div>
           </div>
@@ -334,7 +337,7 @@
                 <p class="fm-line"></p>
               </div>
               <div class="fm-right">
-                <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+                <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
               </div>
             </div>
           </div>
@@ -347,7 +350,9 @@
                   <p class="fm-line"></p>
                 </div>
                 <div class="fm-right">
-                  <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+                  <nuxt-link to="/project" class="link-more"
+                    >查看更多</nuxt-link
+                  >
                 </div>
               </div>
             </div>
@@ -359,7 +364,9 @@
                   <p class="fm-line"></p>
                 </div>
                 <div class="fm-right">
-                  <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
+                  <nuxt-link to="/project" class="link-more"
+                    >查看更多</nuxt-link
+                  >
                 </div>
               </div>
             </div>
@@ -384,17 +391,20 @@
         <div v-swiper:betterCaseSwiper="betterCaseSwiperOption">
           <div class="swiper-wrapper">
             <div
-              v-for="slide in betterCaseSwiperSlides"
+              v-for="slide in topProjectList"
               :key="slide.id"
               class="swiper-slide bc-swiper-slide"
             >
-              <nuxt-link to="/" class="link-img">
-                <img :src="slide.img" alt="优质项目" />
+              <nuxt-link :to="`/project/${slide.id}`" class="link-img">
+                <img
+                  :src="slide.img || require('~/assets/img/no-img.png')"
+                  alt="优质项目"
+                />
               </nuxt-link>
               <div class="slide-info">
                 <p class="title">{{ slide.title }}</p>
-                <p class="introduce">{{ slide.introduce }}</p>
-                <nuxt-link to="/">查看详情</nuxt-link>
+                <p class="introduce">{{ slide.projectDesc }}</p>
+                <nuxt-link :to="`/project/${slide.id}`">查看详情</nuxt-link>
               </div>
             </div>
           </div>
@@ -417,6 +427,8 @@ import {
 export default {
   data() {
     return {
+      showInvestor: false,
+      showInvestigate: false,
       isLoginTabActive: true,
       smsCodeBtnText: '获取验证码',
       loginForm: {
@@ -449,38 +461,6 @@ export default {
         loopFillGroupWithBlank: true,
         allowTouchMove: false
       },
-      successCaseSwiperSlides: [
-        {
-          id: '1',
-          title: '四川某项目融资成功1',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
-        },
-        {
-          id: '2',
-          title: '四川某项目融资成功2',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
-        },
-        {
-          id: '3',
-          title: '四川某项目融资成功3',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
-        },
-        {
-          id: '4',
-          title: '四川某项目融资成功4',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
-        },
-        {
-          id: '5',
-          title: '四川某项目融资成功5',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
-        },
-        {
-          id: '6',
-          title: '四川某项目融资成功6',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9040318929/1000'
-        }
-      ],
       investors: [
         {
           id: '1',
@@ -550,56 +530,21 @@ export default {
         spaceBetween: 10,
         slidesPerGroup: 4,
         allowTouchMove: false
-      },
-      betterCaseSwiperSlides: [
-        {
-          id: '1',
-          title: '四川某项目融资成功1',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
-          introduce:
-            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
-        },
-        {
-          id: '2',
-          title: '四川某项目融资成功2',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
-          introduce:
-            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
-        },
-        {
-          id: '3',
-          title: '四川某项目融资成功3',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
-          introduce:
-            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
-        },
-        {
-          id: '4',
-          title: '四川某项目融资成功4',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
-          introduce:
-            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
-        },
-        {
-          id: '5',
-          title: '四川某项目融资成功5',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
-          introduce:
-            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有'
-        },
-        {
-          id: '6',
-          title: '四川某项目融资成功6',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/9051078583/1000',
-          introduce:
-            '安徽东临溪新农农业开发有限公司（拟），拟建立一家按现代企业模式运作的民营有作的民营有作的民营有'
-        }
-      ]
+      }
     }
   },
   computed: {
     ...mapState('sessionStorage', ['regCodeInfo']),
-    ...mapState('user', ['nuxtToken'])
+    ...mapState('user', ['nuxtToken']),
+    ...mapState('project', ['topProjectList']),
+    ...mapState('successcase', ['successCaseList'])
+  },
+  async fetch({ store }) {
+    await Promise.all([
+      store.dispatch('project/getPageList', { pageNum: 1 }),
+      store.dispatch('project/getPageList', { recommend: 1, pageSize: 8 }),
+      store.dispatch('successcase/getPageList', { pageNum: 1 })
+    ]).catch(() => {})
   },
   created() {
     const isSendDiabled = this.regCodeInfo.isSendDiabled

@@ -39,7 +39,7 @@
                   对该资金感兴趣？快来投递项目方吧，让资金方主动联系您！
                 </div>
               </div>
-              <a class="talks-btn" href="">投递项目</a>
+              <!--<a class="talks-btn" href="">投递项目</a>-->
             </div>
           </div>
           <div class="detail-item-desc">
@@ -103,7 +103,7 @@ export default {
     await Promise.all([
       store.dispatch('fund/getById', { id: params.id }),
       store.dispatch('fund/getRecentList')
-    ])
+    ]).catch(() => {})
   },
   methods: {
     linkToContent(id) {

@@ -122,7 +122,7 @@ export default {
     await Promise.all([
       store.dispatch('successcase/getById', { id: params.id }),
       store.dispatch('fund/getRecentList')
-    ])
+    ]).catch(() => {})
   },
   methods: {
     linkToContent(id) {

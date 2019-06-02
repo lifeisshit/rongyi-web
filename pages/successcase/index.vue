@@ -45,7 +45,7 @@
                   </li>
                 </ul>
               </div>
-              <a href="" class="item-apply">约谈项目</a>
+              <!--<a href="" class="item-apply">约谈项目</a>-->
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default {
   async fetch({ store }) {
     await Promise.all([
       store.dispatch('successcase/getPageList', { pageNum: 1 })
-    ])
+    ]).catch(() => {})
   },
   methods: {
     ...mapActions('successcase', ['getPageList']),

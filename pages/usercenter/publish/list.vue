@@ -83,7 +83,7 @@ export default {
         pageNum: 1,
         hasUser: true
       })
-    ])
+    ]).catch(() => {})
   },
   methods: {
     ...mapActions('project', ['getPageList']),

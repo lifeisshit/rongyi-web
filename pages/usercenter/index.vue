@@ -255,7 +255,13 @@ export default {
     }
   },
   created() {
-    this.accountForm = Object.assign({}, this.user.userData)
+    const user = this.user
+    const userData = user.userData
+    userData.name = user.name
+    userData.gender = user.gender
+    userData.email = user.email
+
+    this.accountForm = JSON.parse(JSON.stringify(userData))
 
     this.selectAddr.province = this.accountForm.province
     this.selectAddr.city = this.accountForm.city
@@ -275,6 +281,7 @@ export default {
         param.province = this.selectAddr.province
         param.city = this.selectAddr.city
         param.region = this.selectAddr.region
+        param.userId = this.user.id
 
         await this.updateMemberInfo(param)
 

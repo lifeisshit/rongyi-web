@@ -53,6 +53,7 @@
                 v-model="publicForm.lastYearTurnover"
                 style="width: 160px;"
                 placeholder="0"
+                type="number"
               ></el-input
               ><el-select
                 v-model="publicForm.lastYearTurnoverUnit"
@@ -73,6 +74,7 @@
                 v-model="publicForm.assetValue"
                 style="width: 160px;"
                 placeholder="0"
+                type="number"
               ></el-input
               ><el-select
                 v-model="publicForm.assetValueUnit"
@@ -112,6 +114,7 @@
                 v-model="publicForm.investAmount"
                 style="width: 160px;"
                 placeholder="0"
+                type="number"
               ></el-input
               ><el-select
                 v-model="publicForm.investAmountUnit"
@@ -302,28 +305,13 @@ export default {
             required: true,
             message: '请输入去年营业额',
             trigger: 'blur'
-          },
-          {
-            pattern: /^[\d]+/,
-            message: '请输入正确的数值',
-            trigger: 'blur'
           }
         ],
         assetValue: [
-          { required: true, message: '请输入资产估价', trigger: 'blur' },
-          {
-            pattern: /^[\d]+/,
-            message: '请输入正确的数值',
-            trigger: 'blur'
-          }
+          { required: true, message: '请输入资产估价', trigger: 'blur' }
         ],
         investAmount: [
-          { required: true, message: '请输入总投资', trigger: 'blur' },
-          {
-            pattern: /^[\d]+/,
-            message: '请输入正确的数值',
-            trigger: 'blur'
-          }
+          { required: true, message: '请输入总投资', trigger: 'blur' }
         ],
         financeAmount: [
           { required: true, message: '请选择融资金额', trigger: 'change' }

@@ -206,7 +206,7 @@
         </div>
       </div>
       <div class="business-list clearfix">
-        <div v-if="totalRow > 0" class="items-list">
+        <div class="items-list">
           <div class="filter-condition clearfix">
             <div
               v-for="item in sortList"
@@ -231,7 +231,7 @@
               >个项目
             </div>
           </div>
-          <div class="items-out-box">
+          <div v-if="totalRow > 0" class="items-out-box">
             <div class="item-data-list">
               <div
                 v-for="fund in fundList"
@@ -275,9 +275,7 @@
               </el-pagination>
             </div>
           </div>
-        </div>
-        <div v-if="totalRow <= 0" class="items-list">
-          <p class="no-data">暂无数据</p>
+          <p v-if="totalRow <= 0" class="no-data">暂无数据</p>
         </div>
         <div class="hot-items">
           <div class="tips">优质信息推荐</div>
@@ -365,7 +363,7 @@ export default {
     await Promise.all([
       store.dispatch('fund/getPageList', { pageSize: 1 }),
       store.dispatch('fund/getPageList', { recommend: 1, pageSize: 6 })
-    ])
+    ]).catch(() => {})
   },
   methods: {
     ...mapActions('fund', ['getPageList']),
