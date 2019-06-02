@@ -62,21 +62,22 @@
         <div class="detail-right-box">
           <div class="horizontal-line"></div>
           <div class="detail-right-ctn">
-            <div class="tips">最近浏览的资金</div>
-            <el-steps direction="vertical" :active="1">
+            <div class="tips">最近浏览的项目</div>
+            <el-steps
+              v-if="projectRecentList.length > 0"
+              direction="vertical"
+              :active="1"
+            >
               <el-step
-                title="陕西某个人资金方寻找优质项目500万-9000万元"
-                description="1小时前"
-              ></el-step>
-              <el-step
-                title="陕西某个人资金方寻找优质项目500万-9000万元"
-                description="1小时前"
-              ></el-step>
-              <el-step
-                title="陕西某个人资金方寻找优质项目500万-9000万元"
-                description="1小时前"
+                v-for="project in projectRecentList"
+                :key="project.id"
+                :title="project.title"
+                @click.native="linkToContent(project.id)"
               ></el-step>
             </el-steps>
+            <div v-if="projectRecentList.length === 0" class="no-data">
+              暂无数据
+            </div>
           </div>
         </div>
       </div>
@@ -98,10 +99,20 @@ export default {
     }
   },
   computed: {
-    ...mapState('project', ['projectInfo'])
+    ...mapState('project', ['projectInfo', 'projectRecentList'])
   },
   async fetch({ store, params }) {
-    await store.dispatch('project/getById', { id: params.id })
+    await Promise.all([
+      store.dispatch('project/getById', { id: params.id }),
+      store.dispatch('project/getRecentList')
+    ])
+  },
+  methods: {
+    linkToContent(id) {
+      this.$router.push({
+        path: '/project/' + id
+      })
+    }
   }
 }
 </script>

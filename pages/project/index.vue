@@ -246,17 +246,18 @@
                   </div>
                   <div class="i-time">{{ project.gmtCreate || '' }}发布</div>
                   <ul class="attribute">
-                    <li>融资地区：{{ project.inventRegion || '' }}</li>
-                    <li>融资行业：{{ project.investIndustry || '' }}</li>
-                    <li>融资资金：{{ project.investAmount || '' }}</li>
-                    <li>风控要求：{{ project.riskRequire || '' }}</li>
-                    <li>最低回报要求：{{ project.minReturnRequire || '' }}</li>
-                    <li>融资方式：{{ project.investWay || '' }}</li>
+                    <li>所在地区：{{ project.region || '' }}</li>
+                    <li>所属行业：{{ project.industry || '' }}</li>
+                    <li>融资资金：{{ project.financeAmount || '' }}</li>
+                    <li>融资用途：{{ project.financeUse || '' }}</li>
+                    <li>项目估值：{{ project.assetValue || '' }}</li>
+                    <li>融资方式：{{ project.financeWay || '' }}</li>
                     <li>资金类型：{{ project.type || '' }}</li>
+                    <li>已投资金：{{ project.investAmount || '' }}</li>
                   </ul>
                 </div>
                 <div class="item-price">
-                  <p>{{ project.investAmount || 0 }}</p>
+                  <p>{{ project.financeAmount || 0 }}</p>
                   <nuxt-link to="/">约谈项目</nuxt-link>
                 </div>
               </div>
@@ -417,19 +418,20 @@ export default {
     },
     // 开始搜索
     sumbitSearch: function(page) {
-      const condition = {
-        keyword: this.keyword,
-        financeWay: this.tzType,
-        region: this.szCity,
-        industry: this.tzHangye,
-        financeAmount: this.tzMoney,
-        sort: this.sort,
-        pageNum: page || 1
-      }
       // 检测是否有筛选条件
       this.checkHasSolabel()
       // 构造当前筛选label
       this.buildSolabelText()
+
+      const condition = {
+        keyword: this.keyword,
+        financeWay: this.tzType,
+        region: this.szCity,
+        industry: this.solabel.tzHangye,
+        financeAmount: this.tzMoney,
+        sort: this.sort,
+        pageNum: page || 1
+      }
       // 加载内容
       // console.log(JSON.stringify(condition))
       // 开始查询
@@ -476,13 +478,9 @@ export default {
         if (typeof this.tzHangye === 'string') {
           tzHangyeText = this.tzHangye
         } else {
-          for (let i = 0, len = this.tzHangye.length; i < len; i++) {
-            tzHangyeText += ',' + this.tzHangye[i]
-          }
+          tzHangyeText = this.tzHangye.join(',')
         }
         if (tzHangyeText) {
-          typeof this.tzHangye === 'string' ||
-            (tzHangyeText = tzHangyeText.substr(1))
           hasLabel = true
         }
 
@@ -494,12 +492,9 @@ export default {
         if (typeof this.zjType === 'string') {
           zjTypeText = this.zjType
         } else {
-          for (let i = 0, len = this.zjType.length; i < len; i++) {
-            zjTypeText += ',' + this.zjType[i]
-          }
+          zjTypeText = this.zjType.join(',')
         }
         if (zjTypeText) {
-          typeof this.zjType === 'string' || (zjTypeText = zjTypeText.substr(1))
           hasLabel = true
         }
         this.solabel.zjType = zjTypeText

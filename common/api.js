@@ -22,13 +22,16 @@ const API = {
   appointPageList: '/service/appointment-project/pageList', // 列表
   // ================资金方================
   fundGetById: '/service/fund/getById', // 根据id获取记录
+  fundListRecent: '/service/fund/listRecent', // 最近浏览列表
   fundPageList: '/service/fund/pageList', // 列表
   // ================项目方================
   projectGetById: '/service/project/getById', // 根据id获取记录
+  projectListRecent: '/service/project/listRecent', // 最近浏览列表
   projectPageList: '/service/project/pageList', // 列表
   projectPublish: '/service/project/publish', // 发布项目
   // ================阿里云OSS签名接口================
-  getSign: '/service/aliyun-oss/getSign' // 签名
+  getSign: '/service/aliyun-oss/getSign', // 签名
+  deleteObject: '/service/aliyun-oss/deleteObject' // 删除文件
 }
 
 export default API

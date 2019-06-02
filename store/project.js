@@ -9,17 +9,21 @@ export const state = () => ({
   totalRow: 0,
   topProjectList: [],
   projectList: [],
-  projectInfo: {}
+  projectInfo: {},
+  projectRecentList: []
 })
 
 export const actions = {
   // 获取列表信息
-  async getPageList({ commit, state }, payload) {
+  async getPageList({ commit, state, rootState }, payload) {
     if (!payload.pageNum) {
-      payload.pageNum = state.pageNum
+      payload.pageNum = 1
     }
     if (!payload.pageSize) {
       payload.pageSize = state.pageSize
+    }
+    if (payload.hasUser) {
+      payload.userId = rootState.user.user.id
     }
     const { dataList, totalRow } = await this.$axios.$post(
       API.projectPageList,
@@ -60,6 +64,15 @@ export const actions = {
     commit('setData', {
       key: 'projectInfo',
       value: projectInfo
+    })
+  },
+  // 根据最近浏览的项目列表
+  async getRecentList({ state, commit }) {
+    const projectRecentList = await this.$axios.$post(API.projectListRecent)
+    console.log(projectRecentList)
+    commit('setData', {
+      key: 'projectRecentList',
+      value: projectRecentList
     })
   }
 }

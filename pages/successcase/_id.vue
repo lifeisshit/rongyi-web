@@ -18,7 +18,9 @@
                 <span class="el-icon-time"
                   ><span>{{ successCaseInfo.gmtCreate }}</span></span
                 >
-                <span class="el-icon-view"><span>623</span></span>
+                <span class="el-icon-view"
+                  ><span>{{ viewTime }}</span></span
+                >
                 <span class="el-icon-edit-outline"><span>评论区</span></span>
                 <span class="el-icon-share"><span>分享</span></span>
               </div>
@@ -77,20 +79,21 @@
           <div class="horizontal-line"></div>
           <div class="detail-right-ctn">
             <div class="tips">最近浏览的资金</div>
-            <el-steps direction="vertical" :active="1">
+            <el-steps
+              v-if="fundRecentList.length > 0"
+              direction="vertical"
+              :active="1"
+            >
               <el-step
-                title="陕西某个人资金方寻找优质项目500万-9000万元"
-                description="1小时前"
-              ></el-step>
-              <el-step
-                title="陕西某个人资金方寻找优质项目500万-9000万元"
-                description="1小时前"
-              ></el-step>
-              <el-step
-                title="陕西某个人资金方寻找优质项目500万-9000万元"
-                description="1小时前"
+                v-for="fund in fundRecentList"
+                :key="fund.id"
+                :title="fund.title"
+                @click.native="linkToContent(fund.id)"
               ></el-step>
             </el-steps>
+            <div v-if="fundRecentList.length === 0" class="no-data">
+              暂无数据
+            </div>
           </div>
         </div>
       </div>
@@ -101,19 +104,32 @@
 <script>
 import '~/assets/css/case-detail.less'
 import { mapState } from 'vuex'
+import { random3Num } from '~/common/util'
 
 export default {
   name: 'CaseId',
   data() {
     return {
+      viewTime: random3Num(),
       activeName: 'first'
     }
   },
   computed: {
-    ...mapState('successcase', ['successCaseInfo'])
+    ...mapState('successcase', ['successCaseInfo']),
+    ...mapState('fund', ['fundRecentList'])
   },
   async fetch({ store, params }) {
-    await store.dispatch('successcase/getById', { id: params.id })
+    await Promise.all([
+      store.dispatch('successcase/getById', { id: params.id }),
+      store.dispatch('fund/getRecentList')
+    ])
+  },
+  methods: {
+    linkToContent(id) {
+      this.$router.push({
+        path: '/fund/' + id
+      })
+    }
   }
 }
 </script>

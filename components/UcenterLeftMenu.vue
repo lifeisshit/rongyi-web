@@ -22,11 +22,6 @@
           >已发布的信息</nuxt-link
         >
       </dd>
-      <dd>
-        <nuxt-link to="/usercenter" :class="{ active: active == 206 }"
-          >发起的投递</nuxt-link
-        >
-      </dd>
     </dl>
   </div>
 </template>

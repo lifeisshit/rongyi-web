@@ -92,35 +92,18 @@
               <el-input v-model="publicForm.financeUse"></el-input>
             </el-form-item>
 
-            <el-form-item label="融资金额：" prop="financeAmountMin">
-              <el-input
-                v-model="publicForm.financeAmountMin"
-                style="width: 160px;"
-                placeholder="0"
-              ></el-input
-              ><el-select
-                v-model="publicForm.financeAmountMinUnit"
+            <el-form-item label="融资金额：" prop="financeAmount">
+              <el-select
+                v-model="publicForm.financeAmount"
                 placeholder="请选择"
-                style="width: 80px;"
-                class="danwei"
+                style="width: 180px;"
               >
-                <el-option label="万元" value="万元"></el-option>
-                <el-option label="亿元" value="亿元"></el-option>
-              </el-select>
-              <span style="margin:0 15px;color:#666;">-</span>
-              <el-input
-                v-model="publicForm.financeAmountMax"
-                style="width: 160px;"
-                placeholder="0"
-              ></el-input
-              ><el-select
-                v-model="publicForm.financeAmountMaxUnit"
-                placeholder="请选择"
-                style="width: 80px;"
-                class="danwei"
-              >
-                <el-option label="万元" value="万元"></el-option>
-                <el-option label="亿元" value="亿元"></el-option>
+                <el-option
+                  v-for="(amount, index) in amounts"
+                  :key="index"
+                  :label="amount"
+                  :value="amount"
+                ></el-option>
               </el-select>
             </el-form-item>
 
@@ -139,21 +122,6 @@
                 <el-option label="万元" value="万元"></el-option>
                 <el-option label="亿元" value="亿元"></el-option>
               </el-select>
-            </el-form-item>
-
-            <el-form-item label="意向资金：" prop="investTypes">
-              <el-checkbox-group
-                v-model="publicForm.investTypes"
-                class="form-check-box"
-              >
-                <el-checkbox
-                  v-for="(value, index) in investTypes"
-                  :key="index"
-                  :label="value"
-                  @change="onCheckChanged()"
-                  >{{ value }}</el-checkbox
-                >
-              </el-checkbox-group>
             </el-form-item>
 
             <el-form-item label="融资方式：" prop="financingMethods">
@@ -268,7 +236,7 @@ import '~/assets/css/ucenter-public-msg.less'
 import API from '~/common/api'
 import UcenterLeftMenu from '~/components/UcenterLeftMenu'
 import {
-  InvestTypes,
+  Amounts,
   Industries,
   Regions,
   FinancingMethods,
@@ -284,33 +252,31 @@ export default {
   },
   data() {
     return {
-      investTypes: InvestTypes,
       industries: Industries,
       regions: Regions,
       financingMethods: FinancingMethods,
       materials: Materials,
+      amounts: Amounts,
       publicForm: {
         title: '',
         region: '',
         type: '项目融资',
+        industry: '',
         lastYearTurnover: '',
         lastYearTurnoverUnit: '万元',
         assetValue: '',
         assetValueUnit: '万元',
-        financeAmountMin: '',
-        financeAmountMinUnit: '万元',
-        financeAmountMax: '',
-        financeAmountMaxUnit: '万元',
+        financeAmount: '',
         investAmount: '',
         investAmountUnit: '万元',
-        investTypes: [],
         financingMethods: [],
         materials: [],
         projectDesc: '',
         otherComment: '',
         tag: '',
         img: '',
-        attachment: ''
+        attachment: '',
+        financeUse: ''
       },
       rules: {
         title: [
@@ -359,23 +325,9 @@ export default {
             trigger: 'blur'
           }
         ],
-        financeAmountMin: [
-          { required: true, message: '请输入最小融资金额', trigger: 'blur' },
-          {
-            pattern: /^[\d]+/,
-            message: '请输入正确的数值',
-            trigger: 'blur'
-          }
+        financeAmount: [
+          { required: true, message: '请选择融资金额', trigger: 'change' }
         ],
-        financeAmountMax: [
-          { required: true, message: '请输入最大融资金额', trigger: 'blur' },
-          {
-            pattern: /^[\d]+/,
-            message: '请输入正确的数值',
-            trigger: 'blur'
-          }
-        ],
-        investTypes: [{ required: true, message: '请勾选意向资金' }],
         financingMethods: [{ required: true, message: '请勾选融资方式' }],
         materials: [{ required: true, message: '请勾选提交资料类型' }],
         projectDesc: [
@@ -400,12 +352,39 @@ export default {
   methods: {
     ...mapActions('user', ['updateMemberInfo']),
     onSubmit(formName) {
-      console.log(this.publicForm)
       this.$refs[formName].validate(async valid => {
         if (!valid) {
           return false
         }
-        const params = this.publicForm
+        const params = {}
+        params.userId = this.user.id
+        params.personName = this.user.name
+        params.title = this.publicForm.title
+        params.region = this.publicForm.region
+        params.tag = this.publicForm.tag
+        params.img = this.publicForm.img
+        params.attachment = this.publicForm.attachment
+        params.otherComment = this.publicForm.otherComment
+        params.projectDesc = this.publicForm.projectDesc
+        params.type = this.publicForm.type
+        params.financeUse = this.publicForm.financeUse
+        params.industry = this.publicForm.industry
+
+        // 去年营业额
+        params.lastYearTurnover =
+          this.publicForm.lastYearTurnover +
+          this.publicForm.lastYearTurnoverUnit
+        // 当前资产估价
+        params.assetValue =
+          this.publicForm.assetValue + this.publicForm.assetValueUnit
+        // 总投金额
+        params.investAmount =
+          this.publicForm.investAmount + this.publicForm.investAmountUnit
+        // 融资金额
+        params.financeAmount = this.publicForm.financeAmount
+        // 提供资料
+        params.material = this.publicForm.materials.join(',')
+        params.financeWay = this.publicForm.financingMethods.join(',')
         // 提交
         await this.$axios.$post(API.projectPublish, params)
         this.$message.success({
@@ -413,9 +392,9 @@ export default {
           message: '发布成功',
           type: 'success'
         })
-        // this.$router.push({
-        //   path: '/usercenter/publish/list'
-        // })
+        this.$router.push({
+          path: '/usercenter/publish/list'
+        })
       })
     },
     getAliyunOssSign() {
@@ -494,13 +473,41 @@ export default {
 
       return host + this.ossDir + 'project/' + fileName
     },
+    // 删除原始文件
+    async removeOriginFile(fileName) {
+      await this.$axios
+        .get(API.deleteObject, {
+          params: {
+            bucketName: 'rongy',
+            dir: this.ossDir + 'project',
+            fileName: this.getFileNameFromFullPath(fileName)
+          }
+        })
+        .then(res => {
+          if (res.status !== 0) {
+            this.$message.error(res.msg)
+          }
+        })
+        .catch(() => {
+          this.$message.error('删除失败')
+        })
+    },
+    // 获取图片名
+    getFileNameFromFullPath(fullPath) {
+      if (!fullPath) {
+        return fullPath
+      }
+      return fullPath.substring(fullPath.lastIndexOf('/') + 1)
+    },
     beforeRemove(file) {
       return this.$confirm(`确定移除 ${file.name}？`)
     },
-    handleRemove(file, fileList) {
+    async handleRemove(file, fileList) {
+      await this.removeOriginFile(this.publicForm.img)
       this.publicForm.img = ''
     },
-    handleRemove2(file, fileList) {
+    async handleRemove2(file, fileList) {
+      await this.removeOriginFile(this.publicForm.attachment)
       this.publicForm.attachment = ''
     },
     handleExceed(files, fileList) {

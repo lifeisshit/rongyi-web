@@ -12,7 +12,7 @@
           ><i class="el-icon-close"></i
         ></label>
         <label v-if="solabel.szCity" class="cur" @click="clearFilter('szCity')"
-          >所在地区：<span class="ellipsis">{{ solabel.szCity }}</span
+          >投资地区：<span class="ellipsis">{{ solabel.szCity }}</span
           ><i class="el-icon-close"></i
         ></label>
         <label
@@ -95,7 +95,7 @@
         <!--</div>-->
         <!--</div>-->
         <div class="filter-box-item">
-          <span class="label">所在地区：</span>
+          <span class="label">投资地区：</span>
           <div :class="['items', isMoreszCity ? 'showall' : '']">
             <el-radio-group v-model="szCity" class="form-check-data">
               <el-radio
@@ -407,19 +407,20 @@ export default {
     },
     // 开始搜索
     sumbitSearch: function(page) {
-      const condition = {
-        keyword: this.keyword,
-        investWay: this.tzType,
-        moneySubjectRegion: this.szCity,
-        investIndustry: this.tzHangye,
-        investAmount: this.tzMoney,
-        sort: this.sort,
-        pageNum: page || 1
-      }
       // 检测是否有筛选条件
       this.checkHasSolabel()
       // 构造当前筛选label
       this.buildSolabelText()
+
+      const condition = {
+        keyword: this.keyword,
+        investWay: this.tzType,
+        region: this.szCity,
+        industry: this.solabel.tzHangye,
+        investAmount: this.tzMoney,
+        sort: this.sort,
+        pageNum: page || 1
+      }
       // 加载内容
       // console.log(JSON.stringify(condition))
       // 开始查询
@@ -466,13 +467,9 @@ export default {
         if (typeof this.tzHangye === 'string') {
           tzHangyeText = this.tzHangye
         } else {
-          for (let i = 0, len = this.tzHangye.length; i < len; i++) {
-            tzHangyeText += ',' + this.tzHangye[i]
-          }
+          tzHangyeText = this.tzHangye.join(',')
         }
         if (tzHangyeText) {
-          typeof this.tzHangye === 'string' ||
-            (tzHangyeText = tzHangyeText.substr(1))
           hasLabel = true
         }
 
@@ -484,12 +481,9 @@ export default {
         if (typeof this.zjType === 'string') {
           zjTypeText = this.zjType
         } else {
-          for (let i = 0, len = this.zjType.length; i < len; i++) {
-            zjTypeText += ',' + this.zjType[i]
-          }
+          zjTypeText = this.zjType.join(',')
         }
         if (zjTypeText) {
-          typeof this.zjType === 'string' || (zjTypeText = zjTypeText.substr(1))
           hasLabel = true
         }
         this.solabel.zjType = zjTypeText

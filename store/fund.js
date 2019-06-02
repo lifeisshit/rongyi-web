@@ -9,7 +9,8 @@ export const state = () => ({
   totalRow: 0,
   topFundList: [],
   fundList: [],
-  fundInfo: {}
+  fundInfo: {},
+  fundRecentList: []
 })
 
 export const actions = {
@@ -56,10 +57,19 @@ export const actions = {
     const fundInfo = await this.$axios.$get(API.fundGetById, {
       params: payload
     })
-    console.log(fundInfo)
+    // console.log(fundInfo)
     commit('setData', {
       key: 'fundInfo',
       value: fundInfo
+    })
+  },
+  // 根据最近浏览的资金列表
+  async getRecentList({ state, commit }) {
+    const fundRecentList = await this.$axios.$post(API.fundListRecent)
+    console.log('fundRecentList: ', fundRecentList)
+    commit('setData', {
+      key: 'fundRecentList',
+      value: fundRecentList
     })
   }
 }
