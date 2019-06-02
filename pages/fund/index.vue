@@ -361,7 +361,7 @@ export default {
   },
   async fetch({ store }) {
     await Promise.all([
-      store.dispatch('fund/getPageList', { pageSize: 1 }),
+      store.dispatch('fund/getPageList', { pageNumber: 1 }),
       store.dispatch('fund/getPageList', { recommend: 1, pageSize: 6 })
     ]).catch(() => {})
   },

@@ -29,14 +29,7 @@ export const InvestTypes = [
   '其它资金'
 ]
 // 投资方式
-export const InvestMethods = [
-  '股权投资',
-  '债权投资',
-  '金融投资',
-  'BT/BOT',
-  '项目投资',
-  '其它投资'
-]
+export const InvestMethods = ['股权投资', '债权投资', '其它投资']
 // 金额
 export const Amounts = [
   '不限',
