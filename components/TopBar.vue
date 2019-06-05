@@ -56,6 +56,7 @@ export default {
     // 登出事件
     async onLogOutClick() {
       await this.logout()
+      this.$router.push('/login')
     }
   }
 }

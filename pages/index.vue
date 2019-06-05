@@ -54,7 +54,7 @@
                 <el-checkbox v-model="loginForm.isAutoLogin">
                   下次自动登录
                 </el-checkbox>
-                <nuxt-link to="/" class="forget-pwd">忘记密码</nuxt-link>
+                <nuxt-link to="/forget" class="forget-pwd">忘记密码</nuxt-link>
               </el-form-item>
             </el-form>
             <!--注册-->
@@ -579,13 +579,13 @@ export default {
     onSendSmsCodeClick() {
       this.$refs.regForm.validateField('phone', async error => {
         if (!error) {
-          this.startCountDown({
-            isInit: false,
-            smsCodeType: SmsCodeType.Register
-          })
           await this.sendSmsCode({
             phone: this.regForm.phone,
             type: SmsCodeType.Register
+          })
+          this.startCountDown({
+            isInit: false,
+            smsCodeType: SmsCodeType.Register
           })
           this.$message.success({
             showClose: true,

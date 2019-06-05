@@ -3,7 +3,9 @@
  * */
 export const SmsCodeType = {
   Register: '1',
-  Login: '2'
+  Login: '2',
+  ModifyPassword: '3', // 用户更改密码
+  DeliverProject: '4' // 投递项目
 }
 // 融资方式
 export const FinancingMethods = ['债权融资', '股权融资', '其他融资', '整体转让']

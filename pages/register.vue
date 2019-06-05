@@ -130,7 +130,8 @@ export default {
     // 如果验证码不可用，则继续倒计时
     if (isSendDiabled) {
       this.startCountDown({
-        isInit: true
+        isInit: true,
+        smsCodeType: SmsCodeType.Register
       })
     }
   },
@@ -141,12 +142,13 @@ export default {
     onSendSmsCodeClick() {
       this.$refs.regForm.validateField('phone', async error => {
         if (!error) {
-          this.startCountDown({
-            isInit: false
-          })
           await this.sendSmsCode({
             phone: this.regForm.phone,
             type: SmsCodeType.Register
+          })
+          this.startCountDown({
+            isInit: false,
+            smsCodeType: SmsCodeType.Register
           })
           this.$message.success({
             showClose: true,

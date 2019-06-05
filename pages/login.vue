@@ -56,7 +56,7 @@
                 <nuxt-link to="/register" class="free-register"
                   >没有账号?免费注册</nuxt-link
                 >
-                <nuxt-link to="/" class="forget-pwd">忘记密码</nuxt-link>
+                <nuxt-link to="/forget" class="forget-pwd">忘记密码</nuxt-link>
               </el-form-item>
             </el-form>
             <!--手机快捷登录-->
@@ -104,7 +104,7 @@
                 <nuxt-link to="/register" class="free-register"
                   >没有账号?免费注册</nuxt-link
                 >
-                <nuxt-link to="/" class="forget-pwd">忘记密码</nuxt-link>
+                <nuxt-link to="/forget" class="forget-pwd">忘记密码</nuxt-link>
               </el-form-item>
             </el-form>
           </div>
@@ -189,13 +189,13 @@ export default {
     onSendSmsCodeClick() {
       this.$refs.telCodeForm.validateField('phone', async error => {
         if (!error) {
-          this.startCountDown({
-            isInit: false,
-            smsCodeType: SmsCodeType.Login
-          })
           await this.sendSmsCode({
             phone: this.telCodeForm.phone,
             type: SmsCodeType.Login
+          })
+          this.startCountDown({
+            isInit: false,
+            smsCodeType: SmsCodeType.Login
           })
           this.$message.success({
             showClose: true,

@@ -1,5 +1,5 @@
 <template>
-  <div class="finish-info content">
+  <div class="finish-info">
     <div class="wrap">
       <div class="main-page-out">
         <div class="page-cate-name">完善资料</div>

@@ -12,6 +12,7 @@
         <nuxt-link to="/project"><span>项目方</span></nuxt-link>
         <nuxt-link to="/successcase"><span>成功案例</span></nuxt-link>
         <nuxt-link to="/member"><span>会员服务</span></nuxt-link>
+        <nuxt-link to="/news"><span>资讯</span></nuxt-link>
         <!--<nuxt-link to="/contact" exact><span>联系我们</span></nuxt-link>-->
       </nav>
     </div>

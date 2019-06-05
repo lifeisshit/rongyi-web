@@ -13,6 +13,10 @@ export const state = () => ({
   loginCodeInfo: {
     countdown: MAX_COUNT_DOWN,
     isSendDiabled: false
+  },
+  forgetPasswordCodeInfo: {
+    countdown: MAX_COUNT_DOWN,
+    isSendDiabled: false
   }
 })
 
@@ -25,6 +29,8 @@ export const actions = {
       codeInfo = state.regCodeInfo
     } else if (payload.smsCodeType === SmsCodeType.Login) {
       codeInfo = state.loginCodeInfo
+    } else if (payload.smsCodeType === SmsCodeType.ModifyPassword) {
+      codeInfo = state.forgetPasswordCodeInfo
     }
 
     if (!codeInfo) {
@@ -69,6 +75,8 @@ export const mutations = {
       codeInfo = state.regCodeInfo
     } else if (payload.smsCodeType === SmsCodeType.Login) {
       codeInfo = state.loginCodeInfo
+    } else if (payload.smsCodeType === SmsCodeType.ModifyPassword) {
+      codeInfo = state.forgetPasswordCodeInfo
     }
 
     if (codeInfo) {

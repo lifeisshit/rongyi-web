@@ -6,7 +6,7 @@ export const verifyPassword = message => ({
   min: 6,
   max: 15,
   trigger: 'blur',
-  message: message || '请正确输入密码'
+  message: message || '请正确输入密码(6-15位)'
 })
 
 export const verifyMobilePhone = message => ({
@@ -38,3 +38,18 @@ export const verifyChecked = message => ({
   trigger: 'change',
   message: message
 })
+
+// 手机验证码
+export const checkPhoneCode = (rule, value, callback) => {
+  if (!value) {
+    return callback(new Error('验证不能为空'))
+  } else {
+    const reg = /^\d{4}$/
+    console.log(reg.test(value))
+    if (reg.test(value)) {
+      callback()
+    } else {
+      return callback(new Error('请输入4位数验证码'))
+    }
+  }
+}

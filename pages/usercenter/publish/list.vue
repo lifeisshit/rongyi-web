@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div>
     <div class="ucenter-warp wrap">
       <div class="uc-left-menu">
         <UcenterLeftMenu :active-menu="204"></UcenterLeftMenu>

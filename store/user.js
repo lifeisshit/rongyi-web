@@ -10,6 +10,7 @@ export const state = () => ({
 })
 
 export const actions = {
+  // 账号密码登录
   async login({ commit }, payload) {
     const data = await this.$axios.$post(API.login, null, {
       params: payload
@@ -23,6 +24,7 @@ export const actions = {
     })
     commit('setToken', data.nuxtToken)
   },
+  // 手机验证码登录
   async loginBySmsCode({ commit }, payload) {
     const data = await this.$axios.$post(API.loginBySmsCode, null, {
       params: payload
@@ -36,6 +38,7 @@ export const actions = {
     })
     commit('setToken', data.nuxtToken)
   },
+  // 初始获取用户信息
   async getUserInfoByInit({ commit }, payload) {
     // 不调用公共拦截器中的方法
     const res = await this.$axios.get(API.getUserInfo)
@@ -51,22 +54,46 @@ export const actions = {
     commit('setToken', payload.nuxtToken)
     console.log('getUserInfoByInit res: ', res)
   },
+  // 注册
   async register({ commit }, payload) {
     await this.$axios.$post(API.register, null, {
       params: payload
     })
   },
+  // 修改密码
+  async updatePwd({ commit }, payload) {
+    await this.$axios.$post(API.updatePwd, null, {
+      params: payload
+    })
+  },
+  // 校验手机验证码
   async verifySmsCode({ commit }, payload) {
     // console.log('payload is: ', payload)
     await this.$axios.$post(API.verifySmsCode, null, {
       params: payload
     })
   },
+  // 发送验证码
   async sendSmsCode({ commit }, payload) {
     await this.$axios.get(API.sendSmsCode, {
       params: payload
     })
   },
+  // 忘记密码后校验验证码
+  async verifySmsCodeAfterForget({ commit }, payload) {
+    // console.log('payload is: ', payload)
+    await this.$axios.$post(API.verifySmsCodeAfterForget, null, {
+      params: payload
+    })
+  },
+  // 忘记密码后更新用户密码
+  async updatePwdAfterForget({ commit }, payload) {
+    // console.log('payload is: ', payload)
+    await this.$axios.$post(API.updatePwdAfterForget, null, {
+      params: payload
+    })
+  },
+  // 登出
   async logout({ commit }) {
     await this.$axios.$get(API.logout)
     // 清除cookie

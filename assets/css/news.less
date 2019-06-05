@@ -1,22 +1,34 @@
-.case-page{
-  .maps{
-    padding:20px 0;
-    height: 20px;
-    line-height: 20px;
-    font-size: 12px;
-  }
-  .el-breadcrumb__inner a , .maps span.el-breadcrumb__inner{
-    color: #666;
-    font-weight: normal;
-    font-size: 12px;
-  }
-  .maps .icon{
-    width: 17px;
-    height: 15px;
-    display: inline-block;
-    float: left;
-    //background: url("../images/home_icon.png") center center no-repeat;
-    margin-right: 10px;
+.news {
+  padding-top: 0;
+  .news-slide {
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+    .sc-swiper-slide {
+      width: 100%;
+      height: 500px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      background: none rgba(255,135,63, 0.5);
+      text-align: center;
+      > i {
+        color: #fff;
+        font-size: 27px;
+        position: relative;
+        top: 8px;
+      }
+      &:hover {
+        background-color: #ff873f;
+      }
+    }
+    .swiper-pagination-bullet-active {
+      background-color: #ff873f;
+    }
   }
   .case-item-list{
     .case-item{
@@ -129,7 +141,4 @@
       padding:0 10px!important;
     }
   }
-}
-.case-detail-page{
-
 }

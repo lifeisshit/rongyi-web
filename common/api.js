@@ -17,6 +17,8 @@ const API = {
   completeMemberInfo: '/service/user/completeMemberInfo', // 完善会员资料
   updatePwd: '/service/user/updatePwd', // 更新用户密码
   updateMemberInfo: '/service/user/updateMemberInfo', // 修改会员资料
+  updatePwdAfterForget: '/service/user/updatePwdAfterForget', // 忘记密码后更新用户密码
+  verifySmsCodeAfterForget: '/service/user/verifySmsCodeAfterForget', // 忘记密码后校验验证码
   // ================约谈项目================
   appoint: '/service/appointment-project/appoint', // 约谈
   appointPageList: '/service/appointment-project/pageList', // 列表
