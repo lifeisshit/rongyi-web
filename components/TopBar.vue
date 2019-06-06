@@ -2,7 +2,7 @@
   <div class="top-bar">
     <div class="wrap">
       <span class="top-left r-pull-left">
-        为了您有更好的咨询体验，请选择在线客服 客服热线：400-123-9876
+        为了您有更好的咨询体验，请选择在线客服 客服热线：{{ companyTel }}
       </span>
       <div v-if="!nuxtToken" class="top-right r-pull-right">
         <span class="please-login">
@@ -31,6 +31,7 @@ export default {
     return {}
   },
   computed: {
+    ...mapState(['companyTel']),
     ...mapState('user', ['user', 'nuxtToken']),
     userLink() {
       let linkUrl = ''

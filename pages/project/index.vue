@@ -258,7 +258,7 @@
                 </div>
                 <div class="item-price">
                   <p>{{ project.financeAmount || 0 }}</p>
-                  <nuxt-link to="/">约谈项目</nuxt-link>
+                  <nuxt-link to="">约谈项目</nuxt-link>
                 </div>
               </div>
             </div>

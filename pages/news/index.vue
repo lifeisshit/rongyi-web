@@ -1,20 +1,21 @@
 <template>
   <div class="news">
     <div class="wrap">
-      <div class="news-slide">
+      <div v-if="slideNewsList.length > 0" class="news-slide">
         <div v-swiper:successCaseSwiper="successCaseSwiperOption">
           <div class="swiper-wrapper">
             <div
-              v-for="slide in successCaseList"
+              v-for="slide in slideNewsList"
               :key="slide.id"
               class="swiper-slide sc-swiper-slide"
             >
-              <nuxt-link :to="`/successcase/${slide.id}`" class="link-img">
+              <nuxt-link :to="`/news/${slide.id}`" class="link-img">
                 <img
                   :src="slide.img || require('~/assets/img/no-img.png')"
-                  alt="成功案例"
+                  alt="融资新闻"
                 />
               </nuxt-link>
+              <p class="slide-title">{{ slide.title }}</p>
             </div>
           </div>
           <div class="swiper-button-prev">
@@ -30,46 +31,34 @@
         <div v-if="totalRow > 0" class="main-page-out">
           <div class="case-item-list">
             <div
-              v-for="successCase in successCaseList"
-              :key="successCase.id"
+              v-for="news in newsList"
+              :key="news.id"
               class="case-item clearfix"
             >
               <div class="case-img">
                 <a href="">
                   <!--<span class="ellipsis">武汉市</span>-->
                   <img
-                    alt="融资成功案例"
-                    :src="successCase.img || require('~/assets/img/no-img.png')"
+                    alt="融资新闻"
+                    :src="news.img || require('~/assets/img/no-img.png')"
                 /></a>
               </div>
               <div class="case-infos">
                 <div class="case-title ellipsis">
-                  <nuxt-link :to="`/successcase/${successCase.id}`">{{
-                    successCase.title
+                  <nuxt-link :to="`/news/${news.id}`">{{
+                    news.title
                   }}</nuxt-link>
                 </div>
-                <div class="case-desc">
-                  {{ successCase.info }}
-                </div>
+                <div class="case-desc" v-html="news.content"></div>
                 <div class="case-pram">
                   <ul class="clearfix">
                     <li>
-                      <i></i><label>资金需求：</label
-                      ><span>{{ successCase.fundRequire }}</span>
+                      <i class="el-icon-time"></i
+                      ><span>{{ news.gmtCreate }}</span>
                     </li>
                     <li>
-                      <i></i><label>成功融资：</label
-                      ><span class="money">{{
-                        successCase.successAmount
-                      }}</span>
-                    </li>
-                    <li>
-                      <i></i><label>项目入驻时间：</label
-                      ><span>{{ successCase.enterTime }}</span>
-                    </li>
-                    <li>
-                      <i></i><label>成功融资时间：</label
-                      ><span>{{ successCase.successTime }}</span>
+                      <i class="el-icon-view"></i
+                      ><span class="money">{{ random3Num() }}</span>
                     </li>
                   </ul>
                 </div>
@@ -101,6 +90,7 @@
 <script>
 import '~/assets/css/news.less'
 import { mapActions, mapState } from 'vuex'
+import { random3Num } from '~/common/util'
 
 export default {
   name: 'News',
@@ -128,17 +118,17 @@ export default {
     }
   },
   computed: {
-    ...mapState('project', ['topProjectList']),
-    ...mapState('successcase', ['successCaseList']),
-    ...mapState('successcase', ['pageSize', 'totalRow', 'successCaseList'])
+    ...mapState('news', ['pageSize', 'totalRow', 'newsList', 'slideNewsList'])
   },
   async fetch({ store }) {
     await Promise.all([
-      store.dispatch('successcase/getPageList', { pageNum: 1 })
+      store.dispatch('news/getPageList', { pageNum: 1 }),
+      store.dispatch('news/getPageList', { pageNum: 1, hot: 1 })
     ]).catch(() => {})
   },
   methods: {
-    ...mapActions('successcase', ['getPageList']),
+    ...mapActions('news', ['getPageList']),
+    random3Num: random3Num,
     handleCurrentChange(page) {
       this.getPageList(page)
     }

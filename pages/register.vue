@@ -65,7 +65,9 @@
               <el-form-item class="other-row" prop="isAgree">
                 <el-checkbox v-model="regForm.isAgree">
                   我已阅读并同意
-                  <nuxt-link to="/" class="reg-agree">《服务协议》 </nuxt-link>
+                  <nuxt-link to="/agreements" class="reg-agree"
+                    >《服务协议》
+                  </nuxt-link>
                 </el-checkbox>
               </el-form-item>
               <el-form-item class="reg-submit-row">

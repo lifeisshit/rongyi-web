@@ -13,7 +13,7 @@
         </div>
         <div class="r-pull-right">
           <p class="tel-text">全国统一服务电话</p>
-          <p class="tel-value">400-809-100</p>
+          <p class="tel-value">{{ companyTel }}</p>
         </div>
       </div>
       <div class="footer-part2">
@@ -35,7 +35,7 @@
           </li>
         </ul>
         <div class="r-pull-right">
-          <p>版权所有：融易网 鄂ICPXXXXXX号</p>
+          <p>版权所有：融易网 鄂ICP备19013312号-1</p>
         </div>
       </div>
     </div>
@@ -43,8 +43,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  name: 'MyFooter'
+  name: 'MyFooter',
+  computed: {
+    ...mapState(['companyTel'])
+  }
 }
 </script>
 

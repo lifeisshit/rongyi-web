@@ -5,6 +5,9 @@ const API = {
   // ================成功案例================
   successCaseGetById: '/service/success-case/getById', // 根据id获取记录
   successCasePageList: '/service/success-case/pageList', // 列表
+  // ================资讯================
+  newsGetById: '/service/news/getById', // 根据id获取记录
+  newsPageList: '/service/news/pageList', // 列表
   // ================用户管理================
   login: '/service/user/login', // 用户登录
   loginBySmsCode: '/service/user/loginBySmsCode', // 用户验证码登录

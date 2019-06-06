@@ -1,7 +1,10 @@
 /*
  * 默认状态管理器
  * */
-export const state = () => ({})
+export const state = () => ({
+  companyEmail: 'customer@rongyi8.com',
+  companyTel: '027-87888610'
+})
 
 const cookieparser = process.server ? require('cookieparser') : undefined
 
