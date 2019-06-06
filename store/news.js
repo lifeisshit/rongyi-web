@@ -27,7 +27,7 @@ export const actions = {
     )
     console.log(dataList)
     // 设置对象树中的值
-    if (payload.hot === 1) {
+    if (payload.type === 1) {
       // 设置资讯幻灯片
       commit('setData', {
         key: 'slideNewsList',

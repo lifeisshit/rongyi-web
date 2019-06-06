@@ -122,15 +122,16 @@ export default {
   },
   async fetch({ store }) {
     await Promise.all([
-      store.dispatch('news/getPageList', { pageNum: 1 }),
-      store.dispatch('news/getPageList', { pageNum: 1, hot: 1 })
+      store.dispatch('news/getPageList', { pageNum: 1, type: 0 }),
+      store.dispatch('news/getPageList', { pageNum: 1, type: 1 })
     ]).catch(() => {})
   },
   methods: {
     ...mapActions('news', ['getPageList']),
     random3Num: random3Num,
     handleCurrentChange(page) {
-      this.getPageList(page)
+      this.getPageList({ pageNum: page || 1, type: 0 })
+      this.currentPage = page || 1
     }
   }
 }

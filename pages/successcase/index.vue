@@ -91,7 +91,8 @@ export default {
   methods: {
     ...mapActions('successcase', ['getPageList']),
     handleCurrentChange(page) {
-      this.getPageList(page)
+      this.getPageList({ pageNum: page || 1 })
+      this.currentPage = page || 1
     }
   }
 }
