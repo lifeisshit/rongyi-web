@@ -413,6 +413,7 @@
         </div>
       </div>
     </div>
+    <bottom-bar></bottom-bar>
   </section>
 </template>
 
@@ -420,6 +421,7 @@
 import '~/assets/css/index.less'
 import { mapActions, mapState } from 'vuex'
 import { SmsCodeType } from '~/common/constant'
+import BottomBar from '~/components/BottomBar.vue'
 import {
   verifyPassword,
   verifyMobilePhone,
@@ -427,6 +429,7 @@ import {
 } from '~/common/validate'
 
 export default {
+  components: { BottomBar },
   data() {
     return {
       showInvestor: false,

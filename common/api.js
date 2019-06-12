@@ -36,7 +36,10 @@ const API = {
   projectPublish: '/service/project/publish', // 发布项目
   // ================阿里云OSS签名接口================
   getSign: '/service/aliyun-oss/getSign', // 签名
-  deleteObject: '/service/aliyun-oss/deleteObject' // 删除文件
+  deleteObject: '/service/aliyun-oss/deleteObject', // 删除文件
+  // ================融资需求================
+  apply: '/service/finance-needs/apply', // 申请
+  count: '/service/finance-needs/count' // 统计总数
 }
 
 export default API
