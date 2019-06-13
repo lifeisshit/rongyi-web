@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom-bar">
+  <div :class="['bottom-bar', isBarShow ? 'show' : '']">
     <div class="wrap">
       <ul class="bottom-bar-inner">
         <li class="visit-number-wrap">
@@ -42,7 +42,7 @@
         </li>
       </ul>
     </div>
-    <span class="close-btn">
+    <span class="close-btn" @click="onCloseClick">
       <i class="el-icon-close"></i>
     </span>
   </div>
@@ -56,6 +56,7 @@ export default {
   name: 'BottomBar',
   data() {
     return {
+      isBarShow: false,
       inlineForm: {
         amount: '',
         phone: ''
@@ -76,8 +77,21 @@ export default {
   computed: {
     ...mapState(['visitCount'])
   },
+  mounted() {
+    // 获取数量
+    this.getApplyCount({})
+
+    window.addEventListener('scroll', this.scrollEvent, false)
+  },
   methods: {
-    ...mapActions(['applyFinance']),
+    ...mapActions(['applyFinance', 'getApplyCount']),
+    scrollEvent() {
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop
+      if (scrollTop > 150) {
+        this.isBarShow = true
+      }
+    },
     onSubmit() {
       this.$refs.inlineForm.validate(async valid => {
         if (!valid) {
@@ -89,7 +103,16 @@ export default {
           message: '申请提交成功',
           type: 'success'
         })
+        this.close()
       })
+    },
+    onCloseClick() {
+      this.close()
+    },
+    close() {
+      this.isBarShow = false
+      this.$refs.inlineForm.resetFields()
+      window.removeEventListener('scroll', this.scrollEvent)
     }
   }
 }

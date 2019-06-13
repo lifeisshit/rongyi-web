@@ -23,13 +23,16 @@
         </div>
       </div>
     </div>
+    <bottom-bar></bottom-bar>
   </div>
 </template>
 
 <script>
 import '~/assets/css/member.less'
+import BottomBar from '~/components/BottomBar.vue'
 
 export default {
-  name: 'Member'
+  name: 'Member',
+  components: { BottomBar }
 }
 </script>

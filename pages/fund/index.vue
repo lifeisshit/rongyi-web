@@ -303,15 +303,18 @@
         </div>
       </div>
     </div>
+    <bottom-bar></bottom-bar>
   </div>
 </template>
 <script>
 import '~/assets/css/fund-list.less'
 import { mapState, mapActions } from 'vuex'
 import { InvestMethods, Amounts, Industries, Regions } from '~/common/constant'
+import BottomBar from '~/components/BottomBar.vue'
 
 export default {
   name: 'Fund',
+  components: { BottomBar },
   data() {
     return {
       currentPage: 1,

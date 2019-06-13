@@ -66,15 +66,18 @@
         <p class="no-data">暂无数据</p>
       </div>
     </div>
+    <bottom-bar></bottom-bar>
   </div>
 </template>
 
 <script>
 import '~/assets/css/case.less'
 import { mapState, mapActions } from 'vuex'
+import BottomBar from '~/components/BottomBar.vue'
 
 export default {
   name: 'SuccessCase',
+  components: { BottomBar },
   data() {
     return {
       currentPage: 1

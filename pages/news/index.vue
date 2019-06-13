@@ -84,6 +84,7 @@
         </div>
       </div>
     </div>
+    <bottom-bar></bottom-bar>
   </div>
 </template>
 
@@ -91,9 +92,11 @@
 import '~/assets/css/news.less'
 import { mapActions, mapState } from 'vuex'
 import { random3Num } from '~/common/util'
+import BottomBar from '~/components/BottomBar.vue'
 
 export default {
   name: 'News',
+  components: { BottomBar },
   data() {
     return {
       currentPage: 1,

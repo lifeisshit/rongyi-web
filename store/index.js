@@ -6,7 +6,7 @@ import API from '~/common/api'
 export const state = () => ({
   companyEmail: 'customer@rongyi8.com',
   companyTel: '027-87888610',
-  visitCount: 101
+  visitCount: 0
 })
 
 const cookieparser = process.server ? require('cookieparser') : undefined
@@ -33,7 +33,7 @@ export const actions = {
     // 设置对象树中的值
     commit('setData', {
       key: 'visitCount',
-      value: data
+      value: data + 101
     })
   },
   // 提交融资申请
