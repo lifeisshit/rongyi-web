@@ -258,7 +258,9 @@
                 </div>
                 <div class="item-price">
                   <p>{{ project.financeAmount || 0 }}</p>
-                  <nuxt-link to="">约谈项目</nuxt-link>
+                  <div class="deliver-btn" @click="appointProject">
+                    约谈项目
+                  </div>
                 </div>
               </div>
             </div>
@@ -366,6 +368,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user', ['nuxtToken', 'user']),
     ...mapState('project', [
       'pageSize',
       'totalRow',
@@ -536,6 +539,29 @@ export default {
           break
       }
       this.sumbitSearch()
+    },
+    // 约谈项目
+    appointProject() {
+      if (!this.nuxtToken || !this.user) {
+        // 未登录，跳转到登录
+        this.$router.push({
+          path: '/login'
+        })
+        return
+      }
+
+      const userData = this.user.userData
+
+      if (!userData || userData.memberObject !== '资金方') {
+        this.$message.error('您不是资金方，暂时无法约谈')
+        return
+      }
+
+      this.$message.success({
+        showClose: true,
+        message: '约谈成功',
+        type: 'success'
+      })
     }
   }
 }

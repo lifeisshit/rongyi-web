@@ -5,11 +5,50 @@ html {
   body {
     margin: 0;
     padding: 0;
+    padding-right: 0px !important;
     width: 100%;
     min-width: 1230px;
     min-height:100%;
     position:relative;
     font-family: "Microsoft YaHei UI", Arial, Gabriola, sans-serif;
+  }
+}
+.el-popup-parent--hidden {
+  overflow-y: auto;
+}
+.el-dialog__header {
+  border-bottom: 1px solid #dcdcdc;
+}
+.el-dialog__footer {
+  text-align: center;
+}
+.el-dialog {
+  input, button {
+    border-radius: 0;
+  }
+}
+.btn-cancel {
+  padding: 10px 28px;
+  border-radius: 0;
+  border-color: #aaa;
+  background-color: #aaa;
+  color: #fff;
+  &:hover {
+    background-color: #666;
+    border-color: #666;
+    color: #fff;
+  }
+}
+.btn-submit {
+  padding: 10px 28px;
+  border-radius: 0;
+  background-color: #ff873f;
+  border-color: #ff873f;
+  color: #fff;
+  &:hover {
+    background-color: #ea6d21;
+    border-color: #ea6d21;
+    color: #fff;
   }
 }
 a {
@@ -57,6 +96,12 @@ h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal}
 }
 .el-select .el-input.is-focus .el-input__inner {
   border-color: #ff873f;
+}
+.el-textarea__inner {
+  &:hover,
+  &:focus {
+    border-color: #ff873f;
+  }
 }
 
 .content {

@@ -257,7 +257,9 @@
                 </div>
                 <div class="item-price">
                   <p>{{ fund.investAmount || 0 }}</p>
-                  <nuxt-link to="">投递项目</nuxt-link>
+                  <div class="deliver-btn" @click="deliverProject(fund.id)">
+                    投递项目
+                  </div>
                 </div>
               </div>
             </div>
@@ -304,19 +306,95 @@
       </div>
     </div>
     <bottom-bar></bottom-bar>
+    <el-dialog title="投递项目" :visible.sync="dialogVisible" width="530px">
+      <el-form
+        ref="deliverForm"
+        class="content-register"
+        :model="deliverForm"
+        :rules="rules"
+        label-width="80px"
+      >
+        <el-form-item class="content-row" prop="contact" label="姓名">
+          <el-input
+            v-model="deliverForm.contact"
+            placeholder="请输入联系人姓名"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item class="content-row" prop="phone" label="手机号">
+          <el-input
+            v-model="deliverForm.phone"
+            placeholder="请输入手机号"
+            type="tel"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item
+          label="验证码"
+          class="content-row"
+          prop="verificationCode"
+        >
+          <el-input
+            v-model="deliverForm.verificationCode"
+            placeholder="请输入验证码"
+            class="reg-ver-code-input"
+          ></el-input>
+          <el-button
+            class="reg-ver-code-get"
+            :disabled="deliverCodeInfo.isSendDiabled"
+            @click="onSendSmsCodeClick"
+          >
+            {{
+              deliverCodeInfo.isSendDiabled
+                ? smsCodeBtnText + '(' + deliverCodeInfo.countdown + ')'
+                : smsCodeBtnText
+            }}
+          </el-button>
+        </el-form-item>
+        <el-form-item class="content-row" prop="title" label="项目标题">
+          <el-input v-model="deliverForm.title" placeholder="请输入项目标题">
+          </el-input>
+        </el-form-item>
+        <el-form-item class="content-row" prop="description" label="项目描述">
+          <el-input
+            v-model="deliverForm.description"
+            placeholder="请输入项目描述"
+            type="textarea"
+            :rows="4"
+          >
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button class="btn-cancel" @click="dialogVisible = false"
+          >取 消</el-button
+        >
+        <el-button class="btn-submit" @click="onFormSubmit('deliverForm')"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import '~/assets/css/fund-list.less'
 import { mapState, mapActions } from 'vuex'
-import { InvestMethods, Amounts, Industries, Regions } from '~/common/constant'
+import {
+  InvestMethods,
+  Amounts,
+  Industries,
+  Regions,
+  SmsCodeType
+} from '~/common/constant'
 import BottomBar from '~/components/BottomBar.vue'
+import { verifyMobilePhone } from '~/common/validate'
 
 export default {
   name: 'Fund',
   components: { BottomBar },
   data() {
     return {
+      dialogVisible: false,
       currentPage: 1,
       tzTypeList: InvestMethods,
       cityList: Regions,
@@ -356,10 +434,47 @@ export default {
           key: 1,
           value: '更新时间'
         }
-      ]
+      ],
+      smsCodeBtnText: '获取验证码',
+      deliverForm: {
+        contact: '',
+        phone: '',
+        title: '',
+        verificationCode: '',
+        description: '',
+        userId: '',
+        fundId: '',
+        filePath: ''
+      },
+      rules: {
+        contact: {
+          required: true,
+          trigger: 'blur',
+          message: '请输入联系人姓名'
+        },
+        phone: verifyMobilePhone(),
+        verificationCode: {
+          required: true,
+          min: 4,
+          trigger: 'blur',
+          message: '请输入有效的验证码'
+        },
+        title: {
+          required: true,
+          trigger: 'blur',
+          message: '请输入项目标题'
+        },
+        description: {
+          required: true,
+          trigger: 'blur',
+          message: '请输入项目描述'
+        }
+      }
     }
   },
   computed: {
+    ...mapState('user', ['nuxtToken']),
+    ...mapState('sessionStorage', ['deliverCodeInfo']),
     ...mapState('fund', ['pageSize', 'totalRow', 'topFundList', 'fundList'])
   },
   async fetch({ store }) {
@@ -368,8 +483,20 @@ export default {
       store.dispatch('fund/getPageList', { recommend: 1, pageSize: 6 })
     ]).catch(() => {})
   },
+  created() {
+    const isSendDiabled = this.deliverCodeInfo.isSendDiabled
+    // 如果验证码不可用，则继续倒计时
+    if (isSendDiabled) {
+      this.startCountDown({
+        isInit: true,
+        smsCodeType: SmsCodeType.DeliverProject
+      })
+    }
+  },
   methods: {
-    ...mapActions('fund', ['getPageList']),
+    ...mapActions('fund', ['getPageList', 'appoint']),
+    ...mapActions('user', ['sendSmsCode', 'verifySmsCode']),
+    ...mapActions('sessionStorage', ['startCountDown']),
     handleCurrentChange(page) {
       this.sumbitSearch(page)
     },
@@ -377,37 +504,37 @@ export default {
       this.solabel.key = this.keyword
       this.sumbitSearch()
     },
-    onSortChange: function(sort) {
+    onSortChange(sort) {
       this.sort = sort
       this.sumbitSearch()
     },
-    showAllzjType: function() {
+    showAllzjType() {
       this.isMorezjType = !this.isMorezjType
     },
-    showAllszCity: function() {
+    showAllszCity() {
       this.isMoreszCity = !this.isMoreszCity
     },
-    showAlltzHangye: function() {
+    showAlltzHangye() {
       this.isMoretzHangye = !this.isMoretzHangye
     },
-    showAlltzCity: function() {
+    showAlltzCity() {
       this.isMoretzCity = !this.isMoretzCity
     },
     showAllAmounts() {
       this.isMoreAmount = !this.isMoreAmount
     },
-    setZjTypeMore: function() {
+    setZjTypeMore() {
       this.zjTypeMore = !this.zjTypeMore
       this.zjType = []
       this.sumbitSearch()
     },
-    setTzHangyeMore: function() {
+    setTzHangyeMore() {
       this.tzHangyeMore = !this.tzHangyeMore
       this.tzHangye = []
       this.sumbitSearch()
     },
     // 开始搜索
-    sumbitSearch: function(page) {
+    sumbitSearch(page) {
       // 检测是否有筛选条件
       this.checkHasSolabel()
       // 构造当前筛选label
@@ -428,7 +555,7 @@ export default {
       this.getPageList(condition)
       this.currentPage = page || 1
     },
-    checkHasSolabel: function() {
+    checkHasSolabel() {
       const solabel = this.solabel
       const has =
         solabel.key ||
@@ -440,7 +567,7 @@ export default {
         solabel.tzMoney
       this.solabel.has = has
     },
-    buildSolabelText: function() {
+    buildSolabelText() {
       let hasLabel = false
       if (this.solabel.key) {
         hasLabel = true
@@ -491,7 +618,7 @@ export default {
       }
       this.solabel.has = hasLabel
     },
-    clearFilter: function(clearfilter) {
+    clearFilter(clearfilter) {
       switch (clearfilter) {
         case 'tzType':
           this.tzType = ''
@@ -525,6 +652,61 @@ export default {
           break
       }
       this.sumbitSearch()
+    },
+    // 投递项目
+    deliverProject(fundId) {
+      if (!this.nuxtToken) {
+        // 未登录，跳转到登录
+        this.$router.push({
+          path: '/login'
+        })
+        return
+      }
+      this.deliverForm.fundId = fundId
+      this.dialogVisible = true
+    },
+    // 发送验证码
+    onSendSmsCodeClick() {
+      this.$refs.deliverForm.validateField('phone', async error => {
+        if (!error) {
+          await this.sendSmsCode({
+            phone: this.deliverForm.phone,
+            type: SmsCodeType.DeliverProject
+          })
+          this.startCountDown({
+            isInit: false,
+            smsCodeType: SmsCodeType.DeliverProject
+          })
+          this.$message.success({
+            showClose: true,
+            message: '验证码已发送成功，请注意查收',
+            type: 'success'
+          })
+        }
+      })
+    },
+    // 点击投递项目确定按钮
+    onFormSubmit(formName) {
+      this.$refs[formName].validate(async valid => {
+        if (!valid) {
+          return
+        }
+        if (formName === 'deliverForm') {
+          // 注册
+          await this.verifySmsCode({
+            phone: this.deliverForm.phone,
+            type: SmsCodeType.DeliverProject,
+            smsCode: this.deliverForm.verificationCode
+          })
+          await this.appoint(this.deliverForm)
+          this.$message.success({
+            showClose: true,
+            message: '项目投递成功，请保持手机畅通等待联系',
+            type: 'success'
+          })
+        }
+        this.dialogVisible = false
+      })
     }
   }
 }

@@ -153,7 +153,7 @@ export default {
           required: true,
           min: 4,
           trigger: 'blur',
-          message: '请输入验证码'
+          message: '请输入有效的验证码'
         }
       }
     }

@@ -10,7 +10,8 @@ export const state = () => ({
   topFundList: [],
   fundList: [],
   fundInfo: {},
-  fundRecentList: []
+  fundRecentList: [],
+  deliverList: []
 })
 
 export const actions = {
@@ -66,11 +67,37 @@ export const actions = {
   // 根据最近浏览的资金列表
   async getRecentList({ state, commit }) {
     const fundRecentList = await this.$axios.$post(API.fundListRecent)
-    console.log('fundRecentList: ', fundRecentList)
+    // console.log('fundRecentList: ', fundRecentList)
     commit('setData', {
       key: 'fundRecentList',
       value: fundRecentList
     })
+  },
+  // 投递项目
+  async appoint({ commit }, payload) {
+    await this.$axios.$post(API.appoint, payload)
+  },
+  // 投递项目列表
+  async getAppointPageList({ commit }, payload) {
+    const { dataList, totalRow } = await this.$axios.$post(
+      API.appointPageList,
+      payload
+    )
+    console.log('getAppointPageList: ', dataList)
+    commit('setData', {
+      key: 'deliverList',
+      value: dataList
+    })
+    commit('setData', {
+      key: 'totalRow',
+      value: totalRow
+    })
+    if (payload.pageNum) {
+      commit('setData', {
+        key: 'pageNum',
+        value: payload.pageNum
+      })
+    }
   }
 }
 

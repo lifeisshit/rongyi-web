@@ -23,6 +23,16 @@
         >
       </dd>
     </dl>
+    <dl>
+      <dt>项目管理</dt>
+      <dd>
+        <nuxt-link
+          to="/usercenter/deliver/list"
+          :class="{ active: active == 301 }"
+          >已投递的项目</nuxt-link
+        >
+      </dd>
+    </dl>
   </div>
 </template>
 

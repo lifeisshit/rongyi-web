@@ -41,8 +41,8 @@ export const actions = {
   // 初始获取用户信息
   async getUserInfoByInit({ commit }, payload) {
     // 不调用公共拦截器中的方法
-    const res = await this.$axios.get(API.getUserInfo)
-    // console.log(res)
+    const res = await this.$axios.get(API.getUserInfo).catch(() => {})
+    console.log('getUserInfoByInit: ', res)
     if (!res || !res.data || res.status !== 0) {
       return
     }
@@ -52,7 +52,6 @@ export const actions = {
       value: res.data
     })
     commit('setToken', payload.nuxtToken)
-    console.log('getUserInfoByInit res: ', res)
   },
   // 注册
   async register({ commit }, payload) {

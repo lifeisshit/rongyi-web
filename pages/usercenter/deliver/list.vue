@@ -2,37 +2,31 @@
   <div>
     <div class="ucenter-warp wrap">
       <div class="uc-left-menu">
-        <UcenterLeftMenu :active-menu="202"></UcenterLeftMenu>
+        <UcenterLeftMenu :active-menu="301"></UcenterLeftMenu>
       </div>
       <div class="uc-right-main">
         <div class="main-page-out">
-          <div class="page-cate-name">已发布信息</div>
+          <div class="page-cate-name">已投递的项目</div>
           <el-table
             ref="multipleTable"
-            :data="projectList"
+            :data="deliverList"
             tooltip-effect="dark"
             style="width: 100%"
             class="collect-table"
             empty-text="暂无数据"
           >
             <el-table-column type="selection" width="40"></el-table-column>
-            <el-table-column label="标题内容">
+            <el-table-column label="项目标题" width="200">
               <template slot-scope="scope">
                 <!--<i class="el-icon-dot"></i>-->
-                <nuxt-link :to="`/project/${scope.row.id}`" class="title-txt">{{
+                <nuxt-link :to="`/fund/${scope.row.id}`" class="title-txt">{{
                   scope.row.title
                 }}</nuxt-link>
               </template>
             </el-table-column>
             <el-table-column
-              prop="type"
-              label="信息类型"
-              width="150"
-            ></el-table-column>
-            <el-table-column
-              prop="financeAmount"
-              label="融资金额"
-              width="180"
+              prop="description"
+              label="项目描述"
             ></el-table-column>
             <el-table-column label="发布日期" width="150">
               <template slot-scope="scope">{{
@@ -40,7 +34,7 @@
               }}</template>
             </el-table-column>
           </el-table>
-          <div v-if="projectList.length > 0" class="collect-pagination">
+          <div v-if="deliverList.length > 0" class="collect-pagination">
             <el-pagination
               background
               layout="prev, pager, next"
@@ -74,23 +68,20 @@ export default {
     }
   },
   computed: {
-    ...mapState('project', ['pageSize', 'totalRow', 'projectList']),
-    ...mapState('user', ['user'])
+    ...mapState('fund', ['deliverList', 'pageSize', 'totalRow'])
   },
   async fetch({ store }) {
     await Promise.all([
-      store.dispatch('project/getPageList', {
-        pageNum: 1,
-        hasUser: true
+      store.dispatch('fund/getAppointPageList', {
+        pageNum: 1
       })
     ]).catch(() => {})
   },
   methods: {
-    ...mapActions('project', ['getPageList']),
+    ...mapActions('fund', ['getAppointPageList']),
     handleCurrentChange(page) {
-      this.getPageList({
-        pageNum: page || 1,
-        hasUser: true
+      this.getAppointPageList({
+        pageNum: page || 1
       })
       this.currentPage = page || 1
     }

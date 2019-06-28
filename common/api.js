@@ -22,8 +22,8 @@ const API = {
   updateMemberInfo: '/service/user/updateMemberInfo', // 修改会员资料
   updatePwdAfterForget: '/service/user/updatePwdAfterForget', // 忘记密码后更新用户密码
   verifySmsCodeAfterForget: '/service/user/verifySmsCodeAfterForget', // 忘记密码后校验验证码
-  // ================约谈项目================
-  appoint: '/service/appointment-project/appoint', // 约谈
+  // ================投递项目================
+  appoint: '/service/appointment-project/appoint', // 投递
   appointPageList: '/service/appointment-project/pageList', // 列表
   // ================资金方================
   fundGetById: '/service/fund/getById', // 根据id获取记录
