@@ -480,8 +480,8 @@ export default {
   },
   async fetch({ store }) {
     await Promise.all([
-      store.dispatch('getInvestorPageList'),
-      store.dispatch('getInvestOrgPageList'),
+      store.dispatch('getInvestorPageList', { pageNum: 1, pageSize: 3 }),
+      store.dispatch('getInvestOrgPageList', { pageNum: 1, pageSize: 3 }),
       store.dispatch('project/getPageList', { pageNum: 1 }),
       store.dispatch('project/getPageList', { recommend: 1, pageSize: 8 }),
       store.dispatch('successcase/getPageList', { pageNum: 1 })

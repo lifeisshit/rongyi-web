@@ -45,9 +45,11 @@ export const actions = {
     // await dispatch('getApplyCount')
   },
   // 获取投资人列表信息
-  async getInvestorPageList({ commit }) {
+  async getInvestorPageList({ commit }, payload) {
     // console.log('payload is: ', payload)
-    const investors = await this.$axios.$get(API.investorPageList)
+    const investors = await this.$axios.$get(API.investorPageList, {
+      params: payload
+    })
     // 设置对象树中的值
     commit('setData', {
       key: 'investors',
@@ -56,9 +58,11 @@ export const actions = {
     console.log('investors is: ', investors.dataList)
   },
   // 获取投资机构列表信息
-  async getInvestOrgPageList({ commit }) {
+  async getInvestOrgPageList({ commit }, payload) {
     // console.log('payload is: ', payload)
-    const investOrgs = await this.$axios.$get(API.investOrgPageList)
+    const investOrgs = await this.$axios.$get(API.investOrgPageList, {
+      params: payload
+    })
     // 设置对象树中的值
     commit('setData', {
       key: 'investOrgs',
