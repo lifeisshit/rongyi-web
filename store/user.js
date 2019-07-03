@@ -74,7 +74,7 @@ export const actions = {
   },
   // 发送验证码
   async sendSmsCode({ commit }, payload) {
-    await this.$axios.get(API.sendSmsCode, {
+    await this.$axios.$get(API.sendSmsCode, {
       params: payload
     })
   },

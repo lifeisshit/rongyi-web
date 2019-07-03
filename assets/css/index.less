@@ -270,6 +270,7 @@
         display: inline-block;
         overflow: hidden;
         background: #fff;
+        box-shadow: 0 0 8px 0px #ddd;
         &:nth-child(2) {
           margin: 0 30px;
         }
@@ -297,7 +298,14 @@
           .investor-introduce {
             font-size: 12px;
             color: #060608;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
             line-height: 20px;
+            margin-bottom: 10px;
+            height: 100px;
           }
           .meet-btn {
             width: 85px;
@@ -317,11 +325,12 @@
 
       .invest-agency-item {
         width: 347px;
-        height: 289px;
+        height: 277px;
         padding: 24px 8px 25px 25px;
         display: inline-block;
         overflow: hidden;
         background: #fff;
+        box-shadow: 0 0 8px 0px #ddd;
         &:nth-child(2) {
           margin: 0 30px;
         }
@@ -383,6 +392,12 @@
             font-size: 14px;
             line-height: 25px;
             color: #454545;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            height: 100px;
           }
           .meet-btn {
             width: 85px;

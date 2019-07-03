@@ -8,6 +8,12 @@ const API = {
   // ================资讯================
   newsGetById: '/service/news/getById', // 根据id获取记录
   newsPageList: '/service/news/pageList', // 列表
+  // ================投资人================
+  investorGetById: '/service/investor/getById', // 根据id获取记录
+  investorPageList: '/service/investor/pageList', // 列表
+  // ================投资机构================
+  investOrgGetById: '/service/invest-org/getById', // 根据id获取记录
+  investOrgPageList: '/service/invest-org/pageList', // 列表
   // ================用户管理================
   login: '/service/user/login', // 用户登录
   loginBySmsCode: '/service/user/loginBySmsCode', // 用户验证码登录

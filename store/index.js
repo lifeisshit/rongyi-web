@@ -6,7 +6,9 @@ import API from '~/common/api'
 export const state = () => ({
   companyEmail: 'customer@rongyi8.com',
   companyTel: '027-87888610',
-  visitCount: 0
+  visitCount: 0,
+  investors: [],
+  investOrgs: []
 })
 
 const cookieparser = process.server ? require('cookieparser') : undefined
@@ -41,6 +43,27 @@ export const actions = {
     await this.$axios.$post(API.apply, payload)
     // 提交成功后获取最新的数量
     // await dispatch('getApplyCount')
+  },
+  // 获取投资人列表信息
+  async getInvestorPageList({ commit }) {
+    // console.log('payload is: ', payload)
+    const investors = await this.$axios.$get(API.investorPageList)
+    // 设置对象树中的值
+    commit('setData', {
+      key: 'investors',
+      value: investors.dataList
+    })
+    console.log('investors is: ', investors.dataList)
+  },
+  // 获取投资机构列表信息
+  async getInvestOrgPageList({ commit }) {
+    // console.log('payload is: ', payload)
+    const investOrgs = await this.$axios.$get(API.investOrgPageList)
+    // 设置对象树中的值
+    commit('setData', {
+      key: 'investOrgs',
+      value: investOrgs.dataList
+    })
   }
 }
 

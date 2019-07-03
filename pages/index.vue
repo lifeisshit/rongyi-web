@@ -221,64 +221,63 @@
       </div>
     </div>
     <!--投资人-->
-    <div v-if="showInvestor" class="index-sec wrap">
+    <div class="index-sec wrap">
       <div class="index-sec-hd">
         <h3 class="index-sec-hd-left">投资人</h3>
-        <div class="index-sec-hd-right">
-          <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
-        </div>
+        <!--<div class="index-sec-hd-right">-->
+        <!--<nuxt-link to="/" class="link-more">查看更多</nuxt-link>-->
+        <!--</div>-->
       </div>
       <div class="index-sec-bd">
         <div
           v-for="investor in investors"
           :key="investor.id"
-          to="/"
           class="investor-item"
         >
-          <img :src="investor.img" alt="投资人" class="investor-img" />
+          <img :src="investor.avatar" alt="投资人" class="investor-img" />
           <div class="investor-info">
             <p class="investor-name">{{ investor.name }}</p>
             <p class="investor-company">
               <span>{{ investor.company }}</span>
               <span>/</span>
-              <span>{{ investor.title }}</span>
+              <span>{{ investor.post }}</span>
             </p>
-            <p class="investor-introduce">{{ investor.introduce }}</p>
-            <nuxt-link to="/" class="meet-btn">马上约见</nuxt-link>
+            <p class="investor-introduce">{{ investor.description }}</p>
+            <!--<nuxt-link to="/" class="meet-btn">马上约见</nuxt-link>-->
           </div>
         </div>
       </div>
     </div>
     <!--投资机构-->
-    <div v-if="showInvestigate" class="index-sec wrap">
+    <div class="index-sec wrap">
       <div class="index-sec-hd">
         <h3 class="index-sec-hd-left">投资机构</h3>
-        <div class="index-sec-hd-right">
-          <nuxt-link to="/" class="link-more">查看更多</nuxt-link>
-        </div>
+        <!--<div class="index-sec-hd-right">-->
+        <!--<nuxt-link to="/" class="link-more">查看更多</nuxt-link>-->
+        <!--</div>-->
       </div>
       <div class="index-sec-bd">
         <div
-          v-for="agency in investAgencies"
-          :key="agency.id"
+          v-for="org in investOrgs"
+          :key="org.id"
           to="/"
           class="invest-agency-item"
         >
           <div class="top-info">
             <div class="left-info">
-              <p class="full-name">{{ agency.fullName }}</p>
+              <p class="full-name">{{ org.name }}</p>
               <div class="short-line"></div>
-              <p class="short-name">{{ agency.shortName }}</p>
-              <p class="site">{{ agency.site }}</p>
+              <p class="short-name">{{ org.shortName }}</p>
+              <p class="site">{{ org.headquarters }}</p>
             </div>
             <div class="right-info">
-              <img :src="agency.img" alt="投资机构" class="agency-img" />
+              <img :src="org.logo" alt="投资机构" class="org-img" />
             </div>
           </div>
           <div class="bottom-info">
             <p class="intro-tip">介绍</p>
-            <p class="introduce">{{ agency.introduce }}</p>
-            <nuxt-link to="/" class="meet-btn">马上约见</nuxt-link>
+            <p class="introduce">{{ org.description }}</p>
+            <!--<nuxt-link to="/" class="meet-btn">马上约见</nuxt-link>-->
           </div>
         </div>
       </div>
@@ -432,8 +431,6 @@ export default {
   components: { BottomBar },
   data() {
     return {
-      showInvestor: false,
-      showInvestigate: false,
       isLoginTabActive: true,
       smsCodeBtnText: '获取验证码',
       loginForm: {
@@ -466,70 +463,6 @@ export default {
         loopFillGroupWithBlank: true,
         allowTouchMove: false
       },
-      investors: [
-        {
-          id: '1',
-          name: '张三',
-          company: 'IDB资本',
-          title: '董事长',
-          img:
-            'http://a4.att.hudong.com/07/88/01300542570390140775880068513_s.jpg',
-          introduce:
-            '浙江大学医学硕士，现任浙江九仁资本管理有限公司副总裁，进入投行多年，曾在贝达药业、浙大创投任职多年'
-        },
-        {
-          id: '2',
-          name: '李四',
-          company: 'IDB资本',
-          title: '董事长',
-          img:
-            'http://a4.att.hudong.com/07/88/01300542570390140775880068513_s.jpg',
-          introduce:
-            '浙江大学医学硕士，现任浙江九仁资本管理有限公司副总裁，进入投行多年，曾在贝达药业、浙大创投任职多年'
-        },
-        {
-          id: '3',
-          name: '王五',
-          company: 'IDB资本',
-          title: '董事长',
-          img:
-            'http://a4.att.hudong.com/07/88/01300542570390140775880068513_s.jpg',
-          introduce:
-            '浙江大学医学硕士，现任浙江九仁资本管理有限公司副总裁，进入投行多年，曾在贝达药业、浙大创投任职多年'
-        }
-      ],
-      investAgencies: [
-        {
-          id: '1',
-          fullName: '金沙江创业投资基金',
-          shortName: '金沙江创业投资基金',
-          site: '董事长',
-          img:
-            'https://www.temasek.com.sg/content/dam/temasek-corporate/our-community/temasek-foundations/TemasekTrust%20Logo_30Aug17_small.jpg',
-          introduce:
-            '金沙江创业投资基金专注于投资立足中国，面向全球市场的高新技术初创企业。'
-        },
-        {
-          id: '2',
-          fullName: '金沙江创业投资基金',
-          shortName: '金沙江创业投资基金',
-          site: '董事长',
-          img:
-            'https://www.temasek.com.sg/content/dam/temasek-corporate/our-community/temasek-foundations/TemasekTrust%20Logo_30Aug17_small.jpg',
-          introduce:
-            '金沙江创业投资基金专注于投资立足中国，面向全球市场的高新技术初创企业。'
-        },
-        {
-          id: '3',
-          fullName: '金沙江创业投资基金',
-          shortName: '金沙江创业投资基金',
-          site: '董事长',
-          img:
-            'https://www.temasek.com.sg/content/dam/temasek-corporate/our-community/temasek-foundations/TemasekTrust%20Logo_30Aug17_small.jpg',
-          introduce:
-            '金沙江创业投资基金专注于投资立足中国，面向全球市场的高新技术初创企业。'
-        }
-      ],
       betterCaseSwiperOption: {
         slidesPerView: 4,
         spaceBetween: 10,
@@ -539,6 +472,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['investors', 'investOrgs']),
     ...mapState('sessionStorage', ['regCodeInfo']),
     ...mapState('user', ['nuxtToken']),
     ...mapState('project', ['topProjectList']),
@@ -546,6 +480,8 @@ export default {
   },
   async fetch({ store }) {
     await Promise.all([
+      store.dispatch('getInvestorPageList'),
+      store.dispatch('getInvestOrgPageList'),
       store.dispatch('project/getPageList', { pageNum: 1 }),
       store.dispatch('project/getPageList', { recommend: 1, pageSize: 8 }),
       store.dispatch('successcase/getPageList', { pageNum: 1 })
