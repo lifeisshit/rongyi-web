@@ -1,4 +1,17 @@
 .business-plan {
+  .sec2,
+  .sec3,
+  .sec4,
+  .sec5 {
+    .wrap {
+      opacity: 0;
+      &.loaded {
+        opacity: 1;
+        transition: opacity 2s ease-in;
+        -webkit-transition: opacity 2s ease-in;
+      }
+    }
+  }
   .sec1 {
     width: 100%;
     height: 477px;
@@ -8,9 +21,12 @@
   .sec2 {
     width: 100%;
     height: 393px;
-    background: url("~assets/img/bp-bg2.jpg") no-repeat center;
-    background-size: cover;
+    background: none;
     text-align: center;
+    &.loaded {
+      background: url("~assets/img/bp-bg2.jpg") no-repeat center;
+      background-size: cover;
+    }
     h2 {
       font-size: 30px;
       font-weight: bold;
@@ -38,8 +54,11 @@
   .sec3 {
     width: 100%;
     height: 468px;
-    background: url("~assets/img/bp-bg3.jpg") no-repeat center;
-    background-size: cover;
+    background: none;
+    &.loaded {
+      background: url("~assets/img/bp-bg3.jpg") no-repeat center;
+      background-size: cover;
+    }
     h2 {
       font-size: 30px;
       font-weight: bold;
@@ -128,9 +147,12 @@
   .sec4 {
     width: 100%;
     height: 638px;
-    background: url("~assets/img/bp-bg4.jpg") no-repeat center;
-    background-size: cover;
+    background: none;
     text-align: center;
+    &.loaded {
+      background: url("~assets/img/bp-bg4.jpg") no-repeat center;
+      background-size: cover;
+    }
     h2 {
       font-size: 30px;
       color: #ffffff;
@@ -219,8 +241,11 @@
   .sec5 {
     width: 100%;
     height: 574px;
-    background: url("~assets/img/bp-bg5.jpg") no-repeat center;
-    background-size: cover;
+    background: none;
+    &.loaded {
+      background: url("~assets/img/bp-bg5.jpg") no-repeat center;
+      background-size: cover;
+    }
     h2 {
       text-align: center;
       font-size: 30px;

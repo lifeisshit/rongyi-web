@@ -24,3 +24,8 @@ For detailed explanation on how things work, checkout [Nuxt.js docs](https://nux
 element-ui高于2.7.2版本 ssr模式有问题 等修复了再升级
 
 validate 校验路由参数正确性
+
+Vuetify
+Vue + Material Design
+
+https://vuetifyjs.com/zh-Hans/

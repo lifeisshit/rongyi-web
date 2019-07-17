@@ -1,6 +1,8 @@
 /*
  * 全局配置
  * */
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
+
 export default {
   mode: 'universal',
 
@@ -48,10 +50,11 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~/plugins/element-ui' },
+    { src: '~/plugins/element-ui', mode: 'client' },
     { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
     { src: '~/plugins/axios' },
     { src: '~/plugins/filter' }
+    // { src: '~/plugins/lodash', mode: 'client' }
   ],
 
   /*
@@ -104,6 +107,19 @@ export default {
         }
       }
     },
+    vendor: ['element-ui'],
+    babel: {
+      plugins: [
+        [
+          'component',
+          {
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-chalk'
+          }
+        ]
+      ],
+      comments: true
+    },
     /*
      ** You can extend webpack config here
      */
@@ -117,6 +133,10 @@ export default {
           exclude: /(node_modules)/
         })
       }
+      // load loadsh.js on require
+      // config.plugins.unshift(new LodashModuleReplacementPlugin())
+      // rules[2].use[0] is babel-loader
+      // config.module.rules[2].use[0].options.plugins = ['lodash']
     }
   }
 }

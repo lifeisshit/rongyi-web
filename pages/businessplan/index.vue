@@ -1,8 +1,11 @@
 <template>
   <div class="business-plan">
-    <section class="sec1"></section>
-    <section class="sec2">
-      <div class="wrap">
+    <section ref="sec1" class="sec1"></section>
+    <section
+      ref="sec2"
+      :class="['sec2', { loaded: scrollloadElems.sec2.isLoadBackground }]"
+    >
+      <div class="wrap" :class="{ loaded: scrollloadElems.sec2.isLoadContent }">
         <h2>为什么你的商业计划书很难融到资？</h2>
         <ul>
           <li>不能快速打动投资人</li>
@@ -17,8 +20,11 @@
         </ul>
       </div>
     </section>
-    <section class="sec3">
-      <div class="wrap">
+    <section
+      ref="sec3"
+      :class="['sec3', { loaded: scrollloadElems.sec3.isLoadBackground }]"
+    >
+      <div class="wrap" :class="{ loaded: scrollloadElems.sec3.isLoadContent }">
         <h2>解决商业计划书的存在问题？</h2>
         <ul>
           <li>
@@ -64,8 +70,11 @@
         </ul>
       </div>
     </section>
-    <section class="sec4">
-      <div class="wrap">
+    <section
+      ref="sec4"
+      :class="['sec4', { loaded: scrollloadElems.sec4.isLoadBackground }]"
+    >
+      <div class="wrap" :class="{ loaded: scrollloadElems.sec4.isLoadContent }">
         <h2>打造您的专属商业计划书</h2>
         <div class="sec4-content">
           <ul>
@@ -103,8 +112,11 @@
         </div>
       </div>
     </section>
-    <section class="sec5">
-      <div class="wrap">
+    <section
+      ref="sec5"
+      :class="['sec5', { loaded: scrollloadElems.sec5.isLoadBackground }]"
+    >
+      <div class="wrap" :class="{ loaded: scrollloadElems.sec5.isLoadContent }">
         <h2>服务优势</h2>
         <h3>依托领先的IT技术，撰写高质量的商业计划书</h3>
         <ul>
@@ -143,10 +155,77 @@
 <script>
 import '~/assets/css/business-plan.less'
 import BottomBar from '~/components/BottomBar.vue'
+import throttle from 'lodash/throttle'
+import forIn from 'lodash/forIn'
 
 export default {
   name: 'BusinessPlan',
   layout: 'default2',
-  components: { BottomBar }
+  components: { BottomBar },
+  data() {
+    return {
+      scrollloadElems: {
+        sec2: {
+          isLoadBackground: true,
+          isLoadContent: false
+        },
+        sec3: {
+          isLoadBackground: false,
+          isLoadContent: false
+        },
+        sec4: {
+          isLoadBackground: false,
+          isLoadContent: false
+        },
+        sec5: {
+          isLoadBackground: false,
+          isLoadContent: false
+        }
+      }
+    }
+  },
+  mounted() {
+    // 主动触发一次滚动事件
+    this.onScroll()
+    // 使用节流函数，保证500毫秒内只触发一次
+    window.addEventListener('scroll', throttle(this.onScroll, 500))
+  },
+  methods: {
+    onScroll() {
+      // 遍历所有需要滚动加载的元素
+      forIn(this.scrollloadElems, (value, key) => {
+        // 如果内容已经加载，证明该区域已加载完毕，无需重复加载
+        if (!value.isLoadContent) {
+          this.isScrollload(key)
+        }
+      })
+    },
+    // 先加载背景, 后加载内容
+    isScrollload(elemName) {
+      if (!this.$refs.hasOwnProperty(elemName)) {
+        return
+      }
+      const elem = this.$refs[elemName]
+      if (!elem) {
+        return
+      }
+      // 可见区域高度
+      const screenHeight = document.documentElement.clientHeight
+      // 滚动条距离顶部的高度
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop
+      const elemTop = elem.getBoundingClientRect().top
+      // 内容加载高度
+      const loadContentHeight = screenHeight - 200
+      // 加载到元素顶部的时候开始加载背景
+      if (elemTop < scrollTop + screenHeight + 100) {
+        this.scrollloadElems[elemName].isLoadBackground = true
+      }
+      // 只有当滚动到元素一半的位置的时候才开始加载内容
+      if (elemTop < loadContentHeight) {
+        this.scrollloadElems[elemName].isLoadContent = true
+      }
+    }
+  }
 }
 </script>
