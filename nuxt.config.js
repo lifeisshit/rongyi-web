@@ -50,7 +50,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~/plugins/element-ui', mode: 'client' },
+    { src: '~/plugins/element-ui' },
     { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
     { src: '~/plugins/axios' },
     { src: '~/plugins/filter' }

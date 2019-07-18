@@ -16,7 +16,11 @@ import {
   TableColumn,
   Col,
   Row,
-  Option
+  Option,
+  Tabs,
+  TabPane,
+  Steps,
+  Step
 } from 'element-ui'
 
 export default () => {
@@ -37,4 +41,8 @@ export default () => {
   Vue.use(Col)
   Vue.use(Row)
   Vue.use(Option)
+  Vue.use(Tabs)
+  Vue.use(TabPane)
+  Vue.use(Steps)
+  Vue.use(Step)
 }
