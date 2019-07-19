@@ -20,7 +20,8 @@ import {
   Tabs,
   TabPane,
   Steps,
-  Step
+  Step,
+  Message
 } from 'element-ui'
 
 export default () => {
@@ -45,4 +46,5 @@ export default () => {
   Vue.use(TabPane)
   Vue.use(Steps)
   Vue.use(Step)
+  Vue.prototype.$message = Message
 }

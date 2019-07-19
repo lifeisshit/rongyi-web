@@ -5,7 +5,7 @@ import API from '~/common/api'
 
 export const state = () => ({
   companyEmail: 'customer@rongyi8.com',
-  companyTel: '027-87888610',
+  companyTel: '027-88869177',
   visitCount: 0,
   investors: [],
   investOrgs: []
