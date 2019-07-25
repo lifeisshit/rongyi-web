@@ -319,42 +319,60 @@ import {
   Industries,
   Regions
 } from '~/common/constant'
+import isArray from 'lodash/isArray'
 
 export default {
   name: 'Project',
   components: { BottomBar },
   data() {
+    // 读取url中携带的查询条件
+    const query = this.$route.query
+    const keyword = query.keyword || ''
+    const financeWay = query.financeWay || ''
+    const region = query.region || ''
+    let tzHangye = query.industry || ''
+    let tzHangyeMore = false
+    if (query.industry && query.industry.indexOf(',') >= 0) {
+      // 证明行业是多选
+      tzHangye = query.industry.split(',')
+      tzHangyeMore = true
+    }
+    const financeAmount = query.financeAmount || ''
+    const sort = query.sort || 0
+    const has = keyword || financeWay || region || tzHangye || financeAmount
+    console.log('sort: ', sort)
+
     return {
       currentPage: 1,
       tzTypeList: FinancingMethods,
       cityList: Regions,
       tzMoneyList: Amounts,
       tzHangyeList: Industries,
-      keyword: '',
-      tzType: '',
+      keyword: keyword,
+      tzType: financeWay,
       zjType: [],
-      szCity: '',
-      tzHangye: [],
+      szCity: region,
+      tzHangye: tzHangye,
       tzCity: '',
-      tzMoney: '',
+      tzMoney: financeAmount,
       zjTypeMore: false,
       isMorezjType: false,
       isMoreszCity: false,
-      tzHangyeMore: false,
+      tzHangyeMore: tzHangyeMore,
       isMoretzHangye: false,
       isMoretzCity: false,
       isMoreAmount: false,
       solabel: {
-        has: false,
-        key: '',
-        tzType: '',
+        has: has,
+        key: keyword,
+        tzType: financeWay,
         zjType: '',
-        szCity: '',
-        tzHangye: '',
+        szCity: region,
+        tzHangye: query.industry,
         tzCity: '',
-        tzMoney: ''
+        tzMoney: financeAmount
       },
-      sort: 0,
+      sort: sort * 1,
       sortList: [
         {
           key: 0,
@@ -376,9 +394,9 @@ export default {
       'projectList'
     ])
   },
-  async fetch({ store }) {
+  async fetch({ store, query }) {
     await Promise.all([
-      store.dispatch('project/getPageList', { pageNum: 1 }),
+      store.dispatch('project/getPageList', query),
       store.dispatch('project/getPageList', { recommend: 1, pageSize: 6 })
     ]).catch(() => {})
   },
@@ -417,13 +435,15 @@ export default {
     },
     setTzHangyeMore: function() {
       this.tzHangyeMore = !this.tzHangyeMore
-      this.tzHangye = []
-      this.sumbitSearch()
+      if (this.tzHangyeMore) {
+        this.tzHangye = this.tzHangye.split(',')
+      } else {
+        this.tzHangye = ''
+        this.sumbitSearch()
+      }
     },
     // 开始搜索
     sumbitSearch: function(page) {
-      // 检测是否有筛选条件
-      this.checkHasSolabel()
       // 构造当前筛选label
       this.buildSolabelText()
 
@@ -441,6 +461,11 @@ export default {
       // 开始查询
       this.getPageList(condition)
       this.currentPage = page || 1
+      // 修改路由
+      this.$router.push({
+        path: '/project',
+        query: condition
+      })
     },
     checkHasSolabel: function() {
       const solabel = this.solabel
@@ -454,56 +479,20 @@ export default {
         solabel.tzMoney
       this.solabel.has = has
     },
-    buildSolabelText: function() {
-      let hasLabel = false
-      if (this.solabel.key) {
-        hasLabel = true
-      }
-      if (this.tzType) {
-        this.solabel.tzType = this.tzType
-        hasLabel = true
-      }
-      if (this.szCity) {
-        this.solabel.szCity = this.szCity
-        hasLabel = true
-      }
-      if (this.tzCity) {
-        this.solabel.tzCity = this.tzCity
-        hasLabel = true
-      }
-      if (this.tzMoney) {
-        this.solabel.tzMoney = this.tzMoney
-        hasLabel = true
-      }
-      if (this.tzHangye) {
-        let tzHangyeText = ''
-
-        // 如果是字符串，则直接是选中的值，如果是数组，则需要遍历
-        if (typeof this.tzHangye === 'string') {
-          tzHangyeText = this.tzHangye
-        } else {
-          tzHangyeText = this.tzHangye.join(',')
-        }
-        if (tzHangyeText) {
-          hasLabel = true
-        }
-
-        this.solabel.tzHangye = tzHangyeText
-      }
-      if (this.zjType) {
-        let zjTypeText = ''
-        // 如果是字符串，则直接是选中的值，如果是数组，则需要遍历
-        if (typeof this.zjType === 'string') {
-          zjTypeText = this.zjType
-        } else {
-          zjTypeText = this.zjType.join(',')
-        }
-        if (zjTypeText) {
-          hasLabel = true
-        }
-        this.solabel.zjType = zjTypeText
-      }
-      this.solabel.has = hasLabel
+    buildSolabelText() {
+      this.solabel.key = this.keyword || ''
+      this.solabel.tzType = this.tzType || ''
+      this.solabel.szCity = this.szCity || ''
+      this.solabel.tzCity = this.tzCity || ''
+      this.solabel.tzMoney = this.tzMoney || ''
+      this.solabel.tzHangye = isArray(this.tzHangye)
+        ? this.tzHangye.join(',')
+        : this.tzHangye
+      this.solabel.zjType = isArray(this.zjType)
+        ? this.zjType.join(',')
+        : this.zjType
+      // 检测是否有筛选条件
+      this.checkHasSolabel()
     },
     clearFilter: function(clearfilter) {
       switch (clearfilter) {

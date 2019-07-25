@@ -158,15 +158,11 @@
         </div>
       </div>
       <div class="index-sec-bd">
-        <nuxt-link to="/fund" class="money-item">
-          <img src="~/assets/img/money-img1.png" alt="找资金" />
-          <div class="money-info">
-            <span class="money-title1">天使投资</span>
-            <span class="money-title2">早期项目的福利从这里开始</span>
-            <span class="money-arrow"></span>
-          </div>
-        </nuxt-link>
-        <nuxt-link to="/fund" class="money-item money-item-center">
+        <nuxt-link
+          :to="{ path: '/fund', query: { investWay: '股权投资' } }"
+          title="项目缺乏资金-股权投资"
+          class="money-item"
+        >
           <img src="~/assets/img/money-img2.jpg" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">股权投资</span>
@@ -174,11 +170,27 @@
             <span class="money-arrow"></span>
           </div>
         </nuxt-link>
-        <nuxt-link to="/fund" class="money-item">
+        <nuxt-link
+          :to="{ path: '/fund', query: { investWay: '债权投资' } }"
+          title="项目缺乏资金-债权投资"
+          class="money-item money-item-center"
+        >
           <img src="~/assets/img/money-img3.png" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">债权投资</span>
             <span class="money-title2">借款方式多样，融资就这么简单</span>
+            <span class="money-arrow"></span>
+          </div>
+        </nuxt-link>
+        <nuxt-link
+          :to="{ path: '/fund', query: { investWay: '其他投资' } }"
+          title="项目缺乏资金-其他投资"
+          class="money-item"
+        >
+          <img src="~/assets/img/money-img1.png" alt="找资金" />
+          <div class="money-info">
+            <span class="money-title1">其他投资</span>
+            <span class="money-title2">项目的福利从这里开始</span>
             <span class="money-arrow"></span>
           </div>
         </nuxt-link>
@@ -299,7 +311,11 @@
               <p class="fm-line"></p>
             </div>
             <div class="fm-right">
-              <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
+              <nuxt-link
+                :to="{ path: '/project', query: { financeWay: 'IT互联网' } }"
+                class="link-more"
+                >查看更多</nuxt-link
+              >
             </div>
           </div>
         </div>
@@ -312,7 +328,11 @@
                 <p class="fm-line"></p>
               </div>
               <div class="fm-right">
-                <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
+                <nuxt-link
+                  :to="{ path: '/project', query: { financeWay: '农林牧渔' } }"
+                  class="link-more"
+                  >查看更多</nuxt-link
+                >
               </div>
             </div>
           </div>
@@ -324,7 +344,11 @@
                 <p class="fm-line"></p>
               </div>
               <div class="fm-right">
-                <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
+                <nuxt-link
+                  :to="{ path: '/project', query: { financeWay: '房地产' } }"
+                  class="link-more"
+                  >查看更多</nuxt-link
+                >
               </div>
             </div>
           </div>
@@ -338,7 +362,14 @@
                 <p class="fm-line"></p>
               </div>
               <div class="fm-right">
-                <nuxt-link to="/project" class="link-more">查看更多</nuxt-link>
+                <nuxt-link
+                  :to="{
+                    path: '/project',
+                    query: { financeWay: '餐饮休闲娱乐' }
+                  }"
+                  class="link-more"
+                  >查看更多</nuxt-link
+                >
               </div>
             </div>
           </div>
@@ -351,7 +382,12 @@
                   <p class="fm-line"></p>
                 </div>
                 <div class="fm-right">
-                  <nuxt-link to="/project" class="link-more"
+                  <nuxt-link
+                    :to="{
+                      path: '/project',
+                      query: { financeWay: '节能环保' }
+                    }"
+                    class="link-more"
                     >查看更多</nuxt-link
                   >
                 </div>
@@ -365,7 +401,12 @@
                   <p class="fm-line"></p>
                 </div>
                 <div class="fm-right">
-                  <nuxt-link to="/project" class="link-more"
+                  <nuxt-link
+                    :to="{
+                      path: '/project',
+                      query: { financeWay: '其他行业' }
+                    }"
+                    class="link-more"
                     >查看更多</nuxt-link
                   >
                 </div>
@@ -460,14 +501,12 @@ export default {
         spaceBetween: 0,
         slidesPerGroup: 4,
         loop: false,
-        loopFillGroupWithBlank: true,
-        allowTouchMove: false
+        loopFillGroupWithBlank: true
       },
       betterCaseSwiperOption: {
         slidesPerView: 4,
         spaceBetween: 10,
-        slidesPerGroup: 4,
-        allowTouchMove: false
+        slidesPerGroup: 4
       }
     }
   },

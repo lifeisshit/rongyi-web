@@ -11,10 +11,6 @@
           >资金类型：<span class="ellipsis">{{ solabel.zjType }}</span
           ><i class="el-icon-close"></i
         ></label>
-        <label v-if="solabel.szCity" class="cur" @click="clearFilter('szCity')"
-          >投资地区：<span class="ellipsis">{{ solabel.szCity }}</span
-          ><i class="el-icon-close"></i
-        ></label>
         <label
           v-if="solabel.tzHangye"
           class="cur"
@@ -97,7 +93,7 @@
         <div class="filter-box-item">
           <span class="label">投资地区：</span>
           <div :class="['items', isMoreszCity ? 'showall' : '']">
-            <el-radio-group v-model="szCity" class="form-check-data">
+            <el-radio-group v-model="tzCity" class="form-check-data">
               <el-radio
                 v-for="(value, index) in cityList"
                 :key="index"
@@ -158,29 +154,6 @@
             ></span>
           </div>
         </div>
-        <!--<div class="filter-box-item">-->
-        <!--<span class="label">投资地区：</span>-->
-        <!--<div :class="['items', isMoretzCity ? 'showall' : '']">-->
-        <!--<el-radio-group v-model="tzCity" class="form-check-data">-->
-        <!--<el-radio-->
-        <!--v-for="(value, index) in cityList"-->
-        <!--:key="index"-->
-        <!--:label="value"-->
-        <!--@change="sumbitSearch()"-->
-        <!--&gt;{{ value }}</el-radio-->
-        <!--&gt;-->
-        <!--</el-radio-group>-->
-        <!--</div>-->
-        <!--<div class="options">-->
-        <!--<span @click="showAlltzCity"-->
-        <!--&gt;更多<i-->
-        <!--:class="[-->
-        <!--isMoretzCity ? 'el-icon-arrow-down' : 'el-icon-arrow-up'-->
-        <!--]"-->
-        <!--&gt;</i-->
-        <!--&gt;</span>-->
-        <!--</div>-->
-        <!--</div>-->
         <div class="filter-box-item">
           <span class="label">投资金额：</span>
           <div :class="['items', isMoreAmount ? 'showall' : '']">
@@ -388,11 +361,28 @@ import {
 } from '~/common/constant'
 import BottomBar from '~/components/BottomBar.vue'
 import { verifyMobilePhone } from '~/common/validate'
+import isArray from 'lodash/isArray'
 
 export default {
   name: 'Fund',
   components: { BottomBar },
   data() {
+    // 读取url中携带的查询条件
+    const query = this.$route.query
+    const keyword = query.keyword || ''
+    const investWay = query.investWay || ''
+    const region = query.region || ''
+    let tzHangye = query.industry || ''
+    let tzHangyeMore = false
+    if (query.industry && query.industry.indexOf(',') >= 0) {
+      // 证明行业是多选
+      tzHangye = query.industry.split(',')
+      tzHangyeMore = true
+    }
+    const investAmount = query.investAmount || ''
+    const sort = query.sort || 0
+    const has = keyword || investWay || region || tzHangye || investAmount
+
     return {
       dialogVisible: false,
       currentPage: 1,
@@ -400,31 +390,29 @@ export default {
       cityList: Regions,
       tzMoneyList: Amounts,
       tzHangyeList: Industries,
-      keyword: '',
-      tzType: '',
+      keyword: keyword,
+      tzType: investWay,
       zjType: [],
-      szCity: '',
-      tzHangye: [],
-      tzCity: '',
-      tzMoney: '',
+      tzHangye: tzHangye,
+      tzCity: region,
+      tzMoney: investAmount,
       zjTypeMore: false,
       isMorezjType: false,
       isMoreszCity: false,
-      tzHangyeMore: false,
+      tzHangyeMore: tzHangyeMore,
       isMoretzHangye: false,
       isMoretzCity: false,
       isMoreAmount: false,
       solabel: {
-        has: false,
-        key: '',
-        tzType: '',
+        has: has,
+        key: keyword,
+        tzType: investWay,
         zjType: '',
-        szCity: '',
-        tzHangye: '',
-        tzCity: '',
-        tzMoney: ''
+        tzHangye: query.industry,
+        tzCity: region,
+        tzMoney: investAmount
       },
-      sort: 0,
+      sort: sort * 1,
       sortList: [
         {
           key: 0,
@@ -477,9 +465,11 @@ export default {
     ...mapState('sessionStorage', ['deliverCodeInfo']),
     ...mapState('fund', ['pageSize', 'totalRow', 'topFundList', 'fundList'])
   },
-  async fetch({ store }) {
+  async fetch({ store, query }) {
+    // console.log('query: ', query)
+    // query.pageNum = 1
     await Promise.all([
-      store.dispatch('fund/getPageList', { pageNumber: 1 }),
+      store.dispatch('fund/getPageList', query),
       store.dispatch('fund/getPageList', { recommend: 1, pageSize: 6 })
     ]).catch(() => {})
   },
@@ -530,20 +520,24 @@ export default {
     },
     setTzHangyeMore() {
       this.tzHangyeMore = !this.tzHangyeMore
-      this.tzHangye = []
-      this.sumbitSearch()
+      if (this.tzHangyeMore) {
+        this.tzHangye = this.tzHangye.split(',')
+      } else {
+        this.tzHangye = ''
+        this.sumbitSearch()
+      }
+      // this.tzHangye = []
+      // this.sumbitSearch()
     },
     // 开始搜索
     sumbitSearch(page) {
-      // 检测是否有筛选条件
-      this.checkHasSolabel()
       // 构造当前筛选label
       this.buildSolabelText()
 
       const condition = {
         keyword: this.keyword,
         investWay: this.tzType,
-        region: this.szCity,
+        region: this.tzCity,
         industry: this.solabel.tzHangye,
         investAmount: this.tzMoney,
         sort: this.sort,
@@ -554,6 +548,11 @@ export default {
       // 开始查询
       this.getPageList(condition)
       this.currentPage = page || 1
+      // 修改路由
+      this.$router.push({
+        path: '/fund',
+        query: condition
+      })
     },
     checkHasSolabel() {
       const solabel = this.solabel
@@ -561,62 +560,24 @@ export default {
         solabel.key ||
         solabel.tzType ||
         solabel.zjType ||
-        solabel.szCity ||
         solabel.tzHangye ||
         solabel.tzCity ||
         solabel.tzMoney
       this.solabel.has = has
     },
     buildSolabelText() {
-      let hasLabel = false
-      if (this.solabel.key) {
-        hasLabel = true
-      }
-      if (this.tzType) {
-        this.solabel.tzType = this.tzType
-        hasLabel = true
-      }
-      if (this.szCity) {
-        this.solabel.szCity = this.szCity
-        hasLabel = true
-      }
-      if (this.tzCity) {
-        this.solabel.tzCity = this.tzCity
-        hasLabel = true
-      }
-      if (this.tzMoney) {
-        this.solabel.tzMoney = this.tzMoney
-        hasLabel = true
-      }
-      if (this.tzHangye) {
-        let tzHangyeText = ''
-
-        // 如果是字符串，则直接是选中的值，如果是数组，则需要遍历
-        if (typeof this.tzHangye === 'string') {
-          tzHangyeText = this.tzHangye
-        } else {
-          tzHangyeText = this.tzHangye.join(',')
-        }
-        if (tzHangyeText) {
-          hasLabel = true
-        }
-
-        this.solabel.tzHangye = tzHangyeText
-      }
-      if (this.zjType) {
-        let zjTypeText = ''
-        // 如果是字符串，则直接是选中的值，如果是数组，则需要遍历
-        if (typeof this.zjType === 'string') {
-          zjTypeText = this.zjType
-        } else {
-          zjTypeText = this.zjType.join(',')
-        }
-        if (zjTypeText) {
-          hasLabel = true
-        }
-        this.solabel.zjType = zjTypeText
-      }
-      this.solabel.has = hasLabel
+      this.solabel.key = this.keyword || ''
+      this.solabel.tzType = this.tzType || ''
+      this.solabel.tzCity = this.tzCity || ''
+      this.solabel.tzMoney = this.tzMoney || ''
+      this.solabel.tzHangye = isArray(this.tzHangye)
+        ? this.tzHangye.join(',')
+        : this.tzHangye
+      this.solabel.zjType = isArray(this.zjType)
+        ? this.zjType.join(',')
+        : this.zjType
+      // 检测是否有筛选条件
+      this.checkHasSolabel()
     },
     clearFilter(clearfilter) {
       switch (clearfilter) {
@@ -627,10 +588,6 @@ export default {
         case 'zjType':
           this.zjType = []
           this.solabel.zjType = ''
-          break
-        case 'szCity':
-          this.szCity = ''
-          this.solabel.szCity = ''
           break
         case 'tzHangye':
           this.tzHangye = []
