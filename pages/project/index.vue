@@ -328,7 +328,7 @@ export default {
     // 读取url中携带的查询条件
     const query = this.$route.query
     const keyword = query.keyword || ''
-    const financeWay = query.financeWay || ''
+    const financeWay = query.financeway || ''
     const region = query.region || ''
     let tzHangye = query.industry || ''
     let tzHangyeMore = false

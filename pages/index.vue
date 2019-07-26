@@ -159,7 +159,7 @@
       </div>
       <div class="index-sec-bd">
         <nuxt-link
-          :to="{ path: '/fund', query: { investWay: '股权投资' } }"
+          :to="{ path: '/fund', query: { investway: '股权投资' } }"
           title="项目缺乏资金-股权投资"
           class="money-item"
         >
@@ -171,7 +171,7 @@
           </div>
         </nuxt-link>
         <nuxt-link
-          :to="{ path: '/fund', query: { investWay: '债权投资' } }"
+          :to="{ path: '/fund', query: { investway: '债权投资' } }"
           title="项目缺乏资金-债权投资"
           class="money-item money-item-center"
         >
@@ -183,7 +183,7 @@
           </div>
         </nuxt-link>
         <nuxt-link
-          :to="{ path: '/fund', query: { investWay: '其他投资' } }"
+          :to="{ path: '/fund', query: { investway: '其他投资' } }"
           title="项目缺乏资金-其他投资"
           class="money-item"
         >
@@ -312,7 +312,7 @@
             </div>
             <div class="fm-right">
               <nuxt-link
-                :to="{ path: '/project', query: { financeWay: 'IT互联网' } }"
+                :to="{ path: '/project', query: { financeway: 'IT互联网' } }"
                 class="link-more"
                 >查看更多</nuxt-link
               >
@@ -329,7 +329,7 @@
               </div>
               <div class="fm-right">
                 <nuxt-link
-                  :to="{ path: '/project', query: { financeWay: '农林牧渔' } }"
+                  :to="{ path: '/project', query: { financeway: '农林牧渔' } }"
                   class="link-more"
                   >查看更多</nuxt-link
                 >
@@ -345,7 +345,7 @@
               </div>
               <div class="fm-right">
                 <nuxt-link
-                  :to="{ path: '/project', query: { financeWay: '房地产' } }"
+                  :to="{ path: '/project', query: { financeway: '房地产' } }"
                   class="link-more"
                   >查看更多</nuxt-link
                 >
@@ -365,7 +365,7 @@
                 <nuxt-link
                   :to="{
                     path: '/project',
-                    query: { financeWay: '餐饮休闲娱乐' }
+                    query: { financeway: '餐饮休闲娱乐' }
                   }"
                   class="link-more"
                   >查看更多</nuxt-link
@@ -385,7 +385,7 @@
                   <nuxt-link
                     :to="{
                       path: '/project',
-                      query: { financeWay: '节能环保' }
+                      query: { financeway: '节能环保' }
                     }"
                     class="link-more"
                     >查看更多</nuxt-link
@@ -404,7 +404,7 @@
                   <nuxt-link
                     :to="{
                       path: '/project',
-                      query: { financeWay: '其他行业' }
+                      query: { financeway: '其他行业' }
                     }"
                     class="link-more"
                     >查看更多</nuxt-link
