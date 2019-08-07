@@ -453,6 +453,54 @@
         </div>
       </div>
     </div>
+    <!--资讯-->
+    <div class="index-sec wrap">
+      <div class="index-sec-hd">
+        <h3 class="index-sec-hd-left">资讯</h3>
+        <div class="index-sec-hd-right">
+          <nuxt-link to="/news" class="link-more">查看更多</nuxt-link>
+        </div>
+      </div>
+      <div class="index-sec-bd news-sec-bd">
+        <div class="news-left">
+          <div
+            v-for="news in newsList"
+            :key="news.id"
+            class="case-item clearfix"
+          >
+            <div class="case-infos">
+              <div class="case-title ellipsis">
+                <nuxt-link :to="`/news/${news.id}`">{{ news.title }}</nuxt-link>
+              </div>
+              <!--<div class="case-desc" v-html="news.content"></div>-->
+              <div class="case-pram">
+                <span>{{ news.gmtCreate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="news-right">
+          <div v-swiper:newsSwiper="newsSwiperOption">
+            <div class="swiper-wrapper">
+              <div
+                v-for="slide in slideNewsList"
+                :key="slide.id"
+                class="swiper-slide news-swiper-slide"
+              >
+                <nuxt-link :to="`/news/${slide.id}`" class="link-img">
+                  <img
+                    :src="slide.img || require('~/assets/img/no-img.png')"
+                    alt="融资新闻"
+                  />
+                </nuxt-link>
+                <p class="slide-title">{{ slide.title }}</p>
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <bottom-bar></bottom-bar>
   </section>
 </template>
@@ -507,6 +555,20 @@ export default {
         slidesPerView: 4,
         spaceBetween: 10,
         slidesPerGroup: 4
+      },
+      newsSwiperOption: {
+        autoplay: {
+          disableOnInteraction: false
+        },
+        loop: true,
+        lazy: {
+          loadPrevNext: true,
+          loadPrevNextAmount: 3
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
       }
     }
   },
@@ -515,7 +577,8 @@ export default {
     ...mapState('sessionStorage', ['regCodeInfo']),
     ...mapState('user', ['nuxtToken']),
     ...mapState('project', ['topProjectList']),
-    ...mapState('successcase', ['successCaseList'])
+    ...mapState('successcase', ['successCaseList']),
+    ...mapState('news', ['newsList', 'slideNewsList'])
   },
   async fetch({ store }) {
     await Promise.all([
@@ -523,7 +586,9 @@ export default {
       store.dispatch('getInvestOrgPageList', { pageNum: 1, pageSize: 3 }),
       store.dispatch('project/getPageList', { pageNum: 1 }),
       store.dispatch('project/getPageList', { recommend: 1, pageSize: 8 }),
-      store.dispatch('successcase/getPageList', { pageNum: 1 })
+      store.dispatch('successcase/getPageList', { pageNum: 1 }),
+      store.dispatch('news/getPageList', { pageNum: 1, type: 0, pageSize: 5 }),
+      store.dispatch('news/getPageList', { pageNum: 1, type: 1 })
     ]).catch(() => {})
   },
   created() {
