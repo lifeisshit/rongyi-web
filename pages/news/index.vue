@@ -12,7 +12,7 @@
               <nuxt-link :to="`/news/${slide.id}`" class="link-img">
                 <img
                   :src="slide.img || require('~/assets/img/no-img.png')"
-                  alt="融资新闻"
+                  :alt="slide.title"
                 />
               </nuxt-link>
               <p class="slide-title">{{ slide.title }}</p>
@@ -97,6 +97,25 @@ import BottomBar from '~/components/BottomBar.vue'
 export default {
   name: 'News',
   components: { BottomBar },
+  head() {
+    return {
+      title: '武汉专业的项目融资公司_投资项目缺乏资金融资_可信赖投资平台',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            '武汉融易网信息服务有限公司为你提供个人投资项目相关新闻动态，如果你想要了解个人投资项目找项目，个人投资项目缺乏资金，就上武汉融易网！这里拥有海量的投资融资项目合作信息,是专业的融资服务平台。'
+        },
+        {
+          hid: 'Keywords',
+          name: 'Keywords',
+          content:
+            '武汉专业的项目融资公司,投资项目缺乏资金融资,可信赖投资平台,武汉融易网信息服务有限公司'
+        }
+      ]
+    }
+  },
   data() {
     return {
       currentPage: 1,

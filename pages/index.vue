@@ -1,6 +1,11 @@
 <template>
   <section class="index">
     <div class="banner">
+      <img
+        :src="require('~/assets/img/money-arrow.png')"
+        alt="武汉低风险靠谱的投资平台"
+        title="武汉低风险靠谱的投资平台"
+      />
       <div class="wrap banner-wrap">
         <div v-if="!nuxtToken" class="login-tab">
           <ul class="login-tab-menu">
@@ -518,6 +523,25 @@ import {
 
 export default {
   components: { BottomBar },
+  head() {
+    return {
+      title: '专业的项目融资信息服务平台_低风险投资管理咨询公司_武汉融易网',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            '融易网是中国专业的项目融资服务平台，拥有数万投融资机构入驻，融易网通过线上+线下对接，为平台会员提供一站式投融资服务,解决了传统投融资行业存在的地域限制、信息不对称、效率低下等问题。融易网凭借项目信息与投资需求高效、直观、精准地匹配，成功对接股权融资超过千亿元。'
+        },
+        {
+          hid: 'Keywords',
+          name: 'Keywords',
+          content:
+            '专业的项目融资信息服务平台,低风险投资管理咨询公司,武汉融易网信息服务有限公司'
+        }
+      ]
+    }
+  },
   data() {
     return {
       isLoginTabActive: true,

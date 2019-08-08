@@ -324,6 +324,25 @@ import isArray from 'lodash/isArray'
 export default {
   name: 'Project',
   components: { BottomBar },
+  head() {
+    return {
+      title: '创业项目缺乏资金_寻找快速融资平台_低风险比较有知名度的融资平台',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            '武汉融易网信息服务有限公司专业服务于创业项目缺乏资金，找靠谱的天使投资人，企业融资对接投资机构，为投资公司以及个人投资者提供优质项目进行投资，为创业企业提供关于融资方面的各种专业服务。'
+        },
+        {
+          hid: 'Keywords',
+          name: 'Keywords',
+          content:
+            '创业项目缺乏资金,寻找快速融资平台,低风险比较有知名度的融资平台'
+        }
+      ]
+    }
+  },
   data() {
     // 读取url中携带的查询条件
     const query = this.$route.query

@@ -365,6 +365,25 @@ import isArray from 'lodash/isArray'
 
 export default {
   name: 'Fund',
+  head() {
+    return {
+      title: '武汉有规模的投资公司_可信赖低风险投资平台_寻找靠谱的天使投资人',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            '找有规模的投资公司,可信赖低风险投资平台,寻找靠谱的天使投资人，就上武汉融易网!这里拥有海量的投资融资资金合作信息,是专业的融资服务平台.'
+        },
+        {
+          hid: 'Keywords',
+          name: 'Keywords',
+          content:
+            '武汉有规模的投资公司,可信赖低风险投资平台,寻找靠谱的天使投资人,武汉融易网信息服务有限公司'
+        }
+      ]
+    }
+  },
   components: { BottomBar },
   data() {
     // 读取url中携带的查询条件

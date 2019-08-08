@@ -78,6 +78,24 @@ import BottomBar from '~/components/BottomBar.vue'
 export default {
   name: 'SuccessCase',
   components: { BottomBar },
+  head() {
+    return {
+      title: '武汉靠谱的天使投资人_投资项目缺乏资金融资_投资项目著名案例合作',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            '找靠谱的天使投资人，投资项目著名案例资金介绍，投资项目著名案例融资，投资项目著名案例合作,就上武汉融易网!这里拥有海量的投资融资资金合作信息,是专业的融资服务平台。'
+        },
+        {
+          hid: 'Keywords',
+          name: 'Keywords',
+          content: '靠谱的天使投资人,投资项目缺乏资金融资,投资项目著名案例合作'
+        }
+      ]
+    }
+  },
   data() {
     return {
       currentPage: 1
