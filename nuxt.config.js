@@ -10,7 +10,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: '专业的融资信息服务平台－融易网',
+    title: '专业的项目融资信息服务平台_低风险投资管理咨询公司_武汉融易网',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -25,7 +25,7 @@ export default {
         hid: 'Keywords',
         name: 'Keywords',
         content:
-          '融资,项目融资,天使投资,风投,风险投资,投资公司,项目,股权融资,债权融资,找投资人,快速融资,融易网'
+          '专业的项目融资信息服务平台,低风险投资管理咨询公司,武汉融易网信息服务有限公司'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v3' }]
