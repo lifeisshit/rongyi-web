@@ -40,7 +40,7 @@
                   <!--<span class="ellipsis">武汉市</span>-->
                   <img
                     alt="融资新闻"
-                    :src="news.img || require('~/assets/img/no-img.png')"
+                    v-lazy="news.img || require('~/assets/img/no-img.png')"
                 /></a>
               </div>
               <div class="case-infos">

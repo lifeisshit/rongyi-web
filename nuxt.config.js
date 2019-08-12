@@ -53,8 +53,8 @@ export default {
     { src: '~/plugins/element-ui' },
     { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
     { src: '~/plugins/axios' },
-    { src: '~/plugins/filter' }
-    // { src: '~/plugins/lodash', mode: 'client' }
+    { src: '~/plugins/filter' },
+    { src: '~/plugins/vue-lazyload.js', mode: 'client' }
   ],
 
   /*

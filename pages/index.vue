@@ -2,7 +2,7 @@
   <section class="index">
     <div class="banner">
       <img
-        :src="require('~/assets/img/money-arrow.png')"
+        v-lazy="require('~/assets/img/money-arrow.png')"
         alt="武汉低风险靠谱的投资平台"
         title="武汉低风险靠谱的投资平台"
       />
@@ -168,7 +168,7 @@
           title="项目缺乏资金-股权投资"
           class="money-item"
         >
-          <img src="~/assets/img/money-img2.jpg" alt="找资金" />
+          <img v-lazy="require('~/assets/img/money-img2.jpg')" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">股权投资</span>
             <span class="money-title2">引入实力投资，助推企业发展</span>
@@ -180,7 +180,7 @@
           title="项目缺乏资金-债权投资"
           class="money-item money-item-center"
         >
-          <img src="~/assets/img/money-img3.png" alt="找资金" />
+          <img v-lazy="require('~/assets/img/money-img3.png')" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">债权投资</span>
             <span class="money-title2">借款方式多样，融资就这么简单</span>
@@ -192,7 +192,7 @@
           title="项目缺乏资金-其他投资"
           class="money-item"
         >
-          <img src="~/assets/img/money-img1.png" alt="找资金" />
+          <img v-lazy="require('~/assets/img/money-img1.png')" alt="找资金" />
           <div class="money-info">
             <span class="money-title1">其他投资</span>
             <span class="money-title2">项目的福利从这里开始</span>
@@ -224,8 +224,9 @@
             >
               <nuxt-link :to="`/successcase/${slide.id}`" class="link-img">
                 <img
-                  :src="slide.img || require('~/assets/img/no-img.png')"
+                  :data-src="slide.img || require('~/assets/img/no-img.png')"
                   alt="成功案例"
+                  class="swiper-lazy"
                 />
               </nuxt-link>
               <div class="slide-info">
@@ -251,7 +252,7 @@
           :key="investor.id"
           class="investor-item"
         >
-          <img :src="investor.avatar" alt="投资人" class="investor-img" />
+          <img v-lazy="investor.avatar" alt="投资人" class="investor-img" />
           <div class="investor-info">
             <p class="investor-name">{{ investor.name }}</p>
             <p class="investor-company">
@@ -288,7 +289,7 @@
               <p class="site">{{ org.headquarters }}</p>
             </div>
             <div class="right-info">
-              <img :src="org.logo" alt="投资机构" class="org-img" />
+              <img v-lazy="org.logo" alt="投资机构" class="org-img" />
             </div>
           </div>
           <div class="bottom-info">
@@ -309,7 +310,7 @@
       </div>
       <div class="index-sec-bd">
         <div class="fm-item find-money1">
-          <img src="~/assets/img/find-money1.png" alt="找项目" />
+          <img v-lazy="require('~/assets/img/find-money1.png')" alt="找项目" />
           <div class="fm-info">
             <div class="fm-left">
               <p class="fm-title">IT互联网</p>
@@ -326,7 +327,10 @@
         </div>
         <div class="find-money2">
           <div class="fm-item find-money2-1">
-            <img src="~/assets/img/find-money2.jpg" alt="找项目" />
+            <img
+              v-lazy="require('~/assets/img/find-money2.jpg')"
+              alt="找项目"
+            />
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">农林牧渔</p>
@@ -342,7 +346,10 @@
             </div>
           </div>
           <div class="fm-item find-money2-2">
-            <img src="~/assets/img/find-money3.png" alt="找项目" />
+            <img
+              v-lazy="require('~/assets/img/find-money3.png')"
+              alt="找项目"
+            />
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">房地产</p>
@@ -360,7 +367,10 @@
         </div>
         <div class="find-money3">
           <div class="fm-item find-money3-1">
-            <img src="~/assets/img/find-money4.jpg" alt="找项目" />
+            <img
+              v-lazy="require('~/assets/img/find-money4.jpg')"
+              alt="找项目"
+            />
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">餐饮休闲娱乐</p>
@@ -380,7 +390,10 @@
           </div>
           <div class="find-money3-2">
             <div class="fm-item find-money3-2-1">
-              <img src="~/assets/img/find-money5.png" alt="找项目" />
+              <img
+                v-lazy="require('~/assets/img/find-money5.png')"
+                alt="找项目"
+              />
               <div class="fm-info">
                 <div class="fm-left">
                   <p class="fm-title">节能环保</p>
@@ -399,7 +412,10 @@
               </div>
             </div>
             <div class="fm-item find-money3-2-2">
-              <img src="~/assets/img/find-money6.png" alt="找项目" />
+              <img
+                v-lazy="require('~/assets/img/find-money6.png')"
+                alt="找项目"
+              />
               <div class="fm-info">
                 <div class="fm-left">
                   <p class="fm-title">其他行业</p>
@@ -444,8 +460,9 @@
             >
               <nuxt-link :to="`/project/${slide.id}`" class="link-img">
                 <img
-                  :src="slide.img || require('~/assets/img/no-img.png')"
+                  :data-src="slide.img || require('~/assets/img/no-img.png')"
                   alt="优质项目"
+                  class="swiper-lazy"
                 />
               </nuxt-link>
               <div class="slide-info">
@@ -554,22 +571,21 @@ export default {
         spaceBetween: 0,
         slidesPerGroup: 4,
         loop: false,
-        loopFillGroupWithBlank: true
+        loopFillGroupWithBlank: true,
+        lazy: true
       },
       betterCaseSwiperOption: {
         slidesPerView: 4,
         spaceBetween: 10,
-        slidesPerGroup: 4
+        slidesPerGroup: 4,
+        lazy: true
       },
       newsSwiperOption: {
         autoplay: {
           disableOnInteraction: false
         },
         loop: true,
-        lazy: {
-          loadPrevNext: true,
-          loadPrevNextAmount: 3
-        },
+        lazy: true,
         pagination: {
           el: '.swiper-pagination',
           clickable: true
