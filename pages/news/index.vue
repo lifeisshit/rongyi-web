@@ -39,8 +39,8 @@
                 <a href="">
                   <!--<span class="ellipsis">武汉市</span>-->
                   <img
-                    alt="融资新闻"
                     v-lazy="news.img || require('~/assets/img/no-img.png')"
+                    alt="融资新闻"
                 /></a>
               </div>
               <div class="case-infos">

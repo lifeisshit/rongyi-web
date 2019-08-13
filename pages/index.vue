@@ -168,7 +168,13 @@
           title="项目缺乏资金-股权投资"
           class="money-item"
         >
-          <img v-lazy="require('~/assets/img/money-img2.jpg')" alt="找资金" />
+          <div class="img-wrap">
+            <img
+              v-lazy="require('~/assets/img/money-img2.jpg')"
+              alt="项目缺乏资金-股权投资"
+              title="项目缺乏资金-股权投资"
+            />
+          </div>
           <div class="money-info">
             <span class="money-title1">股权投资</span>
             <span class="money-title2">引入实力投资，助推企业发展</span>
@@ -180,7 +186,13 @@
           title="项目缺乏资金-债权投资"
           class="money-item money-item-center"
         >
-          <img v-lazy="require('~/assets/img/money-img3.png')" alt="找资金" />
+          <div class="img-wrap">
+            <img
+              v-lazy="require('~/assets/img/money-img3.png')"
+              alt="项目缺乏资金-债权投资"
+              title="项目缺乏资金-债权投资"
+            />
+          </div>
           <div class="money-info">
             <span class="money-title1">债权投资</span>
             <span class="money-title2">借款方式多样，融资就这么简单</span>
@@ -192,7 +204,13 @@
           title="项目缺乏资金-其他投资"
           class="money-item"
         >
-          <img v-lazy="require('~/assets/img/money-img1.png')" alt="找资金" />
+          <div class="img-wrap">
+            <img
+              v-lazy="require('~/assets/img/money-img1.png')"
+              alt="项目缺乏资金-其他投资"
+              title="项目缺乏资金-其他投资"
+            />
+          </div>
           <div class="money-info">
             <span class="money-title1">其他投资</span>
             <span class="money-title2">项目的福利从这里开始</span>
@@ -224,10 +242,12 @@
             >
               <nuxt-link :to="`/successcase/${slide.id}`" class="link-img">
                 <img
-                  :data-src="slide.img || require('~/assets/img/no-img.png')"
-                  alt="成功案例"
+                  :data-src="slide.img"
+                  alt="专业的项目融资公司成功案例"
+                  title="专业的项目融资公司成功案例"
                   class="swiper-lazy"
                 />
+                <div class="swiper-lazy-preloader"></div>
               </nuxt-link>
               <div class="slide-info">
                 <p>{{ slide.title }}</p>
@@ -252,7 +272,14 @@
           :key="investor.id"
           class="investor-item"
         >
-          <img v-lazy="investor.avatar" alt="投资人" class="investor-img" />
+          <div class="img-wrap">
+            <img
+              v-lazy="investor.avatar"
+              alt="寻找靠谱的投资人"
+              title="寻找靠谱的投资人"
+              class="investor-img"
+            />
+          </div>
           <div class="investor-info">
             <p class="investor-name">{{ investor.name }}</p>
             <p class="investor-company">
@@ -289,7 +316,14 @@
               <p class="site">{{ org.headquarters }}</p>
             </div>
             <div class="right-info">
-              <img v-lazy="org.logo" alt="投资机构" class="org-img" />
+              <div class="img-wrap">
+                <img
+                  v-lazy="org.logo"
+                  alt="比较有知名度的融资平台"
+                  title="比较有知名度的融资平台"
+                  class="org-img"
+                />
+              </div>
             </div>
           </div>
           <div class="bottom-info">
@@ -310,7 +344,13 @@
       </div>
       <div class="index-sec-bd">
         <div class="fm-item find-money1">
-          <img v-lazy="require('~/assets/img/find-money1.png')" alt="找项目" />
+          <div class="img-wrap">
+            <img
+              v-lazy="require('~/assets/img/find-money1.png')"
+              alt="IT互联网项目寻找快速融资平台"
+              title="IT互联网项目寻找快速融资平台"
+            />
+          </div>
           <div class="fm-info">
             <div class="fm-left">
               <p class="fm-title">IT互联网</p>
@@ -327,10 +367,13 @@
         </div>
         <div class="find-money2">
           <div class="fm-item find-money2-1">
-            <img
-              v-lazy="require('~/assets/img/find-money2.jpg')"
-              alt="找项目"
-            />
+            <div class="img-wrap">
+              <img
+                v-lazy="require('~/assets/img/find-money2.jpg')"
+                alt="农林牧渔项目寻找快速融资平台"
+                title="农林牧渔项目寻找快速融资平台"
+              />
+            </div>
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">农林牧渔</p>
@@ -346,10 +389,13 @@
             </div>
           </div>
           <div class="fm-item find-money2-2">
-            <img
-              v-lazy="require('~/assets/img/find-money3.png')"
-              alt="找项目"
-            />
+            <div class="img-wrap">
+              <img
+                v-lazy="require('~/assets/img/find-money3.png')"
+                alt="房地产项目寻找快速融资平台"
+                title="房地产项目寻找快速融资平台"
+              />
+            </div>
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">房地产</p>
@@ -367,10 +413,13 @@
         </div>
         <div class="find-money3">
           <div class="fm-item find-money3-1">
-            <img
-              v-lazy="require('~/assets/img/find-money4.jpg')"
-              alt="找项目"
-            />
+            <div class="img-wrap">
+              <img
+                v-lazy="require('~/assets/img/find-money4.jpg')"
+                alt="餐饮休闲娱乐项目寻找快速融资平台"
+                title="餐饮休闲娱乐项目寻找快速融资平台"
+              />
+            </div>
             <div class="fm-info">
               <div class="fm-left">
                 <p class="fm-title">餐饮休闲娱乐</p>
@@ -390,10 +439,13 @@
           </div>
           <div class="find-money3-2">
             <div class="fm-item find-money3-2-1">
-              <img
-                v-lazy="require('~/assets/img/find-money5.png')"
-                alt="找项目"
-              />
+              <div class="img-wrap">
+                <img
+                  v-lazy="require('~/assets/img/find-money5.png')"
+                  alt="节能环保项目寻找快速融资平台"
+                  title="节能环保项目寻找快速融资平台"
+                />
+              </div>
               <div class="fm-info">
                 <div class="fm-left">
                   <p class="fm-title">节能环保</p>
@@ -412,10 +464,13 @@
               </div>
             </div>
             <div class="fm-item find-money3-2-2">
-              <img
-                v-lazy="require('~/assets/img/find-money6.png')"
-                alt="找项目"
-              />
+              <div class="img-wrap">
+                <img
+                  v-lazy="require('~/assets/img/find-money6.png')"
+                  alt="其他行业项目寻找快速融资平台"
+                  title="其他行业项目寻找快速融资平台"
+                />
+              </div>
               <div class="fm-info">
                 <div class="fm-left">
                   <p class="fm-title">其他行业</p>
@@ -461,9 +516,11 @@
               <nuxt-link :to="`/project/${slide.id}`" class="link-img">
                 <img
                   :data-src="slide.img || require('~/assets/img/no-img.png')"
-                  alt="优质项目"
+                  alt="可信赖投资平台寻找优质项目"
+                  title="可信赖投资平台寻找优质项目"
                   class="swiper-lazy"
                 />
+                <div class="swiper-lazy-preloader"></div>
               </nuxt-link>
               <div class="slide-info">
                 <p class="title">{{ slide.title }}</p>
@@ -511,9 +568,12 @@
               >
                 <nuxt-link :to="`/news/${slide.id}`" class="link-img">
                   <img
-                    :src="slide.img || require('~/assets/img/no-img.png')"
+                    :data-src="slide.img || require('~/assets/img/no-img.png')"
                     :alt="slide.title"
+                    :title="slide.title"
+                    class="swiper-lazy"
                   />
+                  <div class="swiper-lazy-preloader"></div>
                 </nuxt-link>
                 <p class="slide-title">{{ slide.title }}</p>
               </div>

@@ -10,7 +10,7 @@
           <p class="combo-text">融资特刊</p>
           <p class="combo-text">每周引荐资方</p>
           <p class="combo-text">专业融资顾问跟踪指导</p>
-          <nuxt-link to="#" class="link-fee">￥3888.00</nuxt-link>
+          <nuxt-link to="#" class="link-fee">12800/2个月</nuxt-link>
         </div>
         <div class="combo-item combo-diamond">
           <div class="combo-img"></div>
@@ -19,7 +19,7 @@
           <p class="combo-text">每周引荐资方</p>
           <p class="combo-text">专业商业计划书撰写</p>
           <p class="combo-text">专业融资顾问跟踪指导</p>
-          <nuxt-link to="#" class="link-fee">￥29800.00</nuxt-link>
+          <nuxt-link to="#" class="link-fee">￥29800/2个月</nuxt-link>
         </div>
       </div>
     </div>

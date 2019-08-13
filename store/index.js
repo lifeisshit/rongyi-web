@@ -6,6 +6,8 @@ import API from '~/common/api'
 export const state = () => ({
   companyEmail: 'customer@rongyi8.com',
   companyTel: '027-88869177',
+  companyMobilePhone: '13349951361',
+  companyAddress: '武汉市洪山区东湖国贸中心B座1301室',
   visitCount: 0,
   investors: [],
   investOrgs: []

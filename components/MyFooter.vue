@@ -38,7 +38,7 @@
           <p class="copyright">
             版权所有：武汉融易网信息服务有限公司 鄂ICP备19013312号-1
           </p>
-          <p>公司地址：武汉市洪山区东湖国贸中心B座1301室</p>
+          <p>公司地址：{{ companyAddress }}</p>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'MyFooter',
   computed: {
-    ...mapState(['companyTel'])
+    ...mapState(['companyAddress', 'companyTel'])
   }
 }
 </script>

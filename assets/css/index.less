@@ -126,10 +126,10 @@
         &.money-item-center {
           margin: 0 25px;
         }
-        > img {
-          width: 100%;
+        .img-wrap {
           height: 180px;
-          display: block;
+        }
+        img {
           -webkit-transition: -webkit-transform .3s ease;
           -moz-transition: -moz-transform .3s ease;
           -ms-transition: -ms-transform .3s ease;
@@ -137,7 +137,7 @@
           transition: transform .3s ease;
         }
         &:hover {
-          > img {
+          img {
             transform: scale3d(1.1, 1.1, 1.1);
             -webkit-transform: scale3d(1.1, 1.1, 1.1);
             -moz-transform: scale3d(1.1, 1.1, 1.1);
@@ -197,6 +197,7 @@
           height: 242px;
           display: block;
           overflow: hidden;
+          position: relative;
           > img {
             border: 1px solid #dcdcdc;
             border-left: none;
@@ -278,7 +279,7 @@
         &:nth-child(2) {
           margin: 0 30px;
         }
-        .investor-img {
+        .img-wrap {
           display: inline-block;
           width: 126px;
           height: 166px;
@@ -372,7 +373,7 @@
             width: 173px;
             vertical-align: top;
             position: relative;
-            > img {
+            > .img-wrap {
               width: 160px;
               height: 70px;
               position: absolute;
@@ -502,10 +503,6 @@
           -ms-transform: translateY(-10px);
           -o-transform: translateY(-10px);
         }
-        > img {
-          width: 100%;
-          height: 100%;
-        }
         .fm-info {
           padding: 30px 34px 29px 26px;
           position: absolute;
@@ -577,6 +574,7 @@
           width: 100%;
           height: 176px;
           display: block;
+          position: relative;
           > img {
             width: 100%;
             height: 100%;
