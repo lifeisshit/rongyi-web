@@ -205,14 +205,16 @@
     <!--合作伙伴-->
     <section class="sec5">
       <h2 class="sec-title">合作伙伴</h2>
-      <div class="sec-content">
+      <div class="sec-content wrap">
         <ul>
           <li v-for="bank in bankList" :key="bank.name">
-            <img
-              v-lazy="bank.icon"
-              :alt="`可信赖投资平台合作伙伴${bank.name}`"
-              :title="`可信赖投资平台合作伙伴${bank.name}`"
-            />
+            <div class="img-wrap">
+              <img
+                v-lazy="bank.icon"
+                :alt="`可信赖投资平台合作伙伴${bank.name}`"
+                :title="`可信赖投资平台合作伙伴${bank.name}`"
+              />
+            </div>
           </li>
         </ul>
       </div>
@@ -249,10 +251,48 @@
             <p class="underline"></p>
             <div class="info">
               <div class="info-item">
-                <span class="label">地址：</span>
+                <span class="label label2">地址：</span>
                 <span class="value">{{ companyAddress }}</span>
               </div>
-              <div class="map"></div>
+              <div class="map-wrap">
+                <baidu-map
+                  :style="{
+                    width: map.width + 'px',
+                    height: map.height + 'px'
+                  }"
+                  class="map"
+                  ak="GsVPaMppFyGP7wveCDCVnRX12xdFO3pa"
+                  :zoom="map.zoom"
+                  :center="{ lng: map.center.lng, lat: map.center.lat }"
+                  @ready="handler"
+                  :scroll-wheel-zoom="true"
+                >
+                  <!-- 添加标注 -->
+                  <bm-marker
+                    :position="{ lng: map.marker.lng, lat: map.marker.lat }"
+                  ></bm-marker>
+                  <!--信息窗体-->
+                  <bm-label
+                    content="融易网"
+                    :labelStyle="{
+                      color: '#060608',
+                      fontSize: '16px',
+                      backgroundColor: '#fff',
+                      width: '80px',
+                      height: '25px',
+                      lineHeight: '25px',
+                      textAlign: 'center',
+                      border: 'none'
+                    }"
+                    :position="{
+                      lng: map.center.lng,
+                      lat: map.center.lat
+                    }"
+                    :offset="{ width: -35, height: -30 }"
+                    show="true"
+                  />
+                </baidu-map>
+              </div>
             </div>
           </li>
         </ul>
@@ -266,10 +306,13 @@
 import '~/assets/css/about-us.less'
 import { mapState, mapActions } from 'vuex'
 import BottomBar from '~/components/BottomBar.vue'
+import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
+import BmMarker from 'vue-baidu-map/components/overlays/Marker.vue'
+import BmLabel from 'vue-baidu-map/components/overlays/Label.vue'
 
 export default {
   name: 'AboutUs',
-  components: { BottomBar },
+  components: { BottomBar, BaiduMap, BmMarker, BmLabel },
   head() {
     return {
       title: '武汉靠谱的天使投资人_投资项目缺乏资金融资_关于我们',
@@ -290,7 +333,19 @@ export default {
   },
   data() {
     return {
-      currentPage: 1,
+      map: {
+        width: 439,
+        height: 95,
+        zoom: 14,
+        center: {
+          lng: 114.368193,
+          lat: 30.588098
+        },
+        marker: {
+          lng: 114.368691,
+          lat: 30.584996
+        }
+      },
       bankList: [
         {
           name: '中国光大银行',
@@ -397,19 +452,17 @@ export default {
       'companyTel',
       'companyMobilePhone',
       'companyEmail'
-    ]),
-    ...mapState('successcase', ['pageSize', 'totalRow', 'successCaseList'])
-  },
-  async fetch({ store }) {
-    await Promise.all([
-      store.dispatch('successcase/getPageList', { pageNum: 1 })
-    ]).catch(() => {})
+    ])
   },
   methods: {
     ...mapActions('successcase', ['getPageList']),
-    handleCurrentChange(page) {
-      this.getPageList({ pageNum: page || 1 })
-      this.currentPage = page || 1
+    // 地图初始化
+    handler({ BMap, map }) {
+      console.log(BMap, map)
+      // this.map.center.lng = 118.802422
+      // this.map.center.lat = 32.065631
+      // this.map.zoom = 12;
+      // this.getProPositionMap();
     }
   }
 }

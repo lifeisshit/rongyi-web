@@ -28,7 +28,7 @@
             <nuxt-link to="/">版权信息</nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/">联系我们</nuxt-link>
+            <nuxt-link to="/aboutus">关于我们</nuxt-link>
           </li>
           <li>
             <nuxt-link to="/">帮助中心</nuxt-link>

@@ -7,7 +7,7 @@
   }
   section {
     background-size: cover;
-    background: no-repeat center;
+    background: #fff no-repeat center;
     overflow: hidden;
     .sec-title {
       font-size:32px;
@@ -186,9 +186,94 @@
     }
     &.sec5 {
       height: 599px;
+      .sec-content {
+        ul {
+          li {
+            float: left;
+            width: 178px;
+            height: 68px;
+            border: 1px dashed #ccc;
+            margin: 0 24px 25px 0;
+            &:nth-child(6n) {
+              margin-right: 0;
+            }
+            &:nth-child(n+19) {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
     }
     &.sec6 {
-      height: 356px;
+      height: 422px;
+      position: relative;
+      .inner-bg {
+        position: absolute;
+        width: 100%;
+        height: 356px;
+        background-size: cover;
+        background: no-repeat center;
+        top: 0;
+      }
+      .sec-title {
+        z-index: 1;
+        position: relative;
+        color: #fff;
+      }
+      .sec-content {
+        width:860px;
+        height:180px;
+        padding: 41px 50px 37px;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(6, 6, 8, 0.21);
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        ul {
+          li {
+            float: left;
+            width: 50%;
+            .title {
+              font-size:18px;
+              color:rgba(6,6,8,1);
+            }
+            .underline {
+              width:37px;
+              height:2px;
+              background:rgba(6,6,8,1);
+              margin: 11px 0 27px;
+            }
+            .info {
+              .info-item {
+                margin-bottom: 11px;
+                .label {
+                  font-size:14px;
+                  color:rgba(6,6,8,0.6);
+                  margin-right: 21px;
+                  display: inline-block;
+                  width: 60px;
+                  &.label2 {
+                    width: 50px;
+                    margin-right: 0;
+                  }
+                }
+                .value {
+                  font-size:14px;
+                  color:rgba(6,6,8,1);
+                }
+              }
+              .map-wrap {
+                width: 439px;
+                height: 95px;
+                .map {
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
