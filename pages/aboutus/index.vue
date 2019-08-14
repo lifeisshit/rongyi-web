@@ -264,8 +264,8 @@
                   ak="GsVPaMppFyGP7wveCDCVnRX12xdFO3pa"
                   :zoom="map.zoom"
                   :center="{ lng: map.center.lng, lat: map.center.lat }"
-                  @ready="handler"
                   :scroll-wheel-zoom="true"
+                  @ready="handler"
                 >
                   <!-- 添加标注 -->
                   <bm-marker
@@ -274,7 +274,7 @@
                   <!--信息窗体-->
                   <bm-label
                     content="融易网"
-                    :labelStyle="{
+                    :label-style="{
                       color: '#060608',
                       fontSize: '16px',
                       backgroundColor: '#fff',
