@@ -5,7 +5,12 @@ import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
 
 export default {
   mode: 'universal',
-
+  render: {
+    resourceHints: false
+  },
+  router: {
+    prefetchLinks: false
+  },
   /*
    ** Headers of the page
    */

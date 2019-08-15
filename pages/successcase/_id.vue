@@ -14,16 +14,20 @@
               <div class="case-title ellipsis">
                 {{ successCaseInfo.title }}
               </div>
-              <div class="case-labels">
-                <span class="el-icon-time"
-                  ><span>{{ successCaseInfo.gmtCreate }}</span></span
-                >
-                <span class="el-icon-view"
-                  ><span>{{ viewTime }}</span></span
-                >
-                <span class="el-icon-edit-outline"><span>评论区</span></span>
-                <span class="el-icon-share"><span>分享</span></span>
-              </div>
+              <ul class="case-labels">
+                <li>
+                  <i class="el-icon-time"></i
+                  ><span>{{ successCaseInfo.gmtCreate }}</span>
+                </li>
+                <li>
+                  <i class="el-icon-view"></i><span>{{ viewTime }}</span>
+                </li>
+                <li><i class="el-icon-edit-outline"></i><span>评论区</span></li>
+                <li class="share">
+                  <i class="el-icon-share"></i><span>分享</span>
+                  <div id="qrcode"></div>
+                </li>
+              </ul>
               <div class="case-rows">
                 <el-row>
                   <el-col :span="6">
@@ -102,17 +106,41 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
+
 import '~/assets/css/case-detail.less'
 import { mapState } from 'vuex'
 import { random3Num } from '~/common/util'
 
 export default {
   name: 'CaseId',
+  head() {
+    return {
+      script: [
+        {
+          src: '/js/qrcode.min.js',
+          body: true
+        }
+      ]
+    }
+  },
   data() {
     return {
       viewTime: random3Num(),
       activeName: 'first'
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const qrcode = new QRCode('qrcode', {
+        width: 150, // 二维码宽度，单位像素
+        height: 150, // 二维码高度，单位像素
+        text: `https://www.rongyi8.com/successcase/${this.$route.params.id}`, // 二维码中的内容
+        colorDark: '#000000', // 前景色
+        colorLight: '#ffffff', // 背景色
+        correctLevel: QRCode.CorrectLevel.H // 容错级别，
+      })
+    })
   },
   computed: {
     ...mapState('successcase', ['successCaseInfo']),

@@ -3,16 +3,19 @@
     <div class="wrap">
       <div class="detail-title">
         <h1>{{ projectInfo.title }}</h1>
-        <div class="infos">
-          <span class="el-icon-time"
-            ><span>{{ projectInfo.gmtCreate }}</span></span
-          >
-          <span class="el-icon-view"
-            ><span>{{ viewTime }}</span></span
-          >
-          <span class="el-icon-edit-outline"><span>评论区</span></span>
-          <span class="el-icon-share"><span>分享</span></span>
-        </div>
+        <ul class="infos">
+          <li>
+            <i class="el-icon-time"></i><span>{{ projectInfo.gmtCreate }}</span>
+          </li>
+          <li>
+            <i class="el-icon-view"></i><span>{{ viewTime }}</span>
+          </li>
+          <li><i class="el-icon-edit-outline"></i><span>评论区</span></li>
+          <li class="share">
+            <i class="el-icon-share"></i><span>分享</span>
+            <div id="qrcode"></div>
+          </li>
+        </ul>
       </div>
       <div class="detail-content">
         <div class="detail-left-box">
@@ -86,17 +89,40 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
 import '~/assets/css/business-detail.less'
 import { mapState } from 'vuex'
 import { random3Num } from '~/common/util'
 
 export default {
   name: 'ProjectId',
+  head() {
+    return {
+      script: [
+        {
+          src: '/js/qrcode.min.js',
+          body: true
+        }
+      ]
+    }
+  },
   data() {
     return {
       viewTime: random3Num(),
       activeName: 'first'
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const qrcode = new QRCode('qrcode', {
+        width: 150, // 二维码宽度，单位像素
+        height: 150, // 二维码高度，单位像素
+        text: `https://www.rongyi8.com/project/${this.$route.params.id}`, // 二维码中的内容
+        colorDark: '#000000', // 前景色
+        colorLight: '#ffffff', // 背景色
+        correctLevel: QRCode.CorrectLevel.H // 容错级别，
+      })
+    })
   },
   computed: {
     ...mapState('project', ['projectInfo', 'projectRecentList'])
