@@ -114,14 +114,17 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      const qrcode = new QRCode('qrcode', {
-        width: 150, // 二维码宽度，单位像素
-        height: 150, // 二维码高度，单位像素
-        text: `https://www.rongyi8.com/project/${this.$route.params.id}`, // 二维码中的内容
-        colorDark: '#000000', // 前景色
-        colorLight: '#ffffff', // 背景色
-        correctLevel: QRCode.CorrectLevel.H // 容错级别，
-      })
+      // 保证qrcode.js完全下载完再初始化
+      setTimeout(() => {
+        const qrcode = new QRCode('qrcode', {
+          width: 150, // 二维码宽度，单位像素
+          height: 150, // 二维码高度，单位像素
+          text: `https://www.rongyi8.com/project/${this.$route.params.id}`, // 二维码中的内容
+          colorDark: '#000000', // 前景色
+          colorLight: '#ffffff', // 背景色
+          correctLevel: QRCode.CorrectLevel.H // 容错级别，
+        })
+      }, 1000)
     })
   },
   computed: {
