@@ -78,7 +78,11 @@ export const actions = {
     await this.$axios.$post(API.appoint, payload)
   },
   // 投递项目列表
-  async getAppointPageList({ commit }, payload) {
+  async getAppointPageList({ commit, state }, payload) {
+    if (!payload.pageSize) {
+      payload.pageSize = state.pageSize
+    }
+
     const { dataList, totalRow } = await this.$axios.$post(
       API.appointPageList,
       payload

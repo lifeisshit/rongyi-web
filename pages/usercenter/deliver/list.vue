@@ -73,7 +73,8 @@ export default {
   async fetch({ store }) {
     await Promise.all([
       store.dispatch('fund/getAppointPageList', {
-        pageNum: 1
+        pageNum: 1,
+        userId: store.state.user.user.id
       })
     ]).catch(() => {})
   },
