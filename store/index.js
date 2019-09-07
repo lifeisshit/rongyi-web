@@ -37,7 +37,7 @@ export const actions = {
     // 设置对象树中的值
     commit('setData', {
       key: 'visitCount',
-      value: data + 101
+      value: data + 2000
     })
   },
   // 提交融资申请

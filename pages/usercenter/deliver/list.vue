@@ -15,7 +15,7 @@
             class="collect-table"
             empty-text="暂无数据"
           >
-            <el-table-column type="selection" width="40"></el-table-column>
+            <el-table-column type="selection" width="50"></el-table-column>
             <el-table-column label="项目标题" width="200">
               <template slot-scope="scope">
                 <!--<i class="el-icon-dot"></i>-->
