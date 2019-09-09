@@ -33,7 +33,10 @@ export default {
           '专业的项目融资信息服务平台,低风险投资管理咨询公司,武汉融易网信息服务有限公司'
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v3' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v3' }],
+    script: [
+      { src: 'https://hm.baidu.com/hm.js?0070e28f8b0eeb38d91bf88d6ba50034' }
+    ] /* 引入百度统计的js */
   },
 
   /*
@@ -59,7 +62,8 @@ export default {
     { src: '~/plugins/vue-awesome-swiper.js', mode: 'client' },
     { src: '~/plugins/axios' },
     { src: '~/plugins/filter' },
-    { src: '~/plugins/vue-lazyload.js', mode: 'client' }
+    { src: '~/plugins/vue-lazyload.js', mode: 'client' },
+    { src: '~/plugins/baiduGa.js' } /* 百度统计 */
   ],
 
   /*
