@@ -2,7 +2,7 @@
   <div class="my-menu wrap">
     <h1 class="r-pull-left left-logo">
       <nuxt-link to="/">
-        <img class="main-logo" src="~/assets/img/logo.png" alt="融易网" />
+        <img class="main-logo" src="~/assets/img/web-logo.png" alt="融易网" />
       </nuxt-link>
     </h1>
     <div class="r-pull-left">
