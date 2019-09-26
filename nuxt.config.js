@@ -63,7 +63,7 @@ export default {
     { src: '~/plugins/axios' },
     { src: '~/plugins/filter' },
     { src: '~/plugins/vue-lazyload.js', mode: 'client' },
-    { src: '~/plugins/baiduGa.js' } /* 百度统计 */
+    { src: '~/plugins/baiduGa.js', mode: 'client' } /* 百度统计 */
   ],
 
   /*
